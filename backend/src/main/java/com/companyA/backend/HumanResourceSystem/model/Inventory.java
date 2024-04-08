@@ -20,6 +20,7 @@ public abstract class Inventory {
     private String status;
     private int weight;
     private int size;
+    private int reorderQuantity;
     private StateOfProduct stateOfProduct;
 }
 

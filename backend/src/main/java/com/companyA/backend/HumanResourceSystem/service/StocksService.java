@@ -3,5 +3,5 @@ package com.companyA.backend.HumanResourceSystem.service;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SampleService4 {
+public class StocksService {
 }
