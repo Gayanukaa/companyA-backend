@@ -5,6 +5,8 @@ import com.companyA.backend.GeneralManagementSystem.repository.ManagerRepository
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class ManagerService {
@@ -15,4 +17,10 @@ public class ManagerService {
         managerRepository.save(manager);
         return "Manager added Successfully";
     }
+
+    public Optional<Manager> findManagerById(String managerId) {
+
+        return managerRepository.findById(managerId);
+    }
+
 }
