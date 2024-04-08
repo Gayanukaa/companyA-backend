@@ -13,6 +13,6 @@ public class ManagerService {
 
     public String createManager(Manager manager) {
         managerRepository.save(manager);
-        return "Manager added Successfully";
+        return "Manager for the specific section is added Successfully";
     }
 }
