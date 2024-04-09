@@ -19,7 +19,6 @@ public class ManagerService {
     }
 
     public Optional<Manager> findManagerById(String managerId) {
-
         return managerRepository.findById(managerId);
     }
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/manager")
+@RequestMapping("/api/manager")
 @AllArgsConstructor
 public class ManagerController {
 
@@ -24,5 +24,4 @@ public class ManagerController {
     public Optional<Manager> findManagerById(@RequestParam("id") String id){
         return managerService.findManagerById(id);
     }
-
 }

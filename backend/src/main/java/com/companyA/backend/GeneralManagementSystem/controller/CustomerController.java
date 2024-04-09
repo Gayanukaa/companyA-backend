@@ -22,6 +22,7 @@ public class CustomerController {
 
     private CustomerService customerService;
 
+    // Customer Registration
     @PostMapping("/register")
     public ResponseEntity<Map <String, String>> customerRegisterControl(@Valid @RequestBody Customer customer) {
         String registrationResult = customerService.customerRegister(customer);
@@ -38,6 +39,7 @@ public class CustomerController {
 
 
 
+    // Error handling for Bad Requests
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationException(MethodArgumentNotValidException ex) {
