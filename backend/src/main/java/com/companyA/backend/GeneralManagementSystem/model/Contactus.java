@@ -11,6 +11,6 @@ public class Contactus {
     @NotBlank(message = "Email is Required")
     private String email;
 
-    @NotBlank(message = "Massege is Required")
+    @NotBlank(message = "Messege is Required")
     private String message;
 }

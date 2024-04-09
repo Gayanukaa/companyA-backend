@@ -13,6 +13,6 @@ public class ContactusService {
 
     public String Contactusmessage (Contactus contactus){
         contactusRepository.save(contactus);
-        return "Massage successfully delived";
+        return "Message successfully delived";
     }
 }
