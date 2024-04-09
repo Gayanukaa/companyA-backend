@@ -1,5 +1,7 @@
 package com.companyA.backend.GeneralManagementSystem.controller;
 
+import com.companyA.backend.GeneralManagementSystem.model.Contactus;
+import com.companyA.backend.GeneralManagementSystem.service.ContactusService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +21,10 @@ public class ContactusController {
     //customer feedback
     @PostMapping("/feedback")
     public ResponseEntity<Map<String,String>>customerFeedbackControl(@Valid @RequestBody Contactus contactus ){
-        String feedbackdetails = contactusServise.customerFeedback(contactus);
+        String feedbackdetails = ContactusService.Contactusmassage(contactus);
         Map<String, String> response = new HashMap<>();
         response.put("message",feedbackdetails);
+        
     }
 
 }
