@@ -19,10 +19,11 @@ import java.util.Map;
 @AllArgsConstructor
 
 public class ContactusController {
+    private ContactusService contactusService;
     //customer feedback
     @PostMapping("/feedback")
     public ResponseEntity<Map<String, String>> customerFeedbackControl(@Valid @RequestBody Contactus contactus) {
-        String feedbackdetails = ContactusService.Contactusmassage(contactus);
+        String feedbackdetails = contactusService.Contactusmassage(contactus);
         Map<String, String> response = new HashMap<>();
         response.put("message", feedbackdetails);
         return ResponseEntity.status(HttpStatus.OK).body(response);
