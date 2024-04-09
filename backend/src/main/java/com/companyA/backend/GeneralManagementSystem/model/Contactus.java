@@ -12,5 +12,5 @@ public class Contactus {
     private String email;
 
     @NotBlank(message = "Massege is Required")
-    private String massage;
+    private String message;
 }

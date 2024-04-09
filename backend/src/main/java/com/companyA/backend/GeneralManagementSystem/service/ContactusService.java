@@ -11,7 +11,7 @@ public class ContactusService {
 
     private ContactusRepository contactusRepository;
 
-    public String Contactusmassage (Contactus contactus){
+    public String Contactusmessage (Contactus contactus){
         contactusRepository.save(contactus);
         return "Massage successfully delived";
     }
