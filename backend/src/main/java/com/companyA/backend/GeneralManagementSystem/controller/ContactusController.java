@@ -23,11 +23,10 @@ public class ContactusController {
     //customer feedback
     @PostMapping("/feedback")
     public ResponseEntity<Map<String, String>> customerFeedbackControl(@Valid @RequestBody Contactus contactus) {
-        String feedbackdetails = contactusService.Contactusmessage(contactus);
+        String feedbackDetails = contactusService.ContactusMessage(contactus);
         Map<String, String> response = new HashMap<>();
-        response.put("message", feedbackdetails);
+        response.put("message", feedbackDetails);
         return ResponseEntity.status(HttpStatus.OK).body(response);
-
     }
 }
 

@@ -1,7 +1,6 @@
 package com.companyA.backend.GeneralManagementSystem.controller;
 
 import com.companyA.backend.GeneralManagementSystem.model.Customer;
-import com.companyA.backend.GeneralManagementSystem.model.User;
 import com.companyA.backend.GeneralManagementSystem.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
