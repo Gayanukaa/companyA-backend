@@ -8,6 +8,4 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Document(collection = "inventory")
 public class Supplies extends Inventory {
-    private String serialNumber;
-    private float purchasePrice;
 }
