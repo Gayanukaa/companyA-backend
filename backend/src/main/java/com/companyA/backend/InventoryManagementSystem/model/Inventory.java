@@ -20,7 +20,7 @@ public abstract class Inventory {
 
     @Id @NotBlank
     private String id;
-    @DocumentReference @NotBlank
+    @NotBlank
     private String warehouseId;
     @NotBlank
     private String name;

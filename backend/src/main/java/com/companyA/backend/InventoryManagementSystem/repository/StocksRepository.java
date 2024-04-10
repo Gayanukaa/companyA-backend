@@ -10,4 +10,3 @@ import org.springframework.stereotype.Repository;
 public interface StocksRepository extends MongoRepository<Stocks, ObjectId>{
 
 }
-
