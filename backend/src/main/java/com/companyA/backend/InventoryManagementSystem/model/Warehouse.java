@@ -15,7 +15,7 @@ import java.util.List;
 public class Warehouse {
 
     @Id @NotBlank
-    private ObjectId warehouseId;
+    private String warehouseId;
     @NotBlank
     private String location;
     @DocumentReference @NotBlank

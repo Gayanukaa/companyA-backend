@@ -15,4 +15,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Stocks extends Inventory {
     @NotBlank
     private float price;
+
+    public Stocks(String id, String warehouseId, String name, int quantityAdd, int weightAdd, int sizeAdd, int reorderQuantityAdd, StateOfProduct stateOfProductAdd, InventoryType inventoryTypeAdd, float priceAdd) {
+        super(id, warehouseId, name, quantityAdd, weightAdd, sizeAdd, reorderQuantityAdd, stateOfProductAdd, inventoryTypeAdd);
+        this.price = priceAdd;
+    }
 }

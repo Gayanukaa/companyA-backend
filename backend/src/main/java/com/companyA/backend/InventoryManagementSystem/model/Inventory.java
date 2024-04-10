@@ -19,9 +19,11 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public abstract class Inventory {
 
     @Id @NotBlank
-    private ObjectId itemId;
+    private String id;
     @DocumentReference @NotBlank
-    private Warehouse warehouseId;
+    private String warehouseId;
+    @NotBlank
+    private String name;
     @NotBlank
     private int quantity;
     @NotBlank
@@ -36,5 +38,15 @@ public abstract class Inventory {
     private InventoryType inventoryType;
 }
 
-
+/*
+id
+warehouseId
+name
+quantity
+weight
+size
+reorderQuantity
+stateOfProduct
+inventoryType
+*/
 
