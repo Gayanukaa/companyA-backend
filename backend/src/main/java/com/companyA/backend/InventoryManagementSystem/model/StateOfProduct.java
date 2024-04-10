@@ -1,4 +1,4 @@
-package com.companyA.backend.HumanResourceSystem.model;
+package com.companyA.backend.InventoryManagementSystem.model;
 
 public enum StateOfProduct {
     NEW,

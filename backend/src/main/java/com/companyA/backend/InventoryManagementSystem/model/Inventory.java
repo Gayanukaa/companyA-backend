@@ -1,4 +1,4 @@
-package com.companyA.backend.HumanResourceSystem.model;
+package com.companyA.backend.InventoryManagementSystem.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

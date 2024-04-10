@@ -1,4 +1,4 @@
-package com.companyA.backend.HumanResourceSystem.repository;
+package com.companyA.backend.InventoryManagementSystem.repository;
 
 import org.springframework.stereotype.Repository;
 
