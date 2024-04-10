@@ -5,6 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ContactusRepository extends MongoRepository <Contactus,String> {
+public interface ContactusRepository extends MongoRepository <Contactus, String> {
 
 }
