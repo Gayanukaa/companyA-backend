@@ -4,6 +4,7 @@ import com.companyA.backend.GeneralManagementSystem.DTO.ManagerDTO;
 import com.companyA.backend.GeneralManagementSystem.model.Manager;
 import com.companyA.backend.GeneralManagementSystem.repository.ManagerRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class ManagerService {
 
     private ManagerRepository managerRepository;
+    private PasswordEncoder passwordEncoder;
 
     public String createManager(Manager manager) {
         String tempEmail = manager.getEmail();
@@ -24,10 +26,11 @@ public class ManagerService {
             return "The personnel with the specific email is already assigned to "+tempRoll+".";
         }
         else {
+            String hashedPassword = passwordEncoder.encode(manager.getPassword());
+            manager.setPassword(hashedPassword);
             managerRepository.save(manager);
             return "Manager added Successfully";
         }
-
     }
 
     public Optional<Manager> findManagerById(String managerId) {
@@ -39,7 +42,6 @@ public class ManagerService {
         managerRepository.deleteById(managerId);
         managerRepository.save(manager);
         return "Manager updated successfully.";
-
     }
 
     public List<ManagerDTO> viewAllManagers(){

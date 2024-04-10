@@ -6,5 +6,4 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface ManagerRepository extends UserRepository <Manager> {
 
-    Manager findByEmail(String email);
 }

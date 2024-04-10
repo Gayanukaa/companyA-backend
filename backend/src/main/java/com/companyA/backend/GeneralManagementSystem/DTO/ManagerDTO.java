@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ManagerDTO {
-    private String role;
+    private String id;
     private String firstName;
     private String lastName;
     private String mobileNumber;
     private String email;
-    private String id;
+    private String role;
 }

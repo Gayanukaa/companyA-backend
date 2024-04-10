@@ -8,6 +8,7 @@ import com.companyA.backend.GeneralManagementSystem.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -20,6 +21,7 @@ public class UserService {
 
     private CustomerRepository customerRepository;
     private ManagerRepository managerRepository;
+    private PasswordEncoder passwordEncoder;
 
 
     // Logic for Login for any users in the system
@@ -46,16 +48,20 @@ public class UserService {
                                                                                   String userRole) {
         T relatedUser = userRepository.findByEmail(userEmail);
 
-        if (relatedUser != null && relatedUser.getPassword().equals(userPassword)) {
-            String successMessage =  userRole + " Successfully Logged in";
-            return sendResponseMessage(successMessage, HttpStatus.OK);
+        if (relatedUser != null) {
+            String encodedPassword = relatedUser.getPassword();
+            boolean isPasswordCorrect = passwordEncoder.matches(userPassword, encodedPassword);
+            if (isPasswordCorrect) {
+                String successMessage =  userRole + " Successfully Logged in";
+                return sendResponseMessage(successMessage, HttpStatus.OK);
+            }
         }
 
         String errorMessage = "Authentication failed for " + userRole;
         return sendResponseMessage(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
-    
+
     // Separate Method for create the Response
     public ResponseEntity <Map<String, String>> sendResponseMessage (String message, HttpStatus requestStatus) {
         Map <String, String> response = new HashMap<>();
