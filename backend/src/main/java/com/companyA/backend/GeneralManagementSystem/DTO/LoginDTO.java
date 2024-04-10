@@ -1,9 +1,9 @@
-package com.companyA.backend.GeneralManagementSystem.model;
+package com.companyA.backend.GeneralManagementSystem.DTO;
 
 import lombok.Getter;
 
 @Getter
-public class Login {
+public class LoginDTO {
 
     private String email;
     private String password;

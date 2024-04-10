@@ -1,6 +1,6 @@
 package com.companyA.backend.GeneralManagementSystem.service;
 
-import com.companyA.backend.GeneralManagementSystem.model.Login;
+import com.companyA.backend.GeneralManagementSystem.DTO.LoginDTO;
 import com.companyA.backend.GeneralManagementSystem.model.User;
 import com.companyA.backend.GeneralManagementSystem.repository.CustomerRepository;
 import com.companyA.backend.GeneralManagementSystem.repository.ManagerRepository;
@@ -25,11 +25,11 @@ public class UserService {
 
 
     // Logic for Login for any users in the system
-    public ResponseEntity <Map<String, String>> userLogin(Login login) {
+    public ResponseEntity <Map<String, String>> userLogin(LoginDTO loginDTO) {
 
-        String userRole = login.getRole();
-        String userEmail = login.getEmail();
-        String userPassword = login.getPassword();
+        String userRole = loginDTO.getRole();
+        String userEmail = loginDTO.getEmail();
+        String userPassword = loginDTO.getPassword();
 
         if (userRole.equals("customer")) {
             return authenticateUser(customerRepository, userEmail, userPassword, "Customer");
