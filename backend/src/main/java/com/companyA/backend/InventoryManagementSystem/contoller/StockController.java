@@ -22,14 +22,9 @@ public class StockController {
         return new ResponseEntity<List<Stocks>>(stocksService.allStocks(), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Stocks> addStockInventory(@RequestBody Map<String,String> payload) {
-        return new ResponseEntity<>(stocksService.addStocks
-                (payload.get("id"),payload.get("warehouseId"),payload.get("name"),
-                payload.get("quantity"),payload.get("weight"),
-                payload.get("size"),payload.get("reorderQuantity"),payload.get("stateOfProduct"),
-                payload.get("inventoryType"), payload.get("price"))
-                ,HttpStatus.CREATED);
-
+    @PostMapping("/addStock")
+    public ResponseEntity<Stocks> addStockInventory(@RequestBody Stocks stocks) {
+        return new ResponseEntity<Stocks>(stocksService.addStocks(stocks),HttpStatus.CREATED);
     }
+
 }

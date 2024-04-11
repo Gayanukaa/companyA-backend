@@ -17,8 +17,10 @@ public class Warehouse {
     @Id @NotBlank
     private String warehouseId;
     @NotBlank
+    private String name;
+    @NotBlank
     private String location;
-    @DocumentReference @NotBlank
+    @DocumentReference
     private List<Inventory> inventoryList;
 
     //Anupa use this

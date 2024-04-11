@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @NoArgsConstructor
@@ -16,8 +17,4 @@ public class Stocks extends Inventory {
     @NotBlank
     private float price;
 
-    public Stocks(String id, String warehouseId, String name, int quantityAdd, int weightAdd, int sizeAdd, int reorderQuantityAdd, StateOfProduct stateOfProductAdd, InventoryType inventoryTypeAdd, float priceAdd) {
-        super(id, warehouseId, name, quantityAdd, weightAdd, sizeAdd, reorderQuantityAdd, stateOfProductAdd, inventoryTypeAdd);
-        this.price = priceAdd;
-    }
 }

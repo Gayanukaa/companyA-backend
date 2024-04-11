@@ -20,7 +20,6 @@ public abstract class Inventory {
 
     @Id @NotBlank
     private String id;
-    @NotBlank
     private String warehouseId;
     @NotBlank
     private String name;
