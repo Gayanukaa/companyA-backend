@@ -1,5 +1,6 @@
 package com.companyA.backend.InventoryManagementSystem.service;
 
+import com.companyA.backend.InventoryManagementSystem.model.StateOfProduct;
 import com.companyA.backend.InventoryManagementSystem.model.Stocks;
 import com.companyA.backend.InventoryManagementSystem.model.Warehouse;
 import com.companyA.backend.InventoryManagementSystem.repository.StocksRepository;
@@ -42,4 +43,19 @@ public class StocksService{
         return HttpStatus.OK.toString();
     }
 
+    public Stocks getStockById(String id) {
+        return stocksRepository.findById(id).orElse(null);
+    }
+
+    public Stocks getStockByName(String name) {
+        return stocksRepository.findByName(name);
+    }
+
+    public List<Stocks> getStockByStateOfProduct(StateOfProduct stateOfProduct) {
+        return stocksRepository.findByStateOfProduct(stateOfProduct);
+    }
+
+    public List<Stocks> getStockByPrice(float price) {
+        return stocksRepository.findByPrice(price);
+    }
 }
