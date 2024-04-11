@@ -7,6 +7,7 @@ import com.companyA.backend.InventoryManagementSystem.repository.StocksRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -57,5 +58,13 @@ public class StocksService{
 
     public List<Stocks> getStockByPrice(float price) {
         return stocksRepository.findByPrice(price);
+    }
+
+    public boolean existsById(String id) {
+        return stocksRepository.existsById(id);
+    }
+
+    public void updateStock(Stocks stock) {
+        stocksRepository.save(stock);
     }
 }

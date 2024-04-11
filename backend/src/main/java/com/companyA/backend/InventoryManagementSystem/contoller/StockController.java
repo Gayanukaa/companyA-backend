@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
@@ -63,6 +64,15 @@ public class StockController{
     @GetMapping("/price/{value}")
     public ResponseEntity <List<Stocks>> getStockByPrice(@PathVariable float value) {
         return new ResponseEntity<List<Stocks>>(stocksService.getStockByPrice(value), HttpStatus.OK);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/updateStock")
+    public void update(@RequestBody Stocks stock) {
+        if(!stocksService.existsById(stock.getId())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found!");
+        }
+        stocksService.updateStock(stock);
     }
 
 }
