@@ -28,8 +28,18 @@ public class StocksService{
     }
 
     public Stocks addStocks(Stocks stocks) {
-        mongoTemplate.update(Warehouse.class)
-                .matching(Criteria.where("warehouseId").is(stocks.getWarehouseId())).apply(new Update().push("inventoryList").value(stocks.getId())).first();
+        Query query = new Query(Criteria.where("warehouseId").is(stocks.getWarehouseId()).and("inventoryList.0").is(null));
+        boolean hasNullAtFirstIndex = mongoTemplate.exists(query, Warehouse.class);
+
+        if (hasNullAtFirstIndex) {
+            Update update = new Update().set("inventoryList.0", stocks.getId());
+            mongoTemplate.updateFirst(query, update, Warehouse.class);
+        } else {
+            mongoTemplate.update(Warehouse.class)
+                    .matching(Criteria.where("warehouseId").is(stocks.getWarehouseId()))
+                    .apply(new Update().push("inventoryList", stocks.getId())).first();
+        }
+
         return stocksRepository.save(stocks);
     }
 

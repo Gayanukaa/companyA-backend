@@ -26,6 +26,8 @@ public abstract class Inventory {
     @NotBlank
     private int quantity;
     @NotBlank
+    private int thresholdQuantity;
+    @NotBlank
     private int weight;
     @NotBlank
     private int size;
