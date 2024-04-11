@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/stock")
-public class StockController {
+public class StockController{
 
     @Autowired
     private StocksService stocksService;
@@ -27,4 +27,9 @@ public class StockController {
         return new ResponseEntity<Stocks>(stocksService.addStocks(stocks),HttpStatus.CREATED);
     }
 
+    //Delete stock by id
+    @DeleteMapping("/deleteStock/{stockId}")
+    public ResponseEntity<String> deleteStock(@PathVariable String stockId) {
+        return new ResponseEntity<String>(stocksService.deleteStock(stockId),HttpStatus.OK);
+    }
 }

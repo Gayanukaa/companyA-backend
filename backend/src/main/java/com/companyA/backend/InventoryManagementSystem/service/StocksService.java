@@ -1,7 +1,5 @@
 package com.companyA.backend.InventoryManagementSystem.service;
 
-import com.companyA.backend.InventoryManagementSystem.model.InventoryType;
-import com.companyA.backend.InventoryManagementSystem.model.StateOfProduct;
 import com.companyA.backend.InventoryManagementSystem.model.Stocks;
 import com.companyA.backend.InventoryManagementSystem.model.Warehouse;
 import com.companyA.backend.InventoryManagementSystem.repository.StocksRepository;
@@ -15,8 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StocksService {
-
+public class StocksService{
 
     @Autowired
     private StocksRepository stocksRepository;
@@ -33,4 +30,16 @@ public class StocksService {
                 .matching(Criteria.where("warehouseId").is(stocks.getWarehouseId())).apply(new Update().push("inventoryList").value(stocks.getId())).first();
         return stocksRepository.save(stocks);
     }
+
+    public String deleteStock(String stockId) {
+        Stocks stocks = stocksRepository.findById(stockId).orElse(null);
+        if (stocks == null) {
+            return HttpStatus.NOT_FOUND.toString();
+        }
+        mongoTemplate.update(Warehouse.class)
+                .matching(Criteria.where("warehouseId").is(stocks.getWarehouseId())).apply(new Update().pull("inventoryList", stocks.getId())).first();
+        stocksRepository.deleteById(stockId);
+        return HttpStatus.OK.toString();
+    }
+
 }

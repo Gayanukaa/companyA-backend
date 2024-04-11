@@ -23,8 +23,19 @@ public class WarehouseController {
     @Autowired
     private WarehouseService warehouseService;
 
+    @GetMapping
+    public ResponseEntity<List<Warehouse>> getAllWarehouses() {
+        return new ResponseEntity<List<Warehouse>>(warehouseService.allWarehouses(), HttpStatus.OK);
+    }
+
     @PostMapping("/addWarehouse")
     public ResponseEntity<Warehouse> addWarehouse(@RequestBody Warehouse warehouse) {
         return new ResponseEntity<Warehouse>(warehouseService.addWarehouse(warehouse),HttpStatus.CREATED);
     }
+
+    @GetMapping("/getWarehouse/{warehouseId}")
+    public ResponseEntity<Warehouse> getWarehouse(@PathVariable String warehouseId) {
+        return new ResponseEntity<Warehouse>(warehouseService.getWarehouse(warehouseId),HttpStatus.OK);
+    }
+
 }

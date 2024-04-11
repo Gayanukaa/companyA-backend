@@ -11,7 +11,6 @@ import java.util.List;
 @Service
 public class WarehouseService {
 
-
     @Autowired
     private WarehouseRepository warehouseRepository;
 
@@ -24,5 +23,9 @@ public class WarehouseService {
 
     public Warehouse addWarehouse(Warehouse warehouse) {
         return warehouseRepository.save(warehouse);
+    }
+
+    public Warehouse getWarehouse(String warehouseId) {
+        return warehouseRepository.findById(warehouseId).orElse(null);
     }
 }
