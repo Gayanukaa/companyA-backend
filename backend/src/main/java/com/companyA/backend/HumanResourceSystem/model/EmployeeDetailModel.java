@@ -1,0 +1,41 @@
+package com.companyA.backend.HumanResourceSystem.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Date;
+import java.util.UUID;
+
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Document(collection = "Employee")
+public class EmployeeDetailModel {
+    @Id
+    private String id; //PK auto generated
+    private String firstName;
+    private String lastName;
+    private Date dateOfBirth;
+    private int age;
+    private String nic;
+    private String address;
+    private String emailAddress;
+    private String phoneNumber; // decide 077 1234567
+    private String emergencyContactNumber;
+    private String gender; // decide Enum
+    private int bankAccountNumber; //
+    private String department; // dropdown
+    private String JobRole; // dropdown
+    private Date recruitmentDate;
+    private double salary;
+    private boolean permanentStaff;
+    private String InsuranceCategory;
+    private String trainingStatus;
+
+}
