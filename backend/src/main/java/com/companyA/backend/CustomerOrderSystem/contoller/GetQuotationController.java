@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/v1")
+@RestController // Girlss....this annotation indicates that this class is a REST controller
+@RequestMapping("/api/v1")  //  Girlss...this annotation specifies that all endpoints mapped in this class will start with /api/v1.
 public class GetQuotationController {
     @Autowired
-    private GetQuotationService getQuotationService;
+    private GetQuotationService getQuotationService;  // Autowired Dependency Injection
 
     @GetMapping("/getQuotation")
     public ResponseEntity<Optional<GetQuotation>> getQuotation(

@@ -9,7 +9,7 @@ import java.util.Optional;
 @Service
 public class GetQuotationService {
     @Autowired
-    private GetQuotationRepository getQuotationRepository;
+    private GetQuotationRepository getQuotationRepository; //Autowired Dependency Injection
 
     public Optional<GetQuotation> getQuotation(ObjectId quotation_ID) {
         return getQuotationRepository.findById(quotation_ID);
