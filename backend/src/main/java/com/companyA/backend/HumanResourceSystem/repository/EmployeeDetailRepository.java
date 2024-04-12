@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface EmployeeDetailRepository extends MongoRepository<EmployeeDetailModel,String> {
     EmployeeDetailModel findByEmployeeId(String employeeId);
-    EmployeeDetailModel findByEmployeeName(String employeeName);
+    List<EmployeeDetailModel> findByEmployeeName(String employeeName);
 }
