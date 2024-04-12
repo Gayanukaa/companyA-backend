@@ -12,7 +12,7 @@ import java.util.Optional;
 //Make necessary changes
 
 @RestController
-@RequestMapping("/api/v1/prototypes")
+@RequestMapping("/api/v1/samples")
 public class SampleController {
 
     @Autowired
