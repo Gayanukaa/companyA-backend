@@ -36,5 +36,6 @@ public class EmployeeDetailModel {
     private boolean permanentStaff;
     private String InsuranceCategory;
     private String trainingStatus;
+    private boolean isActive;
 
 }
