@@ -1,9 +1,7 @@
 package com.companyA.backend.HumanResourceSystem.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -30,12 +28,13 @@ public class EmployeeDetailModel {
     private String gender; // decide Enum
     private int bankAccountNumber; //
     private String department; // dropdown
-    private String JobRole; // dropdown
+    private String jobRole; // dropdown
     private Date recruitmentDate;
     private double salary;
     private boolean permanentStaff;
-    private String InsuranceCategory;
+    private String insuranceCategory;
     private String trainingStatus;
-    private boolean isActive;
+    private boolean isActive = true;
+
 
 }
