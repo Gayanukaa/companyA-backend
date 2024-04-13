@@ -1,6 +1,7 @@
 package com.companyA.backend.QualityAssuaranceSystem.contoller;
 
 import com.companyA.backend.QualityAssuaranceSystem.model.Prototype;
+import com.companyA.backend.QualityAssuaranceSystem.model.Test;
 import com.companyA.backend.QualityAssuaranceSystem.service.PrototypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,21 +17,36 @@ import java.util.Optional;
 public class PrototypeController {
 
     @Autowired
-    private PrototypeService service;
+    private PrototypeService prototypeService;
 
     @PostMapping("/addPrototype")
     @ResponseStatus(HttpStatus.CREATED)
     public Prototype addPrototype(@RequestBody Prototype prototype) {
-        return service.addPrototype(prototype);
+        return prototypeService.addPrototype(prototype);
     }
 
     @GetMapping
     public List<Prototype> getAllPrototypes() {
-        return service.getAllPrototypes();
+        return prototypeService.getAllPrototypes();
     }
 
     @GetMapping("/getPrototype/{id}")
     public Optional<Prototype> getPrototypeById(@PathVariable String id) {
-        return service.getPrototypeById(id);
+        return prototypeService.getPrototypeById(id);
     }
+
+    @PostMapping("/createprototype")
+    public String createNewPrototype(@RequestBody Prototype prototype) {
+        return prototypeService.createPrototype(prototype);
+
+    }
+
+    @PostMapping("/inspect")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String testNewPrototype(@RequestBody Prototype prototype, @RequestBody Test test) {
+        String response = prototypeService.testPrototype(prototype, test);
+        prototype.setTestStatus("Test Initiated");
+        return response;
+    }
+
 }
