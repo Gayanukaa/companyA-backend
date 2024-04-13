@@ -20,5 +20,5 @@ public class TestSubjects {
     @NotBlank(message = "Received Date is Required in 'DDMMYYYY' format")
     private static  String receivedDate;
 
-    private String testStatus = "Recived" ;
+    private String testStatus = "Recieved" ;
 }

@@ -25,12 +25,12 @@ public class PrototypeController {
         return prototypeService.addPrototype(prototype);
     }
 
-    @GetMapping
+    @GetMapping("/getAllPrototypes")
     public List<Prototype> getAllPrototypes() {
         return prototypeService.getAllPrototypes();
     }
 
-    @GetMapping("/getPrototype/{id}")
+    @GetMapping("/getPrototype/{id}")   // could not check with postman
     public Optional<Prototype> getPrototypeById(@PathVariable String id) {
         return prototypeService.getPrototypeById(id);
     }
@@ -44,7 +44,7 @@ public class PrototypeController {
     @PostMapping("/inspect")
     @ResponseStatus(HttpStatus.CREATED)
     public String testNewPrototype(@RequestBody Prototype prototype, @RequestBody Test test) {
-        String response = prototypeService.testPrototype(prototype, test);
+        String response = prototypeService.testPrototype(prototype, test); // prototype ekt find by id eka dla aye check krnna
         prototype.setTestStatus("Test Initiated");
         return response;
     }
