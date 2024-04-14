@@ -13,7 +13,7 @@ import org.bson.types.ObjectId;
 @NoArgsConstructor
 public class ProductionData {
     @Id
-    private ObjectId id;;
+    private ObjectId id;
     private String lineId;
     private String data;
     private String description;

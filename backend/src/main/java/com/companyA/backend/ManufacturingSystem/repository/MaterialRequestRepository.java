@@ -10,6 +10,9 @@ import java.util.Optional;
 // Repository interface for MaterialRequest entities
 @Repository
 public interface MaterialRequestRepository extends MongoRepository<MaterialRequest, ObjectId> {
+    // Method to find a material request by material ID and quantity
     Optional<MaterialRequest> findByMaterialIdAndQuantity(Integer materialId, Integer quantity);
+
+    // Method to delete a material request by material ID and quantity
     void deleteByMaterialIdAndQuantity(Integer materialId, Integer quantity);
 }

@@ -14,16 +14,23 @@ import java.util.Optional;
 public class MaterialRequestService {
     private MaterialRequestRepository materialRequestRepository;
 
+    // Method to add a new material request
     public MaterialRequest addMaterialRequest(MaterialRequest materialRequest) {
+        // Check if the material request already exists
         Optional<MaterialRequest> existingMaterialRequest = materialRequestRepository.findByMaterialIdAndQuantity(materialRequest.getMaterialId(), materialRequest.getQuantity());
         if (existingMaterialRequest.isPresent()) {
+            // Throw an exception if the material request already exists
             throw new RuntimeException("This order is already existing.");
         }
+        // Set the current date for the material request
         materialRequest.setDate(LocalDate.now().toString());
+        // Save and return the added material request
         return materialRequestRepository.save(materialRequest);
     }
 
+    // Method to delete a material request
     public void deleteMaterialRequest(MaterialRequest materialRequest) {
+        // Delete the material request by material ID and quantity
         materialRequestRepository.deleteByMaterialIdAndQuantity(materialRequest.getMaterialId(), materialRequest.getQuantity());
     }
 }

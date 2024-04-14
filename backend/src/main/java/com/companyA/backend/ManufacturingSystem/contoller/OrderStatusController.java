@@ -16,15 +16,31 @@ public class OrderStatusController {
 
     private OrderStatusService orderStatusService;
 
+    // Endpoint to retrieve order status by order ID
     @GetMapping("/api/production/task/updateOrderStatus")
-    public ResponseEntity<OrderStatus> getOrderStatus(@RequestParam("order_ID") String order_ID) {
+    public ResponseEntity<Object> getOrderStatus(@RequestParam("order_ID") String order_ID) {
+        // Call the service to get order status
         OrderStatus response = orderStatusService.getOrderStatus(order_ID);
+        // Check if order status is null
+        if (response == null) {
+            // Return not found response if order status is null
+            return new ResponseEntity<>("Invalid Order ID", HttpStatus.NOT_FOUND);
+        }
+        // Return order status if found
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    // Endpoint to update order status by order ID
     @PostMapping("/api/production/task/updateOrderStatus")
     public ResponseEntity<String> updateOrderStatus(@RequestParam("order_ID") String order_ID, @RequestParam("status") String status) {
+        // Call the service to update order status
         OrderStatus response = orderStatusService.updateOrderStatus(order_ID, status);
-        return new ResponseEntity<>("Order " + response.getOrder_ID() + " status updated to " + response.getStatus() + " successfully", HttpStatus.OK);
+        // Check if order status is null
+        if (response == null) {
+            // Return not found response if order status is null
+            return new ResponseEntity<>("Invalid Order ID", HttpStatus.NOT_FOUND);
+        }
+        // Return success message if order status is updated successfully
+        return new ResponseEntity<>("Order " + response.getOrderID() + " status updated to " + response.getStatus() + " successfully", HttpStatus.OK);
     }
 }

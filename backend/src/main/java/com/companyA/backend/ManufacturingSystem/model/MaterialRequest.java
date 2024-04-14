@@ -14,8 +14,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 public class MaterialRequest {
     @Id
-    private ObjectId id;
-    private Integer materialId;
-    private Integer quantity;
-    private String date;
+    private ObjectId id;         // Unique identifier for the material request
+    private Integer materialId;  // ID of the requested material
+    private Integer quantity;    // Quantity of the requested material
+    private String date;         // Date of the material request
 }
