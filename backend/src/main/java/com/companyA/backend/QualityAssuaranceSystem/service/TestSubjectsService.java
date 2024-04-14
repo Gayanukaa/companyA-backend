@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TestSubjectsService {
     @Autowired
-    private TestSubjectsRepository testSubjectsRepository;
+    private TestSubjectsRepository<TestSubjects> testSubjectsRepository;
 
     public String updateTestMethodById(TestSubjects testSubjects, String newTestName) {
         String testSubjectsId = testSubjects.getId();

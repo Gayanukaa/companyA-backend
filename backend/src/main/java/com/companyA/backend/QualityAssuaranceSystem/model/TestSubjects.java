@@ -18,7 +18,7 @@ public class TestSubjects {
     private String testName;
 
     @NotBlank(message = "Received Date is Required in 'DDMMYYYY' format")
-    private static  String receivedDate;
+    private String receivedDate;  //remove static to check with report generation
 
-    private String testStatus = "Recieved" ;
+    private String testStatus = "Received" ;
 }
