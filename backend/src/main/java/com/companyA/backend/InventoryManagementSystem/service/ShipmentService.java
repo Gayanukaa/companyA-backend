@@ -28,9 +28,8 @@ public class ShipmentService {
         return shipmentRepository.save(shipment);
     }
 
-    public String deleteShipment(String id) {
+    public void deleteShipment(String id) {
         shipmentRepository.deleteById(id);
-        return "Deleted Successfully";
     }
 
 }

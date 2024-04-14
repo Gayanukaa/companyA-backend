@@ -19,6 +19,8 @@ public class Shipment {
     private String originAddress;
     private String destinationAddress;
     private String status;
-
+    //what are you sending in the shipment
+    //best to have document reference to a list of inventory
+    //link to supplier? might need references in both classes
 }
 

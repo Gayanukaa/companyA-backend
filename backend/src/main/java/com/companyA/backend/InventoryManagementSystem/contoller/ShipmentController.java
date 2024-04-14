@@ -41,6 +41,9 @@ public class ShipmentController {
         return new ResponseEntity<>(createdShipment, HttpStatus.CREATED);
     }
 
+    //when creating a shipment should have a map of what is the stock being brought (so stock id and quantity)
+    //so have to create new attribute in shipment model to store stock id and quantity. create a map or document reference
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteShipment(@PathVariable String id) {
         shipmentService.deleteShipment(id);

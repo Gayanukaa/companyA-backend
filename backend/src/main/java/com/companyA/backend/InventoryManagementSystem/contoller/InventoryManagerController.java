@@ -43,9 +43,4 @@ public class InventoryManagerController {
     public void updateWarehouse(@RequestBody Warehouse warehouse) {
         inventoryManagerService.updateWarehouse(warehouse);
     }
-
-    @PostMapping("/calculateSpaceRequirements")
-    public int calculateSpaceRequirements(@RequestParam String warehouseId) {
-        return inventoryManagerService.calculateSpaceRequirements(warehouseId);
-    }
 }

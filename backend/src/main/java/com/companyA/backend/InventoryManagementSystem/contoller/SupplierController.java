@@ -22,7 +22,6 @@ public class SupplierController {
         return ResponseEntity.status(HttpStatus.OK).body(sup);
     }
 
-
     @GetMapping("/details")
     public List<Suppliers> supplierDetails(){
         return supplierService.supplierDetails();

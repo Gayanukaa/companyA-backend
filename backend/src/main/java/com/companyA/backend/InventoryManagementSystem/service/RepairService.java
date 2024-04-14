@@ -22,8 +22,8 @@ public class RepairService {
         List<Repair> repairs = repairRepository.findAllById(ids);
 
         // Check if all IDs were found
-        List<String> foundIds = repairs.stream().map(Repair::getId).collect(Collectors.toList());
-        List<String> missingIds = ids.stream().filter(id -> !foundIds.contains(id)).collect(Collectors.toList());
+        List<String> foundIds = repairs.stream().map(Repair::getId).toList();
+        List<String> missingIds = ids.stream().filter(id -> !foundIds.contains(id)).toList();
 
         // If any IDs are missing, throw an IllegalArgumentException with the error message
         if (!missingIds.isEmpty()) {

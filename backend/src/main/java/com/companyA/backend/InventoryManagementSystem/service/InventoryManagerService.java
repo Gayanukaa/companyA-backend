@@ -44,14 +44,10 @@ public class InventoryManagerService {
         // Update stock quantity
         stock.setQuantity(stock.getQuantity() - quantity);
         stockRepository.save(stock);
-        
-
     }
 
     public Warehouse addWarehouse(Warehouse warehouse) {
         return warehouseRepository.save(warehouse);
-
-
     }
 
     public String deleteWarehouse(String id) {
@@ -67,7 +63,6 @@ public class InventoryManagerService {
                 .orElseThrow(() -> new IllegalArgumentException("Warehouse not found"));
         warehouseRepository.save(warehouse);
     }
-
 
     //Register new supplier
     public String registerSupplier(Suppliers suppliers){

@@ -15,6 +15,7 @@ public class SupplierService {
     public List<Suppliers> supplierDetails(){
         return supplierRepository.findAll();
     }
+
     public String registerSupplier(Suppliers supplier) {
         supplierRepository.save(supplier); // Save supplier to database
         return "Successfully Registered";
