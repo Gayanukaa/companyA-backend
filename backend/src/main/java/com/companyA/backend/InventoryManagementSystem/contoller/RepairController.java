@@ -16,14 +16,14 @@ public class RepairController {
     @Autowired
     private RepairService repairService;
 
-    @PostMapping("/send")
+    @PostMapping("/sendRepair")
     public ResponseEntity<String> sendForRepairs(@RequestBody Repair repair) {
         String sup =  repairService.sendForRepairs(repair);
         return ResponseEntity.status(HttpStatus.OK).body(sup);
     }
 
 
-    @GetMapping("/details")
+    @GetMapping("/getRepairDetails")
 
     public ResponseEntity<Object> getRepairDetails(@RequestBody List<String> ids) {
         try {
@@ -34,7 +34,7 @@ public class RepairController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deleteRepair/{id}")
     public ResponseEntity<String> deleteRepairById(@PathVariable String id) {
         try {
             repairService.deleteRepairById(id);
