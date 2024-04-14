@@ -18,6 +18,11 @@ public class RepairService {
         return repairRepository.findAll();
     }*/
 
+    //add method in controller and service to check for damaged stock
+    //that means search in inventory for stock with StateOfProduct "DAMAGED"
+    //then return the list of stock with StateOfProduct "DAMAGED"
+    // so that the user can select which stock to send for repair
+
     public List<Repair> repairDetails(List<String> ids) {
         List<Repair> repairs = repairRepository.findAllById(ids);
 
@@ -35,8 +40,12 @@ public class RepairService {
 
     public String sendForRepairs(Repair repair) {
         repairRepository.save(repair); // Save supplier to database
+        //set stock StateOfProduct to "UNDER_REPAIR"
         return "Successfully Registered";
     }
+
+    //add method in controller and service for after repair is done set stock StateOfProduct to "REPAIRED"
+    //check what other info you can give when repair is done
 
     public void deleteRepairById(String id) {
         // Check if the repair exists
