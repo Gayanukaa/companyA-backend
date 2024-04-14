@@ -32,7 +32,6 @@ public class InventoryManagerService {
         // Save or update stock
         stock.setQuantity(stock.getQuantity() + quantity);
         stocksService.addStocks(stock);
-
     }
 
     public void removeItemsFromInventory(Stocks stock, int quantity) {

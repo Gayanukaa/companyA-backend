@@ -19,7 +19,6 @@ public class InventoryManagerController {
                                     @RequestParam int quantity,
                                     @RequestParam String warehouseId) {
         inventoryManagerService.addItemsToInventory(stock, quantity, warehouseId);
-
     }
 
     @PostMapping("/removeItemsFromInventory")
@@ -28,6 +27,8 @@ public class InventoryManagerController {
                                          @RequestParam String warehouseId) {
         inventoryManagerService.removeItemsFromInventory(stock, quantity);
     }
+
+    //change these below by invoking methods of warehouse service
 
     @PostMapping("/addWarehouse")
     public Warehouse addWarehouse(@RequestBody Warehouse warehouse) {
