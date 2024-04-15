@@ -17,11 +17,12 @@ import java.util.List;
 @Document(value = "TrainingManagement")
 public class TrainingManagementModel {
 
-    @Id
-    private String id;
+
+    private String courseId;
+    private String courseName;
     private String department;
     private String skillLevel;
-    private String trainingStatus;
+
 
     @DBRef
     private List<EmployeeDetailModel> employees;
