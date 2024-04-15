@@ -22,4 +22,5 @@ public class StockAlert {
     private String itemName;
     @NotBlank
     private int reorderQuantity;
+
 }

@@ -66,6 +66,10 @@ public class StocksService{
         return stocksRepository.findByName(name);
     }
 
+    public Stocks getStockByQuantity(int i) {
+        return stocksRepository.findByQuantity(i);
+    }
+
     public List<Stocks> getStockByStateOfProduct(StateOfProduct stateOfProduct) {
         return stocksRepository.findByStateOfProduct(stateOfProduct);
     }

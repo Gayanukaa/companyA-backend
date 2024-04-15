@@ -12,6 +12,11 @@ public class SupplierService {
     @Autowired
     private SupplierRepository supplierRepository;
 
+    public Suppliers getSupplierById(String id) {
+        return supplierRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Supplier not found"));
+    }
+
     public List<Suppliers> supplierDetails(){
         return supplierRepository.findAll();
     }
