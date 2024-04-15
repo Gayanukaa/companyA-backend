@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StockAlertRepository extends MongoRepository<StockAlert, String> {
+    StockAlert findByItemId(String id);
     // Add custom repository methods if needed
 }

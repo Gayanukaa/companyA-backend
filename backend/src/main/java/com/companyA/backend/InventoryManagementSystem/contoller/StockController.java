@@ -1,7 +1,10 @@
 package com.companyA.backend.InventoryManagementSystem.contoller;
 
+import com.companyA.backend.FinanceSystem.service.FinanceSubsystemService;
 import com.companyA.backend.InventoryManagementSystem.model.StateOfProduct;
+import com.companyA.backend.InventoryManagementSystem.model.StockAlert;
 import com.companyA.backend.InventoryManagementSystem.model.Stocks;
+import com.companyA.backend.InventoryManagementSystem.service.ShipmentService;
 import com.companyA.backend.InventoryManagementSystem.service.StocksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,9 @@ import java.util.Map;
 public class StockController{
 
     private final StocksService stocksService;
+
+
+
 
     @Autowired
     public StockController(StocksService stocksService) {
@@ -82,9 +88,8 @@ public class StockController{
     }
 
     @PostMapping("/checkQuantity")
-    public ResponseEntity<Void> checkStockAndProcessAlerts() {
-        stocksService.checkStockAndProcessAlerts();
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<StockAlert>> checkStockAndProcessAlerts() {
+        return new ResponseEntity<List<StockAlert>>(stocksService.checkStockAndProcessAlerts(), HttpStatus.OK);
     }
 
 }
