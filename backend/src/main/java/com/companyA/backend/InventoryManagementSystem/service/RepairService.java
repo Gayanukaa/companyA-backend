@@ -93,7 +93,7 @@ public class RepairService {
 
         for(String itemId : itemIds){
             repairRepository.deleteById(itemId);
-            System.out.println(itemId);
+            //System.out.println(itemId);
         }
 
     }
