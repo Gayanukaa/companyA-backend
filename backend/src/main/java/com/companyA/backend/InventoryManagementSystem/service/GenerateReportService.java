@@ -5,6 +5,7 @@ import com.companyA.backend.InventoryManagementSystem.repository.GenerateReportR
 import com.companyA.backend.InventoryManagementSystem.repository.InventoryRepository;
 import com.companyA.backend.InventoryManagementSystem.repository.StocksRepository;
 import com.companyA.backend.InventoryManagementSystem.repository.WarehouseRepository;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,18 +15,25 @@ import java.util.*;
 @Service
 public class GenerateReportService {
 
-    /*
+
     @Autowired
     private StocksRepository stocksRepository;
 
     @Autowired
     private WarehouseRepository warehouseRepository;
 
-     */
+
 
     @Autowired
     private GenerateReportRepository generateReportRepository;
-    //private List<Stocks> stocksList = stocksRepository.findAll();
+
+    private List<Stocks> stocksList;
+
+    @PostConstruct
+    public void init() {
+        stocksList = stocksRepository.findAll();
+    }
+    //private final List<Stocks> stocksList = stocksRepository.findAll();
 
     //NEED TO CHECK
     /*
@@ -52,9 +60,18 @@ public class GenerateReportService {
     }
 
     public String createReport(GenerateReport report) {
+        //GenerateReport report = new GenerateReport();
+        report.setRevenue(this.findRevenue());
+        report.setMostSoldItemsByWarehouse(this.mostQuantity());
+        report.setWarehouseItemsByWarehouse(this.findItemsInWarehouse());
+        report.setWarehouses(this.findWarehouses());
+        //report.setGeneratedDateAndTime(LocalDateTime.now());
         generateReportRepository.save(report); // Save report to database
-        return "Successfully Generated";
+
+        return "Report Generated Successfully";
     }
+
+
 
     public void deleteReportId(String id) {
         // Check if the report exists
@@ -67,7 +84,7 @@ public class GenerateReportService {
         }
     }
 
-    /*
+
     //Find which item has the most quantity in each warehouse
     private Map<String, List<String>> mostQuantity() {
         //List<Stocks> stocksList = stocksRepository.findAll();
@@ -139,6 +156,6 @@ public class GenerateReportService {
     }
 
 
-    */
+
 
 }

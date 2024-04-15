@@ -9,12 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/reports")
 public class GenerateReportController {
     @Autowired
     private GenerateReportService generateReportService;
+
 
     /*
     @GetMapping("/generate")
@@ -42,14 +44,18 @@ public class GenerateReportController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerSupplier(@RequestBody GenerateReport report) {
+    public ResponseEntity<String> createReport(GenerateReport report) {
         String sup =  generateReportService.createReport(report);
         return ResponseEntity.status(HttpStatus.OK).body(sup);
     }
+
 
     @GetMapping("/details")
     public List<GenerateReport> reportDetails(){
         return generateReportService.reportDetails();
     }
+
+
+
 }
 
