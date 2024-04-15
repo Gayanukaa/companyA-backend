@@ -2,22 +2,26 @@ package com.companyA.backend.InventoryManagementSystem.model;
 
 import java.util.List;
 import java.util.Map;
+
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Document(collection = "Suppliers")
 
 public class Suppliers {
-    @Id
-    private String id;
+    @Id @NotBlank
+    private String supplierId;
+    @NotBlank
     private String companyName;
+    @NotBlank
     private String contactInfo;
-    private List<String> productList; // List to store products offered
+    @DocumentReference
+    private List<Shipment> orders;
 }

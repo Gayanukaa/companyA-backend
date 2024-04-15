@@ -1,26 +1,29 @@
 package com.companyA.backend.InventoryManagementSystem.model;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Document(collection = "Shipments")
 public class Shipment {
-    @Id
+    @Id @NotBlank
     private String id;
+    @NotBlank
     private String trackingNumber;
-    private String senderName;
-    private String recipientName;
-    private String originAddress;
-    private String destinationAddress;
-    private String status;
-    //what are you sending in the shipment
-    //best to have document reference to a list of inventory
-    //link to supplier? might need references in both classes
+    @DocumentReference @NotBlank
+    private InventoryManager sender;
+    @DocumentReference @NotBlank
+    private Suppliers suppliers;
+    @DocumentReference @NotBlank
+    private Map<Stocks,Integer> orderList;
 }
 
