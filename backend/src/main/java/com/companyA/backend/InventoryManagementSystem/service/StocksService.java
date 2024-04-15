@@ -5,6 +5,7 @@ import com.companyA.backend.InventoryManagementSystem.model.Stocks;
 import com.companyA.backend.InventoryManagementSystem.model.Warehouse;
 import com.companyA.backend.InventoryManagementSystem.repository.StocksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -19,6 +20,9 @@ public class StocksService{
 
     @Autowired
     private StocksRepository stocksRepository;
+
+    @Autowired
+    private StockAlertService stockAlertService;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -77,4 +81,18 @@ public class StocksService{
     public void updateStock(Stocks stock) {
         stocksRepository.save(stock);
     }
+
+    public void checkStockAndProcessAlerts() {
+        List<Stocks> stocks = stocksRepository.findAllByQuantityLessThanThresholdQuantity();
+        for (Stocks stock : stocks) {
+            if(stock.getQuantity() < stock.getThresholdQuantity()){
+                stockAlertService.createStockAlert(stock.getId(), stock.getName(), stock.getQuantity(), stock.getThresholdQuantity());
+            }
+        }
+        /*
+        mongoTemplate.executeQuery(Query.query(Criteria.where("quantity").lt("thresholdQuantity")), Stocks.class, (stock) -> {
+            stockAlertService.createStockAlert(stock.getString("id"), stock.getString("name"), stock.getInteger("quantity"), stock.getInteger("thresholdQuantity"));
+        });*/
+    }
+
 }

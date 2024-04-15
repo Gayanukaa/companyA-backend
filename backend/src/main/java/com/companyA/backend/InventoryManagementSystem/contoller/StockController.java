@@ -49,6 +49,8 @@ public class StockController{
             case "name":
                 stock = stocksService.getStockByName(value);
                 break;
+            case "quantity":
+                stock = stocksService.getStockByQuantity(Integer.parseInt(value));
             default:
                 return ResponseEntity.badRequest().build(); // Return a 400 status code for unknown attributes
         }
@@ -77,6 +79,12 @@ public class StockController{
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found!");
         }
         stocksService.updateStock(stock);
+    }
+
+    @PostMapping("/checkQuantity")
+    public ResponseEntity<Void> checkStockAndProcessAlerts() {
+        stocksService.checkStockAndProcessAlerts();
+        return ResponseEntity.ok().build();
     }
 
 }

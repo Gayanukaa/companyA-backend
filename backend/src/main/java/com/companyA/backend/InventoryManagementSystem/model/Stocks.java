@@ -1,10 +1,7 @@
 package com.companyA.backend.InventoryManagementSystem.model;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,6 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Getter
+@Setter
 @Document(collection = "inventory")
 public class Stocks extends Inventory {
     @NotBlank
