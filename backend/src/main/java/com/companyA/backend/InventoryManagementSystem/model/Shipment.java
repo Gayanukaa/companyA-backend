@@ -15,6 +15,7 @@ import java.util.StringTokenizer;
 @NoArgsConstructor
 @Document(collection = "Shipments")
 public class Shipment {
+
     @Id @NotBlank
     private String id;
     @NotBlank
@@ -26,4 +27,3 @@ public class Shipment {
     @DocumentReference @NotBlank
     private Map<Stocks,Integer> orderList;
 }
-

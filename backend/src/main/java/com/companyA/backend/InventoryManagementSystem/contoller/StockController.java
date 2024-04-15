@@ -16,8 +16,12 @@ import java.util.Map;
 @RequestMapping("/api/v1/stock")
 public class StockController{
 
+    private final StocksService stocksService;
+
     @Autowired
-    private StocksService stocksService;
+    public StockController(StocksService stocksService) {
+        this.stocksService = stocksService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Stocks>> getAllStocks() {
