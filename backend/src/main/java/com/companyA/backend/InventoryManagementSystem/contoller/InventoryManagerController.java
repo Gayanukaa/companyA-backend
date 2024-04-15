@@ -15,17 +15,13 @@ public class InventoryManagerController {
     private InventoryManagerService inventoryManagerService;
 
     @PostMapping("/addItemsToInventory")
-    public void addItemsToInventory(@RequestBody Stocks stock,
-                                    @RequestParam int quantity,
-                                    @RequestParam String warehouseId) {
-        inventoryManagerService.addItemsToInventory(stock, quantity, warehouseId);
+    public void addItemsToInventory(@RequestParam String stockId, @RequestParam int quantity) {
+        inventoryManagerService.addItemsToInventory(stockId, quantity);
     }
 
     @PostMapping("/removeItemsFromInventory")
-    public void removeItemsFromInventory(@RequestBody Stocks stock,
-                                         @RequestParam int quantity,
-                                         @RequestParam String warehouseId) {
-        inventoryManagerService.removeItemsFromInventory(stock, quantity);
+    public void removeItemsFromInventory(@RequestParam String stockId, @RequestParam int quantity) {
+        inventoryManagerService.removeItemsFromInventory(stockId, quantity);
     }
 
     //change these below by invoking methods of warehouse service
