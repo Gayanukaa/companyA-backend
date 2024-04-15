@@ -34,20 +34,18 @@ public class ProductionLineController {
         // Get all production data
         List<ProductionData> productionDataList = productionDataService.getAllProductionData();
 
-        if (!productionDataList.isEmpty()) {
-            // Filter production data by lineId
-            List<ProductionData> reports = productionDataList.stream()
-                    .filter(data -> data.getLineId().equals(lineId)) // Filter by lineId
-                    .collect(Collectors.toList());
 
-            if (!reports.isEmpty()) {
-                // Return production data if found
-                return new ResponseEntity<>(reports, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>("No data found for the production line.", HttpStatus.BAD_REQUEST);
-            }
+        // Filter production data by lineId
+        List<ProductionData> reports = productionDataList.stream()
+                .filter(data -> data.getLineId().equals(lineId)) // Filter by lineId
+                .collect(Collectors.toList());
+
+        if (!reports.isEmpty()) {
+            // Return production data if found
+            return new ResponseEntity<>(reports, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Invalid production line ID or insufficient permissions.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("No data found for the production line.", HttpStatus.BAD_REQUEST);
         }
+
     }
 }
