@@ -32,6 +32,11 @@ public class InventoryManagerService {
     @Autowired
     private InventoryManagerRepository inventoryManagerRepository;
 
+    public InventoryManager getInventoryManagerById(String id) {
+        return inventoryManagerRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Inventory Manager not found"));
+    }
+
     public List<InventoryManager> inventoryManagerDetails(){
         return inventoryManagerRepository.findAll();
     }

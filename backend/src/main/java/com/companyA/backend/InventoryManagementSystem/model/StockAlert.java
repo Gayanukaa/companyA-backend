@@ -8,18 +8,19 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "Repair")
+@NoArgsConstructor
+@Document(collection = "StockAlert")
 
-public class SendForRepair {
+public class StockAlert {
+
     @Id @NotBlank
-    private String id;
+    private String alertId;
     @NotBlank
-    private String inventoryId;
+    private String itemId;
     @NotBlank
-    private String name;
+    private String itemName;
     @NotBlank
-    private int quantity;
+    private int reorderQuantity;
 
 }
