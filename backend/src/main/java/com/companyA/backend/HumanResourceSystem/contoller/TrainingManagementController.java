@@ -1,5 +1,6 @@
 package com.companyA.backend.HumanResourceSystem.contoller;
 
+import com.companyA.backend.HumanResourceSystem.model.EmployeeDetailModel;
 import com.companyA.backend.HumanResourceSystem.model.TrainingManagementModel;
 import com.companyA.backend.HumanResourceSystem.repository.TrainingManagementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,27 @@ public class TrainingManagementController {
     }
 
     // Create new record
+    @PostMapping("/Create")
+    public ResponseEntity<TrainingManagementModel> insertTrainingDetails(@RequestBody TrainingManagementModel trainingManagementModel) {
+        TrainingManagementModel savedTrainee = trainingManagementRepository.save(trainingManagementModel);
+        return ResponseEntity.ok(savedTrainee);
+
+    }
 
 
     // Delete existing record
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTrainingDetails(@PathVariable String id) {
+        TrainingManagementModel existingTrainee = trainingManagementRepository.findById(id).orElse(null);
+        if (existingTrainee == null) {
+            return ResponseEntity.notFound().build();
+        }
+        else{
+            trainingManagementRepository.delete(existingTrainee);
+            return ResponseEntity.ok("Successfully deleted");
+
+        }
+
+    }
 
 }
