@@ -18,10 +18,11 @@ import java.util.Map;
 public class GenerateReport {
     @Id
     private String reportId;
+
     private Map<String, List<String>> mostSoldItemsByWarehouse;
     private Map<String, Double> revenue;
-
-    private LocalDateTime generatedDateAndTime;
+    private Map<String, List<String>> warehouseItemsByWarehouse;
+    //private LocalDateTime generatedDateAndTime;
     private Map<String, String> warehouses;
 
 

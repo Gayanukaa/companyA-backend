@@ -22,16 +22,14 @@ public class GenerateReportController {
         return generateReportService.generateReport();
     } */
 
-    @PostMapping("/create")
-    public ResponseEntity<String> registerSupplier(@RequestBody GenerateReport report) {
-        String repo =  generateReportService.createReport(report);
-        return ResponseEntity.status(HttpStatus.OK).body(repo);
-    }
 
-    @GetMapping("/details")
-    public List<GenerateReport> reportDetails(){
-        return generateReportService.reportDetails();
-    }
+
+    //@GetMapping("/details")
+    //public List<GenerateReport> reportDetails(){
+    //return generateReportService.reportDetails();
+
+
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteReportById(@PathVariable String id) {
@@ -43,5 +41,15 @@ public class GenerateReportController {
         }
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<String> registerSupplier(@RequestBody GenerateReport report) {
+        String sup =  generateReportService.createReport(report);
+        return ResponseEntity.status(HttpStatus.OK).body(sup);
+    }
 
+    @GetMapping("/details")
+    public List<GenerateReport> reportDetails(){
+        return generateReportService.reportDetails();
+    }
 }
+

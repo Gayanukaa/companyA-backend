@@ -14,15 +14,18 @@ import java.util.*;
 @Service
 public class GenerateReportService {
 
+    /*
     @Autowired
     private StocksRepository stocksRepository;
 
     @Autowired
     private WarehouseRepository warehouseRepository;
 
+     */
+
     @Autowired
     private GenerateReportRepository generateReportRepository;
-    private List<Stocks> stocksList = stocksRepository.findAll();
+    //private List<Stocks> stocksList = stocksRepository.findAll();
 
     //NEED TO CHECK
     /*
@@ -64,6 +67,7 @@ public class GenerateReportService {
         }
     }
 
+    /*
     //Find which item has the most quantity in each warehouse
     private Map<String, List<String>> mostQuantity() {
         //List<Stocks> stocksList = stocksRepository.findAll();
@@ -135,6 +139,6 @@ public class GenerateReportService {
     }
 
 
-
+    */
 
 }
