@@ -17,10 +17,9 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @GetMapping("/getEmployees")
-    public ResponseEntity<List<EmployeeSalary>> getAllEmployees() {
-
-        return new ResponseEntity<List<EmployeeSalary>>(employeeService.getAllEmployee(), HttpStatus.OK);
+    @GetMapping("/getEmployeeSalary")
+    public List<EmployeeSalary> getAllEmployees() {
+        return employeeService.getAllEmployee();
     }
 
     @PostMapping("/addEmployee")
