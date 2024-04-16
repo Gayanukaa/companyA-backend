@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/suppliers")
+@RequestMapping("/api/v1/suppliers")
 public class SupplierController {
 
     @Autowired
     private SupplierService supplierService;
 
-    @PostMapping("/register")
+    @PostMapping("/registerSupplier")
     public ResponseEntity<String> registerSupplier(@RequestBody Suppliers supplier) {
         String sup =  supplierService.registerSupplier(supplier);
         return ResponseEntity.status(HttpStatus.OK).body(sup);
     }
 
-    @GetMapping("/details")
+    @GetMapping("/supplierDetails")
     public List<Suppliers> supplierDetails(){
         return supplierService.supplierDetails();
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deleteById/{id}")
     public ResponseEntity<String> deleteSupplierById(@PathVariable String id) {
         try {
             supplierService.deleteSupplierById(id);

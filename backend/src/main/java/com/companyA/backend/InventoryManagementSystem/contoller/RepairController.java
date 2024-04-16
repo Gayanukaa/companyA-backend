@@ -10,49 +10,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/repair")
+@RequestMapping("/api/v1/repair")
 public class RepairController {
 
     @Autowired
     private RepairService repairService;
 
-
-    /////////////////////////////////////////////////////////////////
     //Give ids of the items with stateOfProduct = "DAMAGED"
 
     //Ok
-    @GetMapping("/damaged-products")
+    @GetMapping("/getDamagedItems")
     public ResponseEntity<List<String>> getIdsOfDamagedProducts() {
         List<String> damagedProductIds = repairService.getIdsOfDamagedProducts();
         return ResponseEntity.ok(damagedProductIds);
     }
 
-    //////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////
+
     //StateOfProduct will be updated as "UNDER_REPAIR"("Inventory" collection)
     //Send the details of relevant items to the "Repair" collection
-
-    @GetMapping("/send-for-repair")
+    @GetMapping("/sendForRepairs")
     public ResponseEntity<String> sendItemsForRepair(@RequestBody List<String> itemIds) {
         repairService.sendItemsForRepair(itemIds);
         return ResponseEntity.ok("Items sent for repairs successfully.");
     }
 
-    ////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
 
-    //Can directly add an item to repair collection even if that relevant item is not exist in the inventory collection
-    //This might be not useful.Please check! //Wadk nh wge nm ain krla danna
-    @PostMapping("/send-for-repair-collection")
-    public ResponseEntity<String> sendForRepairs(@RequestBody Repair repair) {
-        String sup =  repairService.sendForRepairs(repair);
-        return ResponseEntity.status(HttpStatus.OK).body(sup);
-    }
-
-    //When you give an repairIds list,this will give you the item details that is "UNDER_REPAIR"
-    //Even if a single id in the list isn't exist in the "Repair" collection, "wrong product id" message will appear
-
-    //Ok
     @GetMapping("/checkRepairApi")
     public ResponseEntity<Object> getRepairDetails(@RequestBody List<String> ids) {
         try {
@@ -64,11 +46,10 @@ public class RepairController {
     }
 
     //Can directly delete an item to repair collection
-    //But this method doesn't update the inventory  //please check
-    //Inventory eke wenas wenne nh stateOfProduct ek.Eka digtm repairs wlt ywwa kyla thiyenw.Eth repair eken delete krhaki
-    //Mekath wdk nttm ahk krnn check krla
-    //Ok
-    @DeleteMapping("/delete/{id}")
+    //And also this method update the inventory back to "DAMAGED"
+    //Commented out due to complexity
+
+    /*@DeleteMapping("/deleteById/{id}")
     public ResponseEntity<String> deleteRepairById(@PathVariable String id) {
         try {
             repairService.deleteRepairById(id);
@@ -76,13 +57,11 @@ public class RepairController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-    }
+    }*/
 
-    ///////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////
 
-    //provide a list of repair Ids
-    @GetMapping("repaired-items")
+    //You should provide a list of repair Ids
+    @GetMapping("/itemsRepairDone")
     public ResponseEntity<String> updateRepairedItems(@RequestBody List<String> itemIds) {
         repairService.updateRepairedItems(itemIds);
         return ResponseEntity.ok("Items has been repaired");

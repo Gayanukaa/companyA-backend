@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -15,10 +16,6 @@ public class RepairService {
 
     @Autowired
     private RepairRepository repairRepository;
-
-
-    ////////////////////////////////
-
     @Autowired
     private InventoryService inventoryService;
     @Autowired
@@ -36,7 +33,6 @@ public class RepairService {
         for (Stocks item : itemsToRepair) {
             item.setStateOfProduct(StateOfProduct.UNDER_REPAIR);
         }
-        System.out.println(itemsToRepair.size());
         stocksRepository.saveAll(itemsToRepair);
 
         // Save selected data from itemsToRepair to repair collection
@@ -64,18 +60,31 @@ public class RepairService {
         return "Successfully Registered";
     }
 
-    public void deleteRepairById(String id) {
+    //Commented out this scenario due to the complexity.
+    //This one is working correctly
+
+    /*public void deleteRepairById(String id) {
         // Check if the repair exists
         if (repairRepository.existsById(id)) {
-            // If the repair exists, delete it
+            // If the repair exists, delete it.Additionally, update the stateOfProduct back to "DAMAGED"(Because the item isn't repaired.But it has removed from repairs)
+            Optional<Repair> repairOptional = repairRepository.findById(id);
+            String inventoryId = repairOptional.map(Repair::getInventoryId).orElse(null);
+            Optional<Stocks> itemsToRepair = stocksRepository.findById(inventoryId);
+            Stocks modifiedRepair = itemsToRepair.map(repair -> {
+                repair.setStateOfProduct(StateOfProduct.DAMAGED);
+                return repair;
+            }).orElse(null);
+            stocksRepository.save(modifiedRepair);
             repairRepository.deleteById(id);
+
         } else {
             // If the repair does not exist, throw an exception
             throw new IllegalArgumentException("Repair with ID " + id + " does not exist.");
         }
     }
+    */
 
-    //You should give a list of repairIds
+    //You should give a list of repairIds-----Remember
     public void updateRepairedItems(List<String> itemIds) {
         //repairRepository.deleteAllByIdIn(itemIds);
         // Update stateOfProduct to "REPAIRED" for items in inventory
