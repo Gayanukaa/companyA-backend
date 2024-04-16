@@ -28,7 +28,6 @@ public class RepairService {
         return inventoryService.getIdsOfDamagedProducts();
     }
 
-
     public void sendItemsForRepair(List<String> itemIds) {
         // Update stateOfProduct to "UNDER_REPAIR" for items in inventory
         //Done
@@ -43,6 +42,7 @@ public class RepairService {
         // Save selected data from itemsToRepair to repair collection
         saveSelectedItemsToRepairCollection(itemsToRepair);
     }
+
 
     public List<Repair> repairDetails(List<String> ids) {
         List<Repair> repairs = repairRepository.findAllById(ids);
@@ -75,16 +75,27 @@ public class RepairService {
         }
     }
 
+    //You should give a list of repairIds
     public void updateRepairedItems(List<String> itemIds) {
+        //repairRepository.deleteAllByIdIn(itemIds);
         // Update stateOfProduct to "REPAIRED" for items in inventory
-        List<Stocks> itemsToRemove = stocksRepository.findAllById(itemIds);
-        for (Stocks item : itemsToRemove) {
+        List<Repair> itemsToRemove = repairRepository.findAllById(itemIds);
+        List<String> inventoryIds = new ArrayList<>();
+
+        for (Repair item : itemsToRemove) {
+            inventoryIds.add(item.getInventoryId());
+        }
+        List<Stocks> idsToRemove = stocksRepository.findAllById(inventoryIds);
+        for (Stocks item : idsToRemove) {
             item.setStateOfProduct(StateOfProduct.REPAIRED);
         }
-        stocksRepository.saveAll(itemsToRemove);
+        stocksRepository.saveAll(idsToRemove);
 
+        for(String itemId : itemIds){
+            repairRepository.deleteById(itemId);
+            //System.out.println(itemId);
+        }
 
-        //sendForRepairService.removeSelectedItemsFromRepairCollection(itemIds);
     }
     public void saveSelectedItemsToRepairCollection(List<Stocks> itemsToRepair) {
         List<Repair> selectedDataList = new ArrayList<>();
@@ -99,20 +110,8 @@ public class RepairService {
         }
         repairRepository.saveAll(selectedDataList);
     }
-    ////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
-
-        /*public void removeSelectedItemsFromRepairCollection(List <String> idsToRemove) {
-            List<String> selectedDataList = new ArrayList<>();
-            for (String item : idsToRemove) {
-                Repair selectedData = new Repair();
-                selectedDataList.add(selectedData.getId());
-                System.out.println(selectedData.getInventoryId());
-            }
-            repairRepository.deleteAllById(selectedDataList);
-            //System.out.println(selectedDataList.get(0));
-
-        }*/
 
 }
+
+
 

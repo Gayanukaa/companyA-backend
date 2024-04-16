@@ -81,6 +81,7 @@ public class RepairController {
     ///////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////
 
+    //provide a list of repair Ids
     @GetMapping("repaired-items")
     public ResponseEntity<String> updateRepairedItems(@RequestBody List<String> itemIds) {
         repairService.updateRepairedItems(itemIds);

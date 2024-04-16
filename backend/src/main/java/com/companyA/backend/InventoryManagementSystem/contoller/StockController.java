@@ -1,10 +1,9 @@
 package com.companyA.backend.InventoryManagementSystem.contoller;
 
-import com.companyA.backend.FinanceSystem.service.FinanceSubsystemService;
 import com.companyA.backend.InventoryManagementSystem.model.StateOfProduct;
 import com.companyA.backend.InventoryManagementSystem.model.StockAlert;
 import com.companyA.backend.InventoryManagementSystem.model.Stocks;
-import com.companyA.backend.InventoryManagementSystem.service.ShipmentService;
+import com.companyA.backend.InventoryManagementSystem.service.StockAlertService;
 import com.companyA.backend.InventoryManagementSystem.service.StocksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,12 +20,12 @@ public class StockController{
 
     private final StocksService stocksService;
 
-
-
+    private final StockAlertService stockAlertService;
 
     @Autowired
-    public StockController(StocksService stocksService) {
+    public StockController(StocksService stocksService, StockAlertService stockAlertService) {
         this.stocksService = stocksService;
+        this.stockAlertService = stockAlertService;
     }
 
     @GetMapping
@@ -67,6 +66,17 @@ public class StockController{
         }
     }
 
+    @PutMapping("/{id}/{attribute}/{value}")
+    public ResponseEntity<Stocks> updateStockByAttribute(@PathVariable String id, @PathVariable String attribute, @PathVariable String value) {
+        Stocks stock = stocksService.getStockById(id);
+        if (stock != null) {
+            stocksService.updateStockByAttribute(stock, attribute, value);
+            return ResponseEntity.ok(stock);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("/stateofproduct/{value}")
     public ResponseEntity <List<Stocks>> getStockByStateOfProduct(@PathVariable String value) {
         StateOfProduct valueNew = StateOfProduct.valueOf(value);
@@ -89,7 +99,7 @@ public class StockController{
 
     @PostMapping("/checkQuantity")
     public ResponseEntity<List<StockAlert>> checkStockAndProcessAlerts() {
-        return new ResponseEntity<List<StockAlert>>(stocksService.checkStockAndProcessAlerts(), HttpStatus.OK);
+        return new ResponseEntity<List<StockAlert>>(stockAlertService.checkStockAndProcessAlerts(), HttpStatus.OK);
     }
 
 }

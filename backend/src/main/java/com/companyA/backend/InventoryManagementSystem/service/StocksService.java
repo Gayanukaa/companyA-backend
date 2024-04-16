@@ -1,11 +1,8 @@
 package com.companyA.backend.InventoryManagementSystem.service;
 
-import com.companyA.backend.InventoryManagementSystem.model.StateOfProduct;
-import com.companyA.backend.InventoryManagementSystem.model.Stocks;
-import com.companyA.backend.InventoryManagementSystem.model.Warehouse;
+import com.companyA.backend.InventoryManagementSystem.model.*;
 import com.companyA.backend.InventoryManagementSystem.repository.StocksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -22,9 +19,6 @@ public class StocksService{
     private StocksRepository stocksRepository;
 
     @Autowired
-    private StockAlertService stockAlertService;
-
-    @Autowired
     private MongoTemplate mongoTemplate;
 
     public List<Stocks> allStocks() {
@@ -32,6 +26,15 @@ public class StocksService{
     }
 
     public Stocks addStocks(Stocks stocks) {
+        if(!stocksRepository.findAll().isEmpty()) {
+            String lastId = stocksRepository.findAll().get(stocksRepository.findAll().size()-1).getId();
+            int id = Integer.parseInt(lastId.substring(1));
+            id++;
+            stocks.setId("I"+String.format("%04d", id));
+        }
+        else {
+            stocks.setId("S0001");
+        }
         Query query = new Query(Criteria.where("warehouseId").is(stocks.getWarehouseId()).and("inventoryList.0").is(null));
         boolean hasNullAtFirstIndex = mongoTemplate.exists(query, Warehouse.class);
 
@@ -86,17 +89,30 @@ public class StocksService{
         stocksRepository.save(stock);
     }
 
-    public void checkStockAndProcessAlerts() {
-        List<Stocks> stocks = stocksRepository.findAllByQuantityLessThanThresholdQuantity();
-        for (Stocks stock : stocks) {
-            if(stock.getQuantity() < stock.getThresholdQuantity()){
-                stockAlertService.createStockAlert(stock.getId(), stock.getName(), stock.getQuantity(), stock.getThresholdQuantity());
-            }
+    public void updateStockByAttribute(Stocks stock, String attribute, String value) {
+        switch (attribute) {
+            case "name":
+                stock.setName(value);
+                break;
+            case "quantity":
+                stock.setQuantity(Integer.parseInt(value));
+                break;
+            case "weight":
+                stock.setWeight(Integer.parseInt(value));
+                break;
+            case "size":
+                stock.setSize(Integer.parseInt(value));
+                break;
+            case "reorderQuantity":
+                stock.setReorderQuantity(Integer.parseInt(value));
+                break;
+            case "stateOfProduct":
+                stock.setStateOfProduct(StateOfProduct.valueOf(value));
+                break;
+            case "inventoryType":
+                stock.setInventoryType(InventoryType.valueOf(value));
+                break;
         }
-        /*
-        mongoTemplate.executeQuery(Query.query(Criteria.where("quantity").lt("thresholdQuantity")), Stocks.class, (stock) -> {
-            stockAlertService.createStockAlert(stock.getString("id"), stock.getString("name"), stock.getInteger("quantity"), stock.getInteger("thresholdQuantity"));
-        });*/
+        stocksRepository.save(stock);
     }
-
 }

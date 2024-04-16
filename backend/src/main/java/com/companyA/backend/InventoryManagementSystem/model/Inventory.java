@@ -18,8 +18,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "inventory")
 public abstract class Inventory {
 
-    @Id @NotBlank
+    @Id
     private String id;
+    @NotBlank
     private String warehouseId;
     @NotBlank
     private String name;
