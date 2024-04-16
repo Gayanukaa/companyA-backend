@@ -15,15 +15,9 @@ import java.util.List;
 public class ShipmentController {
 
     @Autowired
-    private final ShipmentService shipmentService;
+    private  ShipmentService shipmentService;
     @Autowired
-    private final FinanceSubsystemService financeSubsystemService;
-
-    @Autowired
-    public ShipmentController(ShipmentService shipmentService, FinanceSubsystemService financeSubsystemService) {
-        this.shipmentService = shipmentService;
-        this.financeSubsystemService = financeSubsystemService;
-    }
+    private  FinanceSubsystemService financeSubsystemService;
 
     @GetMapping("/getShipments")
     public ResponseEntity<List<Shipment>> getAllShipments() {
@@ -55,9 +49,6 @@ public class ShipmentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
-    //when creating a shipment should have a map of what is the stock being brought (so stock id and quantity)
-    //so have to create new attribute in shipment model to store stock id and quantity. create a map or document reference
 
     @DeleteMapping("/deleteShipment/{id}")
     public ResponseEntity<String> deleteShipment(@PathVariable String id) {

@@ -89,4 +89,30 @@ public class StocksService{
         stocksRepository.save(stock);
     }
 
+    public void updateStockByAttribute(Stocks stock, String attribute, String value) {
+        switch (attribute) {
+            case "name":
+                stock.setName(value);
+                break;
+            case "quantity":
+                stock.setQuantity(Integer.parseInt(value));
+                break;
+            case "weight":
+                stock.setWeight(Integer.parseInt(value));
+                break;
+            case "size":
+                stock.setSize(Integer.parseInt(value));
+                break;
+            case "reorderQuantity":
+                stock.setReorderQuantity(Integer.parseInt(value));
+                break;
+            case "stateOfProduct":
+                stock.setStateOfProduct(StateOfProduct.valueOf(value));
+                break;
+            case "inventoryType":
+                stock.setInventoryType(InventoryType.valueOf(value));
+                break;
+        }
+        stocksRepository.save(stock);
+    }
 }

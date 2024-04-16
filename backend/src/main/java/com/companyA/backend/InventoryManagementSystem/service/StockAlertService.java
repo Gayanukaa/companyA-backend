@@ -1,6 +1,6 @@
 package com.companyA.backend.InventoryManagementSystem.service;
 
-import com.companyA.backend.FinanceSystem.service.FinanceSubsystemService;
+//import com.companyA.backend.FinanceSystem.service.FinanceSubsystemService;
 import com.companyA.backend.InventoryManagementSystem.model.StockAlert;
 import com.companyA.backend.InventoryManagementSystem.model.Stocks;
 import com.companyA.backend.InventoryManagementSystem.repository.StockAlertRepository;
@@ -17,7 +17,7 @@ public class StockAlertService {
     @Autowired
     private StockAlertRepository stockAlertRepository;
 
-   /* @Autowired
+    /* @Autowired
     private FinanceSubsystemService financeSubsystemService;
 
     @Autowired

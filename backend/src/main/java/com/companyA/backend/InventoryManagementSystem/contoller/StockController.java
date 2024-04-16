@@ -1,10 +1,8 @@
 package com.companyA.backend.InventoryManagementSystem.contoller;
 
-import com.companyA.backend.FinanceSystem.service.FinanceSubsystemService;
 import com.companyA.backend.InventoryManagementSystem.model.StateOfProduct;
 import com.companyA.backend.InventoryManagementSystem.model.StockAlert;
 import com.companyA.backend.InventoryManagementSystem.model.Stocks;
-import com.companyA.backend.InventoryManagementSystem.service.ShipmentService;
 import com.companyA.backend.InventoryManagementSystem.service.StockAlertService;
 import com.companyA.backend.InventoryManagementSystem.service.StocksService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +60,17 @@ public class StockController{
                 return ResponseEntity.badRequest().build(); // Return a 400 status code for unknown attributes
         }
         if (stock != null) {
+            return ResponseEntity.ok(stock);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}/{attribute}/{value}")
+    public ResponseEntity<Stocks> updateStockByAttribute(@PathVariable String id, @PathVariable String attribute, @PathVariable String value) {
+        Stocks stock = stocksService.getStockById(id);
+        if (stock != null) {
+            stocksService.updateStockByAttribute(stock, attribute, value);
             return ResponseEntity.ok(stock);
         } else {
             return ResponseEntity.notFound().build();
