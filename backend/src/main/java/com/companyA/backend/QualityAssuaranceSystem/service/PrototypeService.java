@@ -5,6 +5,7 @@ import com.companyA.backend.QualityAssuaranceSystem.model.Report;
 import com.companyA.backend.QualityAssuaranceSystem.model.Sample;
 import com.companyA.backend.QualityAssuaranceSystem.model.Test;
 import com.companyA.backend.QualityAssuaranceSystem.repository.PrototypeRepository;
+import com.companyA.backend.QualityAssuaranceSystem.repository.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,8 @@ public class PrototypeService {
 
     @Autowired
     private PrototypeRepository prototypeRepository;
+    @Autowired
+    private TestRepository testRepository;
 
     public List<Prototype> getAllPrototypes() {
         return prototypeRepository.findAll();
@@ -49,8 +52,10 @@ public class PrototypeService {
 
     public String testPrototype(Prototype prototype,Test test){
         String tempid = prototype.getId();
+        String temptestid = test.getTestId();
         Optional<Prototype> AvalilablePrototype = prototypeRepository.findById(tempid);
-        if (AvalilablePrototype.isPresent()) {
+        Optional<Test> AvalilableTest = testRepository.findById(temptestid);
+        if (AvalilablePrototype.isPresent()&&AvalilableTest.isPresent()) {
             prototype.setAllocatedTest(test);
             prototypeRepository.save(prototype);
             return "The prototype with id: "+tempid +" is subjected to test:"+ test.getTestId();

@@ -30,8 +30,8 @@ public class PrototypeController {
         return prototypeService.getAllPrototypes();
     }
 
-    @GetMapping("/getPrototype/{id}")   // could not check with postman
-    public Optional<Prototype> getPrototypeById(@PathVariable String id) {
+    @GetMapping("/getPrototype/{id}")
+    public Optional<Prototype> getPrototypeById(@RequestParam("id") String id) {
         return prototypeService.getPrototypeById(id);
     }
 
@@ -41,7 +41,7 @@ public class PrototypeController {
 
     }
 
-    @PostMapping("/inspect")
+    @PostMapping("/inspect")    // Check Api
     @ResponseStatus(HttpStatus.CREATED)
     public String testNewPrototype(@RequestBody Prototype prototype, @RequestBody Test test) {
         String response = prototypeService.testPrototype(prototype, test); // prototype ekt find by id eka dla aye check krnna
