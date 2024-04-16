@@ -21,15 +21,29 @@ public class EmployeeController {
     public List<EmployeeSalary> getAllEmployees() {
         return employeeService.getAllEmployee();
     }
+    @GetMapping("/getEmployeeSalary/{employeeId}")
+    public EmployeeSalary getEmployeeSalary(@PathVariable int employeeId) {
+        return employeeService.getEmployee(employeeId);
+    }
 
     @PostMapping("/addEmployee")
-    public ResponseEntity<Map<String, String>> setUser(@RequestBody EmployeeSalary employee) {
+    public ResponseEntity<Map<String, String>> setEmployeeSalary(@RequestBody EmployeeSalary employee) {
         employeeService.addEmployee(employee);
 
         Map<String, String> response = new HashMap<>();
-        response.put("message", "Employee is Successfully Added");
+        response.put("message", "Employee Salary is Successfully Added");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @PutMapping("/updateSalary")
+    public ResponseEntity<Map<String, String>> updateEmployeeSalary(@RequestBody EmployeeSalary employeeSalary){
+        employeeService.updateEmployee(employeeSalary);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Employee Salary is Successfully Updated");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 
 
 }
