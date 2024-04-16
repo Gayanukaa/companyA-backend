@@ -17,12 +17,15 @@ public class RepairService {
     @Autowired
     private RepairRepository repairRepository;
     @Autowired
-    private InventoryService inventoryService;
-    @Autowired
     private StocksRepository stocksRepository;
 
     public List<String> getIdsOfDamagedProducts() {
-        return inventoryService.getIdsOfDamagedProducts();
+        List<Stocks> damagedStock = stocksRepository.findByStateOfProduct(StateOfProduct.DAMAGED);
+        List<String> damagedProductIds = new ArrayList<>();
+        for (Stocks stock : damagedStock) {
+            damagedProductIds.add(stock.getId());
+        }
+        return damagedProductIds;
     }
 
     public void sendItemsForRepair(List<String> itemIds) {
