@@ -1,19 +1,42 @@
 package com.companyA.backend.InventoryManagementSystem.contoller;
 
-import com.companyA.backend.InventoryManagementSystem.model.Stocks;
-import com.companyA.backend.InventoryManagementSystem.model.Warehouse;
+import com.companyA.backend.InventoryManagementSystem.model.*;
 import com.companyA.backend.InventoryManagementSystem.service.InventoryManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/v1/inventoryManager")
+@RequestMapping("/inventoryManager")
 public class InventoryManagerController {
     @Autowired
     private InventoryManagerService inventoryManagerService;
 
+    @PostMapping("/registerManager")
+    public ResponseEntity<String> registerInventoryManager(@RequestBody InventoryManager inventoryManager) {
+        String message =  inventoryManagerService.registerInventoryManager(inventoryManager);
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+
+    @GetMapping("/details")
+        public List<InventoryManager> inventoryManagerDetails(){
+        return inventoryManagerService.inventoryManagerDetais();
+    }
+
+
+    @DeleteMapping("/deleteManager/{id}")
+    public ResponseEntity<String> deleteInventoryManagerById(@PathVariable String id) {
+        try {
+            inventoryManagerService.deleteInventoryManagerById(id);
+            return ResponseEntity.ok("Inventory Manager deleted successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+/*
     @PostMapping("/addItemsToInventory")
     public void addItemsToInventory(@RequestParam String stockId, @RequestParam int quantity) {
         inventoryManagerService.addItemsToInventory(stockId, quantity);
@@ -40,4 +63,5 @@ public class InventoryManagerController {
     public void updateWarehouse(@RequestBody Warehouse warehouse) {
         inventoryManagerService.updateWarehouse(warehouse);
     }
+    */
 }

@@ -1,12 +1,12 @@
 package com.companyA.backend.InventoryManagementSystem.service;
 
 
-import com.companyA.backend.InventoryManagementSystem.model.InventoryManager;
-import com.companyA.backend.InventoryManagementSystem.model.Stocks;
-import com.companyA.backend.InventoryManagementSystem.model.Suppliers;
-import com.companyA.backend.InventoryManagementSystem.model.Warehouse;
+import com.companyA.backend.InventoryManagementSystem.model.*;
 import com.companyA.backend.InventoryManagementSystem.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,20 +31,40 @@ public class InventoryManagerService {
 
     @Autowired
     private InventoryManagerRepository inventoryManagerRepository;
-
+/*
     public InventoryManager getInventoryManagerById(String id) {
         return inventoryManagerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Inventory Manager not found"));
     }
+    */
 
-    public List<InventoryManager> inventoryManagerDetails(){
+    public List<InventoryManager> inventoryManagerDetais(){
         return inventoryManagerRepository.findAll();
     }
 
+    /*
     public String registerInventoryManager(InventoryManager inventoryManager) {
         inventoryManagerRepository.save(inventoryManager);
         return "Successfully Registered";
     }
+
+    */
+
+    public String registerInventoryManager(InventoryManager inventoryManager) {
+        if(!inventoryManagerRepository.findAll().isEmpty()) {
+            String lastId = inventoryManagerRepository.findAll().get(inventoryManagerRepository.findAll().size()-1).getManagerId();
+            int id = Integer.parseInt(lastId.substring(1));
+            id++;
+            inventoryManager.setManagerId("I"+String.format("%04d", id));
+        }
+        else {
+            inventoryManager.setManagerId("M0001");
+        }
+        inventoryManagerRepository.save(inventoryManager);
+        return "Successfully Registered";
+    }
+
+
 
     public void deleteInventoryManagerById(String id) {
         // Check if the Inventory Manager with ID exists
@@ -57,6 +77,7 @@ public class InventoryManagerService {
         }
     }
 
+/*
     // Method to add items to inventory
     public void addItemsToInventory(String stockId, int quantity) {
         // Retrieve the stock object by its ID
@@ -74,7 +95,8 @@ public class InventoryManagerService {
             throw new IllegalArgumentException("Stock with ID " + stockId + " not found");
         }
     }
-
+    */
+/*
     // Method to remove items from inventory
     public void removeItemsFromInventory(String stockId, int quantity) {
         // Retrieve the stock object by its ID
@@ -98,6 +120,7 @@ public class InventoryManagerService {
             throw new IllegalArgumentException("Stock with ID " + stockId + " not found");
         }
     }
+    */
 
     //OLD METHODS NEED TO CHECK AND DELETE
     /*
@@ -118,27 +141,35 @@ public class InventoryManagerService {
         stockRepository.save(stock);
     }
     */
+    /*
     public Warehouse addWarehouse(Warehouse warehouse) {
         return warehouseRepository.save(warehouse);
     }
+    */
 
+/*
     public String deleteWarehouse(String id) {
         Warehouse warehouse = warehouseRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Warehouse not found"));
         warehouseRepository.deleteById(id);
         return "Warehouse Deleted Successfully";
     }
-
+    */
+/*
     public void updateWarehouse(Warehouse warehouse) {
 
         warehouse = warehouseRepository.findById(warehouse.getWarehouseId())
                 .orElseThrow(() -> new IllegalArgumentException("Warehouse not found"));
         warehouseRepository.save(warehouse);
     }
+    */
+
+    /*
 
     //Register new supplier
     public String registerSupplier(Suppliers suppliers){
         return supplierService.registerSupplier(suppliers);
     }
+    */
 }
 
