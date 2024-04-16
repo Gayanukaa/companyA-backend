@@ -2,41 +2,42 @@ package com.companyA.backend.ManufacturingSystem.service;
 
 import com.companyA.backend.ManufacturingSystem.model.MaintenanceRequest;
 import com.companyA.backend.ManufacturingSystem.repository.MaintenanceRequestRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.bson.types.ObjectId;
-import java.util.List;
+
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 // Service class for handling MaintenanceRequest entities
 @Service
-
+@AllArgsConstructor
 public class MaintenanceRequestService {
-    private final MaintenanceRequestRepository maintenanceRequestRepository;
+    private MaintenanceRequestRepository maintenanceRequestRepository;
 
-    // Method to add a new maintenance request
-    @Autowired
-    public MaintenanceRequestService(MaintenanceRequestRepository maintenanceRequestRepository) {
-        this.maintenanceRequestRepository = maintenanceRequestRepository;
-    }
-
-    // Method to set the date
+    // Add a new maintenance request
     public MaintenanceRequest addMaintenanceRequest(MaintenanceRequest maintenanceRequest) {
+        // Check if the maintenance request already exists
+        Optional<MaintenanceRequest> existingMaintenanceRequest = maintenanceRequestRepository.findByMachineIdAndMaintenanceType(maintenanceRequest.getMachineId(), maintenanceRequest.getMaintenanceType());
+        if (existingMaintenanceRequest.isPresent()) {
+            throw new RuntimeException("This maintenance request is already existing.");
+        }
+        // Set the current date for the maintenance request
         maintenanceRequest.setDate(LocalDate.now().toString());
+        // Save the maintenance request to the repository
         return maintenanceRequestRepository.save(maintenanceRequest);
     }
 
-    // Method to delete a maintenance request by ID
-    public void deleteMaintenanceRequest(String id) {
-        maintenanceRequestRepository.deleteById(new ObjectId(id));
+    // Delete a maintenance request
+    public void deleteMaintenanceRequest(MaintenanceRequest maintenanceRequest) {
+        maintenanceRequestRepository.deleteByMachineIdAndMaintenanceType(maintenanceRequest.getMachineId(), maintenanceRequest.getMaintenanceType());
     }
 
-    // Add the method to find maintenance requests by equipment name
-    public List<MaintenanceRequest> findMaintenanceRequestsByEquipmentName(String equipmentName) {
-        return maintenanceRequestRepository.findByEquipmentName(equipmentName);
+    // Check if a maintenance request exists
+    public boolean isMaintenanceRequestExists(Integer machineId, String maintenanceType) {
+        Optional<MaintenanceRequest> maintenanceRequest = maintenanceRequestRepository.findByMachineIdAndMaintenanceType(machineId, maintenanceType);
+        return maintenanceRequest.isPresent();
     }
 }
-
 
 

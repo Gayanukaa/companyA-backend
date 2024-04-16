@@ -15,7 +15,7 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
-
+    // Endpoint to retrieve employees by department for manufacturing
     @GetMapping("/manufacturing")
     public ResponseEntity<List<Employee>> getEmployeesByDepartment(@RequestParam("department") String department) {
         List<Employee> manufacturingWorkers = employeeService.getEmployeesByDepartment(department);

@@ -7,14 +7,15 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+// Represents an employee entity
 @Document(collection = "Employee")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Employee {
-    private String id;
-    private String firstName;
-    private String lastName;
-    private String department;
+    private String id;              // Unique identifier for the employee
+    private String firstName;       // First name of the employee
+    private String lastName;        // Last name of the employee
+    private String department;      // Department to which the employee belongs
     // No additional fields needed for current functionalities
 }

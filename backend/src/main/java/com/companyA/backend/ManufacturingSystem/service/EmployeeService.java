@@ -7,13 +7,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// Service class to handle employee-related operations
 @Service
 public class EmployeeService {
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
+    // Retrieve employees by department
     public List<Employee> getEmployeesByDepartment(String department) {
+        // Delegate the query to the repository
         return employeeRepository.findBydepartment(department);
     }
 }

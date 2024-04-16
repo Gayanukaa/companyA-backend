@@ -12,13 +12,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class MaintenanceRequest {
     @Id
-    private ObjectId id;                    // Unique identifier for the maintenance request
-    private String equipmentName;           // Name of the equipment associated with the maintenance request
-    private String issueDescription;        // Description of the maintenance issue
-    private String date;                    // Date of the maintenance request
-
+    private ObjectId id;           // Unique identifier for the maintenance request
+    private Integer machineId;     // ID of the machine associated with the maintenance request
+    private String maintenanceType;// Type of maintenance requested
+    private String date;           // Date of the maintenance request
 }
 
