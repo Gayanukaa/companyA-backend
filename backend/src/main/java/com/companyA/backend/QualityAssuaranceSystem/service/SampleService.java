@@ -1,14 +1,17 @@
 package com.companyA.backend.QualityAssuaranceSystem.service;
 
 import com.companyA.backend.QualityAssuaranceSystem.model.Prototype;
+import com.companyA.backend.QualityAssuaranceSystem.model.Report;
 import com.companyA.backend.QualityAssuaranceSystem.model.Sample;
 import com.companyA.backend.QualityAssuaranceSystem.model.Test;
+import com.companyA.backend.QualityAssuaranceSystem.repository.ReportRepository;
 import com.companyA.backend.QualityAssuaranceSystem.repository.SampleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 //Only a few methods have been declared so far
 //Make necessary changes
@@ -17,6 +20,9 @@ import java.util.Optional;
 public class SampleService {
     @Autowired
     private SampleRepository sampleRepository;
+
+    @Autowired
+    private ReportRepository reportRepository;
 
     public List<Sample> getAllSamples() {
         return sampleRepository.findAll();
@@ -56,5 +62,29 @@ public class SampleService {
             return "Test was not initiated";
         }
 
+    }
+
+
+    public String generateReport() {
+        List<Sample> samples = getAllSamples();
+        StringBuilder reportContent = new StringBuilder();
+        reportContent.append("Samples Report:\n");
+
+        for (Sample sample : samples) {
+            reportContent.append("Sample ID: ").append(sample.getId()).append("\n");
+            reportContent.append("Test Name: ").append(sample.getTestName() != null ? sample.getTestName() : "Unknown").append("\n");
+            reportContent.append("Received Date: ").append(sample.getReceivedDate() != null ? sample.getReceivedDate() : "Unknown").append("\n");
+            reportContent.append("Test Status: ").append(sample.getTestStatus() != null ? sample.getTestStatus() : "Unknown").append("\n");
+            reportContent.append("\n");
+        }
+
+        String reportId = UUID.randomUUID().toString().substring(0, 8);
+
+        Report report = new Report();
+        report.setId(reportId);
+        report.setReportContent(reportContent.toString());
+        reportRepository.save(report);
+
+        return "Report generated and saved successfully! Report ID: " + reportId;
     }
 }

@@ -49,4 +49,10 @@ public class PrototypeController {
         return response;
     }
 
+    @PostMapping("/generateReport")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String generateReport() {
+        return prototypeService.generateReport();
+    }
+
 }

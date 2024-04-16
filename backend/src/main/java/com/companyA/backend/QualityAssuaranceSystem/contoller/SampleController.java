@@ -48,4 +48,10 @@ public class SampleController {
         sample.setTestStatus("Test Initiated");
         return response;
     }
+
+    @PostMapping("/generateReport")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String generateReport() {
+        return sampleService.generateReport();
+    }
 }
