@@ -14,24 +14,27 @@ import java.util.List;
 @Service
 public class StockAlertService {
 
-    private final StockAlertRepository stockAlertRepository;
+    @Autowired
+    private StockAlertRepository stockAlertRepository;
 
-    private final FinanceSubsystemService financeSubsystemService;
-
-    private final ShipmentService shipmentService;
-
-    private final StocksRepository stocksRepository;
+   /* @Autowired
+    private FinanceSubsystemService financeSubsystemService;
 
     @Autowired
-    public StockAlertService(StockAlertRepository stockAlertRepository, FinanceSubsystemService financeSubsystemService, ShipmentService shipmentService, StocksRepository stocksRepository) {
-        this.stockAlertRepository = stockAlertRepository;
-        this.financeSubsystemService = financeSubsystemService;
-        this.shipmentService = shipmentService;
-        this.stocksRepository = stocksRepository;
+    private ShipmentService shipmentService;*/
+
+    @Autowired
+    private StocksRepository stocksRepository;
+
+
+    public List<StockAlert> checkStockAndProcessAlerts() {
+        List<Stocks> stocks = stocksRepository.findAllByQuantityLessThanThresholdQuantity();
+        List<Stocks> orderStocks = stocks.stream().filter(stock -> stock.getQuantity() < stock.getThresholdQuantity()).toList();
+        return createStockAlert(orderStocks);
     }
 
     public List<StockAlert> createStockAlert(List<Stocks> stocks) {
-        List<StockAlert> stockalerts = new ArrayList<>();
+        List<StockAlert> stockAlerts = new ArrayList<>();
         for (Stocks stock : stocks) {
             if (stockAlertRepository.findByItemId(stock.getId()) != null) {
                 continue;
@@ -44,10 +47,9 @@ public class StockAlertService {
             stockAlertRepository.save(stockAlert);
             stock.setReorderQuantity(reorderQuantity);
             stocksRepository.save(stock);
-            stockalerts.add(stockAlert);
+            stockAlerts.add(stockAlert);
         }
 
-        return stockalerts;
+        return stockAlerts;
     }
-
 }
