@@ -21,11 +21,12 @@ import java.util.List;
 public class InventoryManager {
     @Id@NotBlank
     private String managerId;
+    @NotBlank
     private String managerName;
+    @NotBlank
     private String managerEmail;
+    @NotBlank
     private String managerPhone;
-
-    private List<String> warehouses; // List to store warehouses offered
-
-    private List<String> listOfSuppliers; // List to store list of suppliers offered
+    @DocumentReference
+    private List<Suppliers> listOfSuppliers; // List to store list of suppliers offered
 }

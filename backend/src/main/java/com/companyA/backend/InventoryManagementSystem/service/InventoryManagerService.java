@@ -55,7 +55,7 @@ public class InventoryManagerService {
             String lastId = inventoryManagerRepository.findAll().get(inventoryManagerRepository.findAll().size()-1).getManagerId();
             int id = Integer.parseInt(lastId.substring(1));
             id++;
-            inventoryManager.setManagerId("I"+String.format("%04d", id));
+            inventoryManager.setManagerId("M"+String.format("%04d", id));
         }
         else {
             inventoryManager.setManagerId("M0001");
