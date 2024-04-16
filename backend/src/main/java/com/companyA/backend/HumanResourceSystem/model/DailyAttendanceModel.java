@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,7 +18,8 @@ import java.time.LocalDate;
 public class DailyAttendanceModel {
     private String id;
     private LocalDate date;
-    private LocalDate signInTime;
-    private LocalDate signOutTime;
+    private LocalDateTime signInTime;
+    private LocalDateTime signOutTime;
+    private boolean isPresent;
 
 }
