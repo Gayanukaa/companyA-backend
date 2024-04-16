@@ -21,17 +21,17 @@ public class DailyAttendanceController {
 
 
     //Checks if the given employee is present today.
-    @GetMapping("/GetAttendance/{id}")
-    public ResponseEntity<DailyAttendanceModel> getAttendance(@PathVariable String id){
-        DailyAttendanceModel weeklyAttendance = dailyAttendanceService.getAttendance(id);
+    @GetMapping("/GetAttendance/{employeeId}")
+    public ResponseEntity<DailyAttendanceModel> getAttendance(@PathVariable String employeeId){
+        DailyAttendanceModel weeklyAttendance = dailyAttendanceService.getAttendance(employeeId);
         return ResponseEntity.ok(weeklyAttendance);
 
     }
 
     //to check given employee's attendance in week
-    @GetMapping("/GetWeeklyAttendance/{id}")
-    public ResponseEntity<List<DailyAttendanceModel>> getWeeklyAttendance(@PathVariable String id){
-        List<DailyAttendanceModel> weeklyAttendance = dailyAttendanceService.getWeeklyAttendance(id);
+    @GetMapping("/GetWeeklyAttendance/{employeeId}")
+    public ResponseEntity<List<DailyAttendanceModel>> getWeeklyAttendance(@PathVariable String employeeId){
+        List<DailyAttendanceModel> weeklyAttendance = dailyAttendanceService.getWeeklyAttendance(employeeId);
         return ResponseEntity.ok(weeklyAttendance);
 
     }
@@ -42,14 +42,14 @@ public class DailyAttendanceController {
         return ResponseEntity.ok(dailyAttendanceList);
     }
 
-    @PostMapping("/SignIn/{id}")
-    public ResponseEntity<String> markSigIn(@PathVariable String id){
-        dailyAttendanceService.markSignInAndAttendance(id);
+    @PostMapping("/SignIn/{employeeId}")
+    public ResponseEntity<String> markSignInAndAttendance(@PathVariable String employeeId){
+        dailyAttendanceService.markSignInAndAttendance(employeeId);
         return ResponseEntity.ok("Sign-in time recorded successfully");
     }
-    @PostMapping("/SignOut/{id}")
-    public ResponseEntity<String> markSignOut(@PathVariable String id){
-        dailyAttendanceService.markSignOut(id);
+    @PostMapping("/SignOut/{employeeId}")
+    public ResponseEntity<String> markSignOut(@PathVariable String employeeId){
+        dailyAttendanceService.markSignOut(employeeId);
         return ResponseEntity.ok("Sign-out time recorded successfully");
 
     }
