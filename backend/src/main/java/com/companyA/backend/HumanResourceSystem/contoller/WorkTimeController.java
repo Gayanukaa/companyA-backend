@@ -33,7 +33,11 @@ public class WorkTimeController {
                 workTimeRepository.save(workTimeModel);
             }
             else {
-                workTimeRepository.save(workTimeModel);
+                WorkTimeModel existingEntry = existingWorkTime.get(0); // Assuming only one entry for simplicity
+
+                // Update the existing entry with data from the new entry
+                existingEntry.setTimeSignedIn(workTimeModel.getTimeSignedIn());
+                existingEntry.setTimeSignedOut(workTimeModel.getTimeSignedOut());
             }
         }
         return new ResponseEntity<>(workTimeModels, HttpStatus.CREATED);
