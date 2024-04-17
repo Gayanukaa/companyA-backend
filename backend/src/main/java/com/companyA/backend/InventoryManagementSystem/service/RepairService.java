@@ -123,13 +123,15 @@ public class RepairService {
 
     public void saveSelectedItemsToRepairCollection(List<Stocks> itemsToRepair) {
         List<Repair> selectedDataList = new ArrayList<>();
+        int lastId = repairRepository.findAll().size();
         for (Stocks item : itemsToRepair) {
             // Extract the specific data you want to delete from each Repair item
+            lastId += 1;
             Repair selectedData = new Repair();
             selectedData.setInventoryId(item.getId());
             selectedData.setName(item.getName());
             selectedData.setQuantity(item.getQuantity());
-
+            selectedData.setId("R"+String.format("%04d", lastId));
             selectedDataList.add(selectedData);
         }
         repairRepository.saveAll(selectedDataList);
