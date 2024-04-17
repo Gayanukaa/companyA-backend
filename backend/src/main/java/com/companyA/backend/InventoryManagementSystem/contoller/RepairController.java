@@ -30,10 +30,14 @@ public class RepairController {
     //Send the details of relevant items to the "Repair" collection
     @GetMapping("/sendForRepairs")
     public ResponseEntity<String> sendItemsForRepair(@RequestBody List<String> itemIds) {
-        repairService.sendItemsForRepair(itemIds);
-        return ResponseEntity.ok("Items sent for repairs successfully.");
+        try {
+            repairService.sendItemsForRepair(itemIds);
+            return ResponseEntity.ok("Items sent for repairs successfully.");
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong product ID.All items should be DAMAGED to proceed.");
+        }
     }
-
 
     @GetMapping("/checkRepairApi")
     public ResponseEntity<Object> getRepairDetails(@RequestBody List<String> ids) {
@@ -63,7 +67,11 @@ public class RepairController {
     //You should provide a list of repair Ids
     @GetMapping("/itemsRepairDone")
     public ResponseEntity<String> updateRepairedItems(@RequestBody List<String> itemIds) {
-        repairService.updateRepairedItems(itemIds);
-        return ResponseEntity.ok("Items has been repaired");
+        try {
+            repairService.updateRepairedItems(itemIds);
+            return ResponseEntity.ok("Items has been repaired.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("One or more wrong repair IDs has been provided.");
+        }
     }
 }

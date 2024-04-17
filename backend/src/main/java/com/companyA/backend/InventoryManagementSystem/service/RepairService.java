@@ -33,8 +33,17 @@ public class RepairService {
         //Done
 
         List<Stocks> itemsToRepair = stocksRepository.findAllById(itemIds);
-        for (Stocks item : itemsToRepair) {
-            item.setStateOfProduct(StateOfProduct.UNDER_REPAIR);
+        if (itemsToRepair.size() == itemIds.size()){
+            for (Stocks item : itemsToRepair) {
+                if (item.getStateOfProduct().equals(StateOfProduct.DAMAGED)) {
+                    item.setStateOfProduct(StateOfProduct.UNDER_REPAIR);
+                } else {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
+        else{
+            throw new IllegalArgumentException();
         }
         stocksRepository.saveAll(itemsToRepair);
 
@@ -94,21 +103,24 @@ public class RepairService {
         List<Repair> itemsToRemove = repairRepository.findAllById(itemIds);
         List<String> inventoryIds = new ArrayList<>();
 
-        for (Repair item : itemsToRemove) {
-            inventoryIds.add(item.getInventoryId());
-        }
-        List<Stocks> idsToRemove = stocksRepository.findAllById(inventoryIds);
-        for (Stocks item : idsToRemove) {
-            item.setStateOfProduct(StateOfProduct.REPAIRED);
-        }
-        stocksRepository.saveAll(idsToRemove);
+        if (itemsToRemove.size() == itemIds.size()) {
+            for (Repair item : itemsToRemove) {
+                inventoryIds.add(item.getInventoryId());
+            }
+            List<Stocks> idsToRemove = stocksRepository.findAllById(inventoryIds);
+            for (Stocks item : idsToRemove) {
+                item.setStateOfProduct(StateOfProduct.REPAIRED);
+            }
+            stocksRepository.saveAll(idsToRemove);
 
-        for(String itemId : itemIds){
-            repairRepository.deleteById(itemId);
-            //System.out.println(itemId);
+            for (String itemId : itemIds) {
+                repairRepository.deleteById(itemId);
+            }
+        } else {
+            throw new IllegalArgumentException();
         }
-
     }
+
     public void saveSelectedItemsToRepairCollection(List<Stocks> itemsToRepair) {
         List<Repair> selectedDataList = new ArrayList<>();
         for (Stocks item : itemsToRepair) {
