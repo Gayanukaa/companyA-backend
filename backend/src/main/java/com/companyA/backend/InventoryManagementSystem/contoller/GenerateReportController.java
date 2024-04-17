@@ -1,6 +1,7 @@
 package com.companyA.backend.InventoryManagementSystem.contoller;
 
 import com.companyA.backend.InventoryManagementSystem.model.GenerateReport;
+import com.companyA.backend.InventoryManagementSystem.model.InventoryManager;
 import com.companyA.backend.InventoryManagementSystem.model.Suppliers;
 import com.companyA.backend.InventoryManagementSystem.service.GenerateReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,33 +18,7 @@ public class GenerateReportController {
     @Autowired
     private GenerateReportService generateReportService;
 
-
-    /*
-    @GetMapping("/generate")
-    public GenerateReport generateReports(){
-        return generateReportService.generateReport();
-    } */
-
-
-
-    //@GetMapping("/details")
-    //public List<GenerateReport> reportDetails(){
-    //return generateReportService.reportDetails();
-
-
-
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteReportById(@PathVariable String id) {
-        try {
-            generateReportService.deleteReportId(id);
-            return ResponseEntity.ok("Report deleted successfully.");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-    }
-
-    @PostMapping("/register")
+    @PostMapping("/generate")
     public ResponseEntity<String> createReport(GenerateReport report) {
         String sup =  generateReportService.createReport(report);
         return ResponseEntity.status(HttpStatus.OK).body(sup);
@@ -55,6 +30,15 @@ public class GenerateReportController {
         return generateReportService.reportDetails();
     }
 
+    @GetMapping("/getReport/{id}")
+    public GenerateReport getReportById(@PathVariable String id){
+        return generateReportService.getReportById(id);
+    }
+
+    @DeleteMapping("/deleteReport/{reportId}")
+    public ResponseEntity<String> deleteReport(@PathVariable String reportId) {
+        return new ResponseEntity<String>(generateReportService.deleteReportById(reportId),HttpStatus.OK);
+    }
 
 
 }

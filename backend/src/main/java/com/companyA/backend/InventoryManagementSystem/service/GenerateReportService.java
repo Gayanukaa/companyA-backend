@@ -7,9 +7,13 @@ import com.companyA.backend.InventoryManagementSystem.repository.StocksRepositor
 import com.companyA.backend.InventoryManagementSystem.repository.WarehouseRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -33,28 +37,7 @@ public class GenerateReportService {
     public void init() {
         stocksList = stocksRepository.findAll();
     }
-    //private final List<Stocks> stocksList = stocksRepository.findAll();
 
-    //NEED TO CHECK
-    /*
-    public GenerateReport generateReport() {
-        Map<String, List<String>> mostSoldItemsByWarehouse = mostSold();
-        //Map<String, Double> revenue = findRevenue(); //Should update when price attribute is added
-        LocalDateTime generatedDateAndTime = LocalDateTime.now();
-        Map<String, String> warehouse = findWarehouses();
-
-        GenerateReport report = new GenerateReport();
-        report.setReportId("SomeGeneratedId");
-        report.setGeneratedDateAndTime(generatedDateAndTime);
-        report.setMostSoldItemsByWarehouse(mostSoldItemsByWarehouse);
-        //report.setRevenue(revenue);
-        report.setWarehouses(warehouse);
-
-        generateReportRepository.save(report);
-        return null;
-    }
-
-    */
     public List<GenerateReport> reportDetails(){
         return generateReportRepository.findAll();
     }
@@ -69,25 +52,32 @@ public class GenerateReportService {
         else {
             report.setReportId("R0001");
         }
-        report.setRevenue(this.findRevenue());
-        report.setMostSoldItemsByWarehouse(this.mostQuantity());
+        report.setTotalWorth(this.findWorth());
+        report.setMostRemainingItemsByWarehouse(this.mostQuantity());
         report.setWarehouseItemsByWarehouse(this.findItemsInWarehouse());
         report.setWarehouses(this.findWarehouses());
         //report.setGeneratedDateAndTime(LocalDateTime.now());
+        // Set the generated date and time
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedDateTime = now.format(formatter);
+        report.setGeneratedDateAndTime(formattedDateTime);
         generateReportRepository.save(report); // Save report to database
 
         return "Report Generated Successfully";
     }
 
-    public void deleteReportId(String id) {
-        // Check if the report exists
-        if (generateReportRepository.existsById(id)) {
-            //If so delete the report
-            generateReportRepository.deleteById(id);
-        } else {
-            //If the report does not exist
-            throw new IllegalArgumentException("Report with ID " + id + " does not exist.");
+    public String deleteReportById(String reportId) {
+        GenerateReport report = generateReportRepository.findById(reportId).orElse(null);
+        if (report == null) {
+            return HttpStatus.NOT_FOUND.toString();
         }
+        generateReportRepository.deleteById(reportId);
+        return HttpStatus.OK.toString();
+    }
+
+    public GenerateReport getReportById(String id) {
+        return generateReportRepository.findById(id).orElse(null);
     }
 
 
@@ -96,7 +86,7 @@ public class GenerateReportService {
         //List<Stocks> stocksList = stocksRepository.findAll();
 
         // Create a map to store most sold items by warehouse
-        Map<String, List<String>> mostSoldItemsByWarehouse = new HashMap<>();
+        Map<String, List<String>> mostRemainingItemsByWarehouse = new HashMap<>();
 
         // Group inventory items by warehouse ID
         Map<String, List<Stocks>> inventoryByWarehouse = new HashMap<>();
@@ -111,28 +101,28 @@ public class GenerateReportService {
                     .max(Comparator.comparingInt(Inventory::getQuantity))
                     .orElse(null);
             if (bestSellerItem != null) {
-                mostSoldItemsByWarehouse.computeIfAbsent(entry.getKey(), k -> new ArrayList<>())
+                mostRemainingItemsByWarehouse.computeIfAbsent(entry.getKey(), k -> new ArrayList<>())
                         .add(bestSellerItem.getName());
             }
         }
 
-        return mostSoldItemsByWarehouse;
+        return mostRemainingItemsByWarehouse;
     }
 
 
     //Find the total worth of stock in each warehouse
 
-    private Map<String, Double> findRevenue() {
+    private Map<String, Double> findWorth() {
         //List<Inventory> inventoryList = inventoryRepository.findAll();
-        Map<String, Double> warehouseRevenue = new HashMap<>();
+        Map<String, Double> warehouseWorth = new HashMap<>();
 
         for (Stocks stocks : stocksList) {
             String warehouseId = stocks.getWarehouseId();
             double totalItemRevenue = stocks.getPrice() * stocks.getQuantity();
-            warehouseRevenue.merge(warehouseId, totalItemRevenue, Double::sum);
+            warehouseWorth.merge(warehouseId, totalItemRevenue, Double::sum);
         }
 
-        return warehouseRevenue;
+        return warehouseWorth;
     }
 
 
