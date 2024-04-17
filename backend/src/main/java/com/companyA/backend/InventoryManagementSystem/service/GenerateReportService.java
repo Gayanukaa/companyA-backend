@@ -60,7 +60,15 @@ public class GenerateReportService {
     }
 
     public String createReport(GenerateReport report) {
-        //GenerateReport report = new GenerateReport();
+        if(!generateReportRepository.findAll().isEmpty()) {
+            String lastId = generateReportRepository.findAll().get(generateReportRepository.findAll().size()-1).getReportId();
+            int id = Integer.parseInt(lastId.substring(1));
+            id++;
+            report.setReportId("R"+String.format("%04d", id));
+        }
+        else {
+            report.setReportId("R0001");
+        }
         report.setRevenue(this.findRevenue());
         report.setMostSoldItemsByWarehouse(this.mostQuantity());
         report.setWarehouseItemsByWarehouse(this.findItemsInWarehouse());
@@ -70,8 +78,6 @@ public class GenerateReportService {
 
         return "Report Generated Successfully";
     }
-
-
 
     public void deleteReportId(String id) {
         // Check if the report exists
