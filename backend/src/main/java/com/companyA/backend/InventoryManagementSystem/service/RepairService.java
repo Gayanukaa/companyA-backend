@@ -25,7 +25,12 @@ public class RepairService {
         for (Stocks stock : damagedStock) {
             damagedProductIds.add(stock.getId());
         }
-        return damagedProductIds;
+        if (!damagedProductIds.isEmpty()) {
+            return damagedProductIds;
+        }
+        else{
+            throw new IllegalArgumentException();
+        }
     }
 
     public void sendItemsForRepair(List<String> itemIds) {

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -21,8 +22,12 @@ public class RepairController {
     //Ok
     @GetMapping("/getDamagedItems")
     public ResponseEntity<List<String>> getIdsOfDamagedProducts() {
-        List<String> damagedProductIds = repairService.getIdsOfDamagedProducts();
-        return ResponseEntity.ok(damagedProductIds);
+        try {
+            List<String> damagedProductIds = repairService.getIdsOfDamagedProducts();
+            return ResponseEntity.ok(damagedProductIds);
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonList("No items to repair."));
+        }
     }
 
 
