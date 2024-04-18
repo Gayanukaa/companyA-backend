@@ -19,8 +19,7 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    @Autowired
-    private StockAlertRepo stockAlertRepo;
+
 
     @PostMapping("/salary/{employeeId}")
     public ResponseEntity<Map<String, String>> EmployeeSalaryConfirmation(@PathVariable int employeeId) {
@@ -31,9 +30,5 @@ public class PaymentController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/order")
-    public boolean orderConfirmation(){
-        return paymentService.sendRequestForPaymentConfirmation(stockAlertRepo.findAll());
-    }
 
 }

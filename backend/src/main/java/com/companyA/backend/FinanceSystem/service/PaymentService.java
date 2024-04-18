@@ -22,8 +22,6 @@ public class PaymentService {
     @Autowired
     private EmployeeRepo employeeRepo;
 
-    @Autowired
-    private StocksRepo stocksRepo;
 
     public void SalaryPaymentConfirmation(int employeeId){
         Optional<EmployeeSalary> employee = employeeRepo.findById(employeeId);
@@ -41,29 +39,7 @@ public class PaymentService {
         paymentRepo.save(payment);
 
     }
-    public boolean sendRequestForPaymentConfirmation(List<StockAlert> stockAlerts){
-        double totalCost = 0;
-        double unitPrice;
-        for (StockAlert stockAlert : stockAlerts) {
-            Optional<Stocks> stock = stocksRepo.findById(stockAlert.getItemId());
 
-            Stocks item = null;
-
-            if(stock.isPresent()){
-                item = stock.get();
-            }
-            unitPrice = item.getPrice();
-            totalCost = totalCost + stockAlert.getReorderQuantity() * unitPrice;
-        }
-        if(totalCost> 10000){
-            System.out.println(totalCost);
-            return false;
-        }
-        else{
-            System.out.println(totalCost);
-            return true;
-        }
-    }
 
 
 }
