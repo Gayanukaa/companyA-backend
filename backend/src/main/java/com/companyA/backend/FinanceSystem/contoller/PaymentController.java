@@ -1,8 +1,6 @@
 package com.companyA.backend.FinanceSystem.contoller;
 
-import com.companyA.backend.FinanceSystem.model.EmployeeSalary;
-import com.companyA.backend.FinanceSystem.repository.PaymentRepo;
-import com.companyA.backend.FinanceSystem.repository.StockAlertRepo;
+
 import com.companyA.backend.FinanceSystem.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

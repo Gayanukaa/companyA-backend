@@ -3,6 +3,7 @@ package com.companyA.backend.FinanceSystem.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 
 @Document(collection = "paymentConfirmation")
 public class Payment {
+    private ObjectId id;
     private String type; // "Incoming" or "Outgoing"
     private Double amount;
     private String referenceNumber;

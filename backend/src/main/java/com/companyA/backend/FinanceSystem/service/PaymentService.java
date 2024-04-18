@@ -2,15 +2,11 @@ package com.companyA.backend.FinanceSystem.service;
 
 import com.companyA.backend.FinanceSystem.model.EmployeeSalary;
 import com.companyA.backend.FinanceSystem.model.Payment;
-import com.companyA.backend.FinanceSystem.model.StockAlert;
-import com.companyA.backend.FinanceSystem.model.Stocks;
 import com.companyA.backend.FinanceSystem.repository.EmployeeRepo;
 import com.companyA.backend.FinanceSystem.repository.PaymentRepo;
-import com.companyA.backend.FinanceSystem.repository.StocksRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,6 +35,7 @@ public class PaymentService {
         paymentRepo.save(payment);
 
     }
+
 
 
 

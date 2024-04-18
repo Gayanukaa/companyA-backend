@@ -26,7 +26,7 @@ public class EmployeeController {
         return employeeService.getEmployee(employeeId);
     }
 
-    @PostMapping("/addEmployee")
+    @PostMapping("/SaveEmployeeSalary")
     public ResponseEntity<Map<String, String>> setEmployeeSalary(@RequestBody EmployeeSalary employee) {
         employeeService.addEmployee(employee);
 
