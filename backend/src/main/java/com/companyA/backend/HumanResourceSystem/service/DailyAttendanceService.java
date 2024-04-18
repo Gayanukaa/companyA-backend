@@ -36,13 +36,22 @@ public class DailyAttendanceService {
         }
     }
 
-    public List<DailyAttendanceModel> getWeeklyAttendace(String id){
+    public DailyAttendanceModel getAttendance(String id){
+
+        LocalDate date = LocalDate.now();
+        return dailyAttendanceRepository.findByIdAndDate(id,date);
+
+    }
+
+    public List<DailyAttendanceModel> getWeeklyAttendance(String id){
+
         LocalDate startDate = LocalDate.now().minusDays(7);
         LocalDate endDate = LocalDate.now();
 
-        return dailyAttendanceRepository.findByEmployeeIdAndDateBetween(id, startDate, endDate);
+        return dailyAttendanceRepository.findByIdAndDateBetween(id, startDate, endDate);
 
     }
+
     public List<DailyAttendanceModel> getDailyAttendance(LocalDate date){
 
         return dailyAttendanceRepository.findByDate(date);
