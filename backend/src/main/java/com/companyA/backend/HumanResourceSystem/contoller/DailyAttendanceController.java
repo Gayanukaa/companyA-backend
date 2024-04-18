@@ -20,12 +20,22 @@ public class DailyAttendanceController {
     private DailyAttendanceService dailyAttendanceService;
 
 
-    @GetMapping("/GetWeeklyAttendance/{id}")
-    public ResponseEntity<List<DailyAttendanceModel>> getWeeklyAttendance(@PathVariable String id){
-        List<DailyAttendanceModel> weeklyAttendace = dailyAttendanceService.getWeeklyAttendace(id);
-        return ResponseEntity.ok(weeklyAttendace);
+    //Checks if the given employee is present today.
+    @GetMapping("/GetAttendance/{id}")
+    public ResponseEntity<DailyAttendanceModel> getAttendance(@PathVariable String id){
+        DailyAttendanceModel weeklyAttendance = dailyAttendanceService.getAttendance(id);
+        return ResponseEntity.ok(weeklyAttendance);
 
     }
+
+    //to check given employee's attendance in week
+    @GetMapping("/GetWeeklyAttendance/{id}")
+    public ResponseEntity<List<DailyAttendanceModel>> getWeeklyAttendance(@PathVariable String id){
+        List<DailyAttendanceModel> weeklyAttendance = dailyAttendanceService.getWeeklyAttendance(id);
+        return ResponseEntity.ok(weeklyAttendance);
+
+    }
+
     @GetMapping("/GetDailyAttendance/{date}")
     public ResponseEntity<List<DailyAttendanceModel>> getDailyAttendance(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         List<DailyAttendanceModel> dailyAttendanceList = dailyAttendanceService.getDailyAttendance(date);
