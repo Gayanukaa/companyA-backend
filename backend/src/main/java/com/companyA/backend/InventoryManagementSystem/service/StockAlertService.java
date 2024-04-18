@@ -1,6 +1,7 @@
 package com.companyA.backend.InventoryManagementSystem.service;
 
 //import com.companyA.backend.FinanceSystem.service.FinanceSubsystemService;
+import com.companyA.backend.InventoryManagementSystem.model.StateOfProduct;
 import com.companyA.backend.InventoryManagementSystem.model.StockAlert;
 import com.companyA.backend.InventoryManagementSystem.model.Stocks;
 import com.companyA.backend.InventoryManagementSystem.repository.StockAlertRepository;
@@ -39,6 +40,7 @@ public class StockAlertService {
             if (stockAlertRepository.findByItemId(stock.getId()) != null) {
                 continue;
             }
+            stock.setStateOfProduct(StateOfProduct.valueOf("LOW_STOCK"));
             int reorderQuantity = stock.getThresholdQuantity() - stock.getQuantity();
             StockAlert stockAlert = new StockAlert();
             if(!stockAlertRepository.findAll().isEmpty()) {
@@ -60,5 +62,13 @@ public class StockAlertService {
         }
 
         return stockAlerts;
+    }
+
+    public StockAlert getStockAlertByItemId(String key) {
+        return stockAlertRepository.findByItemId(key);
+    }
+
+    public void deleteStockAlert(String alertId) {
+        stockAlertRepository.deleteById(alertId);
     }
 }

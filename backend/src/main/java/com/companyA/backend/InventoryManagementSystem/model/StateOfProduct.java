@@ -7,5 +7,5 @@ public enum StateOfProduct {
     UNDER_REPAIR,
     REPAIRED,
     LOW_STOCK,
-    SHIPPED
+    IN_STOCK,
 }

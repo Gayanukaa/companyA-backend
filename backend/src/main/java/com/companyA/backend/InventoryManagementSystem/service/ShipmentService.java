@@ -29,6 +29,8 @@ public class ShipmentService {
     private StocksService stocksService;
 
     private MongoTemplate mongoTemplate;
+    @Autowired
+    private StockAlertService stockAlertService;
 
     public List<Shipment> getAllShipments() {
         return shipmentRepository.findAll();
@@ -70,5 +72,19 @@ public class ShipmentService {
         }
         shipment.setOrderList(orderList);
         return shipmentRepository.save(shipment);
+    }
+
+    public List<Stocks> updateStocks(Shipment shipment) {
+        List<Stocks> stocks = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : shipment.getOrderList().entrySet()) {
+            Stocks stock = stocksService.getStockById(entry.getKey());
+            stock.setQuantity(stock.getQuantity() + entry.getValue());
+            stock.setStateOfProduct(StateOfProduct.valueOf("IN_STOCK"));
+            StockAlert stockAlert = stockAlertService.getStockAlertByItemId(entry.getKey());
+            stockAlertService.deleteStockAlert(stockAlert.getAlertId());
+            stocksService.updateStock(stock);
+            stocks.add(stock);
+        }
+        return stocks;
     }
 }

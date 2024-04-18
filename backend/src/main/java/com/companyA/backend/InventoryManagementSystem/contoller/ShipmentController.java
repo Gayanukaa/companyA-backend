@@ -4,6 +4,7 @@ import com.companyA.backend.FinanceSystem.service.FinanceSubsystemService;
 import com.companyA.backend.InventoryManagementSystem.model.Shipment;
 import com.companyA.backend.InventoryManagementSystem.model.ShipmentRequest;
 import com.companyA.backend.InventoryManagementSystem.model.StockAlert;
+import com.companyA.backend.InventoryManagementSystem.model.Stocks;
 import com.companyA.backend.InventoryManagementSystem.service.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -57,4 +58,15 @@ public class ShipmentController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    //Receive shipment
+    @GetMapping("/receiveShipment/{id}")
+    public ResponseEntity<List<Stocks>> receiveShipment(@PathVariable String id) {
+        Shipment shipment = shipmentService.getShipmentById(id);
+        if (shipment != null) {
+            return new ResponseEntity<List<Stocks>>(shipmentService.updateStocks(shipment), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
 }
