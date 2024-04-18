@@ -26,7 +26,7 @@ public class InventoryService {
         //Optional<Inventory> ExistingInventory = inventoryRepository.findById(tempId);
 
 
-        if (ExistingInventory!=null) {
+        if (ExistingInventory.isPresent()) {
             Inventory tempName = ExistingInventory.get();
             return "The personnel with the specific name is already assigned to "+tempName+".";
         }
