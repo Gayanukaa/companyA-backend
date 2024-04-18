@@ -18,7 +18,9 @@ public class EmployeeController {
     // Endpoint to retrieve employees by department for manufacturing
     @GetMapping("/manufacturing")
     public ResponseEntity<List<Employee>> getEmployeesByDepartment(@RequestParam("department") String department) {
+        // Retrieve employees by department from the service layer
         List<Employee> manufacturingWorkers = employeeService.getEmployeesByDepartment(department);
+        // Return a successful response with the list of employees
         return ResponseEntity.ok(manufacturingWorkers);
     }
 }
