@@ -59,10 +59,10 @@ public class ShipmentService {
         }
         shipment.setTrackingNumber("T"+String.format("%04d", new Random().nextInt(10000)));
         shipment.setSender(inventoryManagerRepository.findById(inventoryManagerId).orElse(null));
-        shipment.setSuppliers(supplierRepository.findById(supplierId).orElse(null));
+        shipment.setSupplierId(supplierRepository.findById(supplierId).orElse(null));
 
         mongoTemplate.update(Suppliers.class)
-                .matching(Criteria.where("suppliers").is(shipment.getSuppliers()))
+                .matching(Criteria.where("suppliers").is(shipment.getSupplierId()))
                 .apply(new Update().push("orders", shipment.getId())).first();
 
         Map<Stocks,Integer> orderList = new HashMap<>();

@@ -1,5 +1,6 @@
 package com.companyA.backend.InventoryManagementSystem.contoller;
 
+import com.companyA.backend.InventoryManagementSystem.model.Stocks;
 import com.companyA.backend.InventoryManagementSystem.model.Suppliers;
 import com.companyA.backend.InventoryManagementSystem.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,8 @@ public class SupplierController {
     private SupplierService supplierService;
 
     @PostMapping("/registerSupplier")
-    public ResponseEntity<String> registerSupplier(@RequestBody Suppliers supplier) {
-        String sup =  supplierService.registerSupplier(supplier);
-        return ResponseEntity.status(HttpStatus.OK).body(sup);
+    public ResponseEntity<Suppliers> registerSupplier(@RequestBody Suppliers supplier) {
+        return new ResponseEntity<Suppliers>(supplierService.registerSupplier(supplier),HttpStatus.CREATED);
     }
 
     @GetMapping("/supplierDetails")

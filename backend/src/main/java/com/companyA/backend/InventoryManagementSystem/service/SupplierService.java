@@ -1,8 +1,14 @@
 package com.companyA.backend.InventoryManagementSystem.service;
 
+import com.companyA.backend.InventoryManagementSystem.model.InventoryManager;
 import com.companyA.backend.InventoryManagementSystem.model.Suppliers;
+import com.companyA.backend.InventoryManagementSystem.model.Warehouse;
 import com.companyA.backend.InventoryManagementSystem.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -11,6 +17,9 @@ public class SupplierService {
 
     @Autowired
     private SupplierRepository supplierRepository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     public Suppliers getSupplierById(String id) {
         return supplierRepository.findById(id)
@@ -21,9 +30,30 @@ public class SupplierService {
         return supplierRepository.findAll();
     }
 
-    public String registerSupplier(Suppliers supplier) {
-        supplierRepository.save(supplier); // Save supplier to database
-        return "Successfully Registered";
+    public Suppliers registerSupplier(Suppliers supplier) {
+        if(!supplierRepository.findAll().isEmpty()) {
+            String lastId = supplierRepository.findAll().get(supplierRepository.findAll().size()-1).getSupplierId();
+            int id = Integer.parseInt(lastId.substring(1));
+            id++;
+            supplier.setSupplierId("I"+String.format("%04d", id));
+        }
+        else {
+            supplier.setSupplierId("S0001");
+        }
+
+        Query query = new Query(Criteria.where("managerId").is(supplier.getManagerId()).and("listOfSuppliers.0").is(null));
+        boolean hasNullAtFirstIndex = mongoTemplate.exists(query, InventoryManager.class);
+
+        if (hasNullAtFirstIndex) {
+            Update update = new Update().set("listOfSuppliers.0", supplier.getSupplierId());
+            mongoTemplate.updateFirst(query, update, InventoryManager.class);
+        } else {
+            mongoTemplate.update(InventoryManager.class)
+                    .matching(Criteria.where("managerId").is(supplier.getManagerId()))
+                    .apply(new Update().push("listOfSuppliers", supplier.getSupplierId())).first();
+        }
+
+        return supplierRepository.save(supplier);
     }
 
     public void deleteSupplierById(String id) {
