@@ -33,7 +33,7 @@ public class StocksService{
             stocks.setId("I"+String.format("%04d", id));
         }
         else {
-            stocks.setId("S0001");
+            stocks.setId("I0001");
         }
         Query query = new Query(Criteria.where("warehouseId").is(stocks.getWarehouseId()).and("inventoryList.0").is(null));
         boolean hasNullAtFirstIndex = mongoTemplate.exists(query, Warehouse.class);

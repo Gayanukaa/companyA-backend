@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.util.List;
 
-
 @Data
 @Document(collection = "warehouse")
 public class Warehouse {

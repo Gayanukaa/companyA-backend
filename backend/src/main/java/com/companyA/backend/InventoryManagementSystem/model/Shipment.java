@@ -23,7 +23,7 @@ public class Shipment {
     @DocumentReference @NotBlank
     private InventoryManager sender;
     @DocumentReference @NotBlank
-    private Suppliers suppliers;
+    private Suppliers supplierId;
     @DocumentReference @NotBlank
     private Map<Stocks,Integer> orderList;
 }

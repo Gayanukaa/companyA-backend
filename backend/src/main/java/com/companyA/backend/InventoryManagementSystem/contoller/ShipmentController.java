@@ -15,9 +15,9 @@ import java.util.List;
 public class ShipmentController {
 
     @Autowired
-    private  ShipmentService shipmentService;
+    private ShipmentService shipmentService;
     @Autowired
-    private  FinanceSubsystemService financeSubsystemService;
+    private FinanceSubsystemService financeSubsystemService;
 
     @GetMapping("/getShipments")
     public ResponseEntity<List<Shipment>> getAllShipments() {

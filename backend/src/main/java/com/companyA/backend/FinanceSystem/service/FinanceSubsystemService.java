@@ -1,11 +1,12 @@
 package com.companyA.backend.FinanceSystem.service;
 
 import com.companyA.backend.InventoryManagementSystem.model.StockAlert;
-import com.companyA.backend.InventoryManagementSystem.model.Stocks;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
+@CrossOrigin
 @Service
 public class FinanceSubsystemService {
 
