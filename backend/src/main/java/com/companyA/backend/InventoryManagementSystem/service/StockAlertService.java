@@ -41,6 +41,15 @@ public class StockAlertService {
             }
             int reorderQuantity = stock.getThresholdQuantity() - stock.getQuantity();
             StockAlert stockAlert = new StockAlert();
+            if(!stockAlertRepository.findAll().isEmpty()) {
+                String lastId = stockAlertRepository.findAll().get(stockAlertRepository.findAll().size()-1).getAlertId();
+                int id = Integer.parseInt(lastId.substring(1));
+                id++;
+                stockAlert.setAlertId("A"+String.format("%04d", id));
+            }
+            else {
+                stockAlert.setAlertId("A0001");
+            }
             stockAlert.setItemId(stock.getId());
             stockAlert.setItemName(stock.getName());
             stockAlert.setReorderQuantity(reorderQuantity);

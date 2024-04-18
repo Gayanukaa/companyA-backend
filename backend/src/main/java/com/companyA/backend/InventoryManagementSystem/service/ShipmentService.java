@@ -50,27 +50,23 @@ public class ShipmentService {
         Shipment shipment = new Shipment();
         if(!shipmentRepository.findAll().isEmpty()) {
             String lastId = shipmentRepository.findAll().get(shipmentRepository.findAll().size()-1).getId();
-            int id = Integer.parseInt(lastId.substring(1));
+            int id = Integer.parseInt(lastId.substring(4));
             id++;
-            shipment.setId("S"+String.format("%04d", id));
+            shipment.setId("SHIP"+String.format("%04d", id));
         }
         else {
-            shipment.setId("S0001");
+            shipment.setId("SHIP0001");
         }
         shipment.setTrackingNumber("T"+String.format("%04d", new Random().nextInt(10000)));
         shipment.setSender(inventoryManagerRepository.findById(inventoryManagerId).orElse(null));
         shipment.setSupplierId(supplierRepository.findById(supplierId).orElse(null));
 
-        mongoTemplate.update(Suppliers.class)
-                .matching(Criteria.where("suppliers").is(shipment.getSupplierId()))
-                .apply(new Update().push("orders", shipment.getId())).first();
-
-        Map<Stocks,Integer> orderList = new HashMap<>();
+        Map<String,Integer> orderList = new HashMap<>();
         for (StockAlert stockAlert : stockAlerts) {
             Stocks stock = stocksService.getStockById(stockAlert.getItemId());
             stock.setStateOfProduct(StateOfProduct.valueOf("ORDERED"));
             stocksService.updateStock(stock);
-            orderList.put(stock, stock.getReorderQuantity());
+            orderList.put(stock.getId(), stock.getReorderQuantity());
         }
         shipment.setOrderList(orderList);
         return shipmentRepository.save(shipment);

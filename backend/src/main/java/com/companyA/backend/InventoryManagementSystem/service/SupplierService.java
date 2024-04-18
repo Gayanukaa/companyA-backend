@@ -35,7 +35,7 @@ public class SupplierService {
             String lastId = supplierRepository.findAll().get(supplierRepository.findAll().size()-1).getSupplierId();
             int id = Integer.parseInt(lastId.substring(1));
             id++;
-            supplier.setSupplierId("I"+String.format("%04d", id));
+            supplier.setSupplierId("S"+String.format("%04d", id));
         }
         else {
             supplier.setSupplierId("S0001");

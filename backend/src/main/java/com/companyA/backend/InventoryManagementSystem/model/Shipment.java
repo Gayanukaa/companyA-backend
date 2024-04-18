@@ -24,6 +24,6 @@ public class Shipment {
     private InventoryManager sender;
     @DocumentReference @NotBlank
     private Suppliers supplierId;
-    @DocumentReference @NotBlank
-    private Map<Stocks,Integer> orderList;
+    @NotBlank
+    private Map<String,Integer> orderList;
 }

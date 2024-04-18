@@ -2,6 +2,7 @@ package com.companyA.backend.InventoryManagementSystem.contoller;
 
 import com.companyA.backend.FinanceSystem.service.FinanceSubsystemService;
 import com.companyA.backend.InventoryManagementSystem.model.Shipment;
+import com.companyA.backend.InventoryManagementSystem.model.ShipmentRequest;
 import com.companyA.backend.InventoryManagementSystem.model.StockAlert;
 import com.companyA.backend.InventoryManagementSystem.service.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +41,10 @@ public class ShipmentController {
     }
 
     @PostMapping("/createShipment")
-    public ResponseEntity<Shipment> createShipment(@RequestBody List<StockAlert> stockAlerts, @RequestBody String inventoryManagerId, @RequestBody String supplierId) {
-        boolean paymentConfirmed = financeSubsystemService.sendRequestForPaymentConfirmation(stockAlerts);
+    public ResponseEntity<Shipment> createShipment(@RequestBody ShipmentRequest shipmentRequest) {
+        boolean paymentConfirmed = financeSubsystemService.sendRequestForPaymentConfirmation(shipmentRequest.getStockAlerts());
         if (paymentConfirmed) {
-            return new ResponseEntity<>(shipmentService.placeShipment(stockAlerts, inventoryManagerId, supplierId), HttpStatus.CREATED);
+            return new ResponseEntity<>(shipmentService.placeShipment(shipmentRequest.getStockAlerts(), shipmentRequest.getInventoryManagerId(), shipmentRequest.getSupplierId()), HttpStatus.CREATED);
         }
         else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
