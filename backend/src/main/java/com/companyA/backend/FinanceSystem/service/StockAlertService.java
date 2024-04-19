@@ -1,6 +1,6 @@
 package com.companyA.backend.FinanceSystem.service;
 
-import com.companyA.backend.FinanceSystem.model.Payment;
+
 import com.companyA.backend.FinanceSystem.model.StockAlert;
 import com.companyA.backend.FinanceSystem.model.Stocks;
 import com.companyA.backend.FinanceSystem.repository.PaymentRepo;
@@ -38,11 +38,6 @@ public class StockAlertService {
             return false;
         }
         else{
-            Payment cost = new Payment();
-            cost.setAmount(totalCost);
-            cost.setType("Outgoing");
-            cost.setStatus("Stock order successfully placed");
-            paymentRepo.save(cost);
             return true;
         }
     }
