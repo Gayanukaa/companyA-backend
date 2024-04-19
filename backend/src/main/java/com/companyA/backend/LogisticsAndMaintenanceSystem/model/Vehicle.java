@@ -22,11 +22,9 @@ public class Vehicle {
     private String vehicleId;
     private String model;
     private String location;
+    @lombok.Getter
     private boolean vehicleStatus;
     private String maintenanceDate;
     private String fuelLevel;
 
-    public boolean getVehicleStatus() {
-        return vehicleStatus;
-    }
 }
