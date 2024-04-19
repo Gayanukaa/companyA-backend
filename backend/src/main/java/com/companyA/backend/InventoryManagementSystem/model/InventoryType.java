@@ -1,7 +1,6 @@
 package com.companyA.backend.InventoryManagementSystem.model;
 
-import lombok.Data;
-
-@Data
-public class ModelClass5 {
+public enum InventoryType {
+    STOCKS,
+    SUPPLIES
 }
