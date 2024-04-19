@@ -20,12 +20,12 @@ public class CourseController {
     }
 
     @GetMapping("/api/tms/courses")
-    List<Course> getAllUsers(){
+    List<Course> getAllCourses(){
         return courseRepository.findAll();
     }
 
     @GetMapping("/api/tms/course/{id}")
-    Course getUserById(@PathVariable String id){
+    Course getCourseById(@PathVariable String id){
         return courseRepository.findById(id)
                 .orElseThrow(()->new UserNotFoundException(id));
     }
