@@ -1,8 +1,8 @@
 package com.companyA.backend.HumanResourceSystem.model;
 
 import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -33,8 +33,9 @@ public class EmployeeDetailModel {
     private double salary;
     private boolean permanentStaff;
     private String insuranceCategory;
-    private String trainingStatus;
     private boolean isActive = true;
 
+    @DBRef
+    private TrainingManagementModel trainingManagement;
 
 }
