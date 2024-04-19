@@ -23,6 +23,8 @@ public class GenerateReportService {
     @Autowired
     private StocksRepository stocksRepository;
 
+
+
     @Autowired
     private WarehouseRepository warehouseRepository;
 
@@ -31,12 +33,17 @@ public class GenerateReportService {
     @Autowired
     private GenerateReportRepository generateReportRepository;
 
-    private List<Stocks> stocksList;
+
+    private List<Stocks> stocksList ;
+
 
     @PostConstruct
     public void init() {
         stocksList = stocksRepository.findAll();
     }
+
+
+
 
     public List<GenerateReport> reportDetails(){
         return generateReportRepository.findAll();
@@ -83,7 +90,7 @@ public class GenerateReportService {
 
     //Find which item has the most quantity in each warehouse
     private Map<String, List<String>> mostQuantity() {
-        //List<Stocks> stocksList = stocksRepository.findAll();
+
 
         // Create a map to store most sold items by warehouse
         Map<String, List<String>> mostRemainingItemsByWarehouse = new HashMap<>();
@@ -113,7 +120,7 @@ public class GenerateReportService {
     //Find the total worth of stock in each warehouse
 
     private Map<String, Double> findWorth() {
-        //List<Inventory> inventoryList = inventoryRepository.findAll();
+
         Map<String, Double> warehouseWorth = new HashMap<>();
 
         for (Stocks stocks : stocksList) {
@@ -122,6 +129,8 @@ public class GenerateReportService {
             warehouseWorth.merge(warehouseId, totalItemRevenue, Double::sum);
         }
 
+
+
         return warehouseWorth;
     }
 
@@ -129,6 +138,7 @@ public class GenerateReportService {
     //Find what are the items each warehouse contains
     private Map<String, Map<String, String>> findItemsInWarehouse() {
         //List<Inventory> inventoryList = inventoryRepository.findAll();
+
         Map<String, Map<String, String>> itemsInWarehouse = new HashMap<>();
 
         for (Stocks stocks : stocksList) {

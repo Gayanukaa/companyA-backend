@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/inventoryManager")
+@RequestMapping("/api/v1/inventoryManager")
 public class InventoryManagerController {
     @Autowired
     private InventoryManagerService inventoryManagerService;
@@ -34,16 +34,11 @@ public class InventoryManagerController {
         return inventoryManagerService.getInventoryManagerById(id);
     }
 
-
-    @DeleteMapping("/deleteManager/{id}")
-    public ResponseEntity<String> deleteInventoryManagerById(@PathVariable String id) {
-        try {
-            inventoryManagerService.deleteInventoryManagerById(id);
-            return ResponseEntity.ok("Inventory Manager deleted successfully.");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    @DeleteMapping("/deleteManager/{managerId}")
+    public ResponseEntity<String> deleteManager(@PathVariable String managerId) {
+        return new ResponseEntity<String>(inventoryManagerService.deleteInventoryManagerById(managerId),HttpStatus.OK);
     }
+
     @GetMapping("/getReport")
     public String getReport(GenerateReport report){
         return generateReportService.createReport(report);

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,10 +19,18 @@ public class InventoryManagerService {
     @Autowired
     private InventoryManagerRepository inventoryManagerRepository;
 
+
     public InventoryManager getInventoryManagerById(String id) {
         return inventoryManagerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Inventory Manager not found"));
     }
+    /*
+    public InventoryManager getInventoryManagerById(String id) {
+        return inventoryManagerRepository.findById(id).orElse(null);
+    }
+    */
+
+
 
     public List<InventoryManager> inventoryManagerDetais(){
         return inventoryManagerRepository.findAll();
@@ -33,7 +42,7 @@ public class InventoryManagerService {
             String lastId = inventoryManagerRepository.findAll().get(inventoryManagerRepository.findAll().size()-1).getManagerId();
             int id = Integer.parseInt(lastId.substring(1));
             id++;
-            inventoryManager.setManagerId("M"+String.format("%04d", id));
+            inventoryManager.setManagerId("I"+String.format("%04d", id));
         }
         else {
             inventoryManager.setManagerId("M0001");
@@ -43,7 +52,7 @@ public class InventoryManagerService {
     }
 
 
-
+/*
     public void deleteInventoryManagerById(String id) {
         // Check if the Inventory Manager with ID exists
         if (inventoryManagerRepository.existsById(id)) {
@@ -53,6 +62,16 @@ public class InventoryManagerService {
             // If the Inventory Manager does not exist, throw an exception
             throw new IllegalArgumentException("Inventory Manager with ID " + id + " does not exist.");
         }
+    }
+    */
+
+    public String deleteInventoryManagerById(String managerId) {
+        InventoryManager manager = inventoryManagerRepository.findById(managerId).orElse(null);
+        if (manager == null) {
+            return HttpStatus.NOT_FOUND.toString();
+        }
+        inventoryManagerRepository.deleteById(managerId);
+        return HttpStatus.OK.toString();
     }
 
 }
