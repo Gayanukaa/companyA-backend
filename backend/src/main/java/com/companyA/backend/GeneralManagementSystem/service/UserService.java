@@ -46,29 +46,40 @@ public class UserService {
 
 
     // User Authentication using Generic Type
-    public <T extends User> ResponseEntity <Map<String, String>> authenticateUser(UserRepository<T> userRepository,
-                                                                                  String userEmail,
-                                                                                  String userPassword,
-                                                                                  String userRole) {
-        T relatedUser = userRepository.findByEmail(userEmail);
+    // User Authentication using Generic Type
+    public <T extends User> ResponseEntity<Map<String, String>> authenticateUser(UserRepository<T> userRepository,
+                                                                                 String userEmail,
+                                                                                 String userPassword,
+                                                                                 String userRole) {
+        try {
+            T relatedUser = userRepository.findByEmail(userEmail);
 
-        if (relatedUser != null) {
-            String encodedPassword = relatedUser.getPassword();
-            boolean isPasswordCorrect = passwordEncoder.matches(userPassword, encodedPassword);
+            if (relatedUser != null) {
+                String encodedPassword = relatedUser.getPassword();
+                boolean isPasswordCorrect = passwordEncoder.matches(userPassword, encodedPassword);
 
-            if (isPasswordCorrect) {
-                String returnRole = relatedUser.getRole();
-                String successMessage =  "Successfully Logged in";
+                if (isPasswordCorrect) {
+                    String returnRole = relatedUser.getRole();
+                    String successMessage = "Successfully Logged in";
 
-                if (returnRole != null) {
-                    return sendResponseMessage(successMessage, returnRole, HttpStatus.OK);
+                    if (returnRole != null) {
+                        return sendResponseMessage(successMessage, returnRole, HttpStatus.OK);
+                    }
                 }
             }
-        }
 
-        String errorMessage = "Authentication failed for " + userRole;
-        return sendResponseMessage(errorMessage, null, HttpStatus.BAD_REQUEST);
+            String errorMessage = "Authentication failed for " + userRole;
+            return sendResponseMessage(errorMessage, null, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            // Log the exception for debugging purposes
+            e.printStackTrace();
+
+            // Handle the exception and return an appropriate response
+            String errorMessage = "An error occurred during authentication";
+            return sendResponseMessage(errorMessage, null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
 
 
     // Separate Method for create the Response
