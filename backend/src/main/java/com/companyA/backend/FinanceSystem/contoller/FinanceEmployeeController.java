@@ -1,7 +1,7 @@
 package com.companyA.backend.FinanceSystem.contoller;
 
 import com.companyA.backend.FinanceSystem.model.EmployeeSalary;
-import com.companyA.backend.FinanceSystem.service.EmployeeService;
+import com.companyA.backend.FinanceSystem.service.FinanceEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,22 +13,22 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-public class EmployeeController {
+public class FinanceEmployeeController {
     @Autowired
-    private EmployeeService employeeService;
+    private FinanceEmployeeService financeEmployeeService;
 
     @GetMapping("/getEmployeeSalary")
     public List<EmployeeSalary> getAllEmployees() {
-        return employeeService.getAllEmployee();
+        return financeEmployeeService.getAllEmployee();
     }
     @GetMapping("/getEmployeeSalary/{employeeId}")
     public EmployeeSalary getEmployeeSalary(@PathVariable int employeeId) {
-        return employeeService.getEmployee(employeeId);
+        return financeEmployeeService.getEmployee(employeeId);
     }
 
     @PostMapping("/SaveEmployeeSalary")
     public ResponseEntity<Map<String, String>> setEmployeeSalary(@RequestBody EmployeeSalary employee) {
-        employeeService.addEmployee(employee);
+        financeEmployeeService.addEmployee(employee);
 
         Map<String, String> response = new HashMap<>();
         response.put("message", "Employee Salary is Successfully Added");
@@ -37,7 +37,7 @@ public class EmployeeController {
 
     @PutMapping("/updateSalary")
     public ResponseEntity<Map<String, String>> updateEmployeeSalary(@RequestBody EmployeeSalary employeeSalary){
-        employeeService.updateEmployee(employeeSalary);
+        financeEmployeeService.updateEmployee(employeeSalary);
 
         Map<String, String> response = new HashMap<>();
         response.put("message", "Employee Salary is Successfully Updated");

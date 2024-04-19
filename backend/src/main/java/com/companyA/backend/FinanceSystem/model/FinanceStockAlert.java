@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "StockAlert")
-public class StockAlert {
+public class FinanceStockAlert {
     @Id
     private String alertId;
     private String itemId;

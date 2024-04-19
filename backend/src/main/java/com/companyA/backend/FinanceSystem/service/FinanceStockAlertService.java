@@ -1,7 +1,7 @@
 package com.companyA.backend.FinanceSystem.service;
 
 
-import com.companyA.backend.FinanceSystem.model.StockAlert;
+import com.companyA.backend.FinanceSystem.model.FinanceStockAlert;
 import com.companyA.backend.FinanceSystem.model.Stocks;
 import com.companyA.backend.FinanceSystem.repository.PaymentRepo;
 import com.companyA.backend.FinanceSystem.repository.StocksRepo;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class StockAlertService {
+public class FinanceStockAlertService {
 
     @Autowired
     private StocksRepo stocksRepo;
@@ -20,11 +20,11 @@ public class StockAlertService {
     @Autowired
     private PaymentRepo paymentRepo;
 
-    public boolean sendRequestForPaymentConfirmation(List<StockAlert> stockAlerts){
+    public boolean sendRequestForPaymentConfirmation(List<FinanceStockAlert> financeStockAlerts){
         double totalCost = 0;
         double unitPrice;
-        for (StockAlert stockAlert : stockAlerts) {
-            Optional<Stocks> stock = stocksRepo.findById(stockAlert.getItemId());
+        for (FinanceStockAlert financeStockAlert : financeStockAlerts) {
+            Optional<Stocks> stock = stocksRepo.findById(financeStockAlert.getItemId());
 
             Stocks item = null;
 
@@ -32,7 +32,7 @@ public class StockAlertService {
                 item = stock.get();
             }
             unitPrice = item.getPrice();
-            totalCost = totalCost + stockAlert.getReorderQuantity() * unitPrice;
+            totalCost = totalCost + financeStockAlert.getReorderQuantity() * unitPrice;
         }
         if(totalCost> 10000){
             return false;
@@ -41,5 +41,4 @@ public class StockAlertService {
             return true;
         }
     }
-
 }
