@@ -9,6 +9,8 @@ import com.companyA.backend.QualityAssuaranceSystem.repository.SampleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -68,7 +70,6 @@ public class SampleService {
     public String generateReport() {
         List<Sample> samples = getAllSamples();
         StringBuilder reportContent = new StringBuilder();
-        reportContent.append("Samples Report:\n");
 
         for (Sample sample : samples) {
             reportContent.append("Sample ID: ").append(sample.getId()).append("\n");
@@ -78,10 +79,15 @@ public class SampleService {
             reportContent.append("\n");
         }
 
-        String reportId = UUID.randomUUID().toString().substring(0, 8);
+        String reportId = "S" + UUID.randomUUID().toString().substring(0, 6);
 
         Report report = new Report();
         report.setId(reportId);
+        report.setReportType("Sample");
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = now.format(formatter);
+        report.setGeneratedDateAndTime(formattedDateTime);
         report.setReportContent(reportContent.toString());
         reportRepository.save(report);
 
