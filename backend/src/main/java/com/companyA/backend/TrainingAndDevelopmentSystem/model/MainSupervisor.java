@@ -11,6 +11,19 @@ public class MainSupervisor {
     private String mSupervisorName;
     private String mPassword;
 
+    public void viewDevelopmentStage(int projectCode, int stage){
+        System.out.println(projectCode+" ,"+stage+" monitored successfully");
+    }
+
+    public void takeActionsManually(int projectCode,boolean check){
+        if (check){
+            System.out.println(projectCode+" manually checked complete");
+        }
+        else{
+            System.out.println("waiting for check");
+        }
+    }
+
     public String getId() {
         return id;
     }
