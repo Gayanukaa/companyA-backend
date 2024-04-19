@@ -10,6 +10,13 @@ public class Training {
     private int duration ;
     private double cost;
 
+    public  String enroll(int employeeId){
+        return employeeId+" enrolled successfully";
+    }
+
+    public String complete(int employeeId){
+        return employeeId+ "completed successfully";
+    }
     public String getId() {
         return id;
     }
