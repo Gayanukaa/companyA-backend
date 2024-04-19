@@ -11,7 +11,7 @@ import java.util.Optional;
 
 // Service class for handling MaintenanceRequest entities
 @Service
-@AllArgsConstructor
+
 public class MaintenanceRequestService {
     private MaintenanceRequestRepository maintenanceRequestRepository;
 

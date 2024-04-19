@@ -11,7 +11,6 @@ import java.util.List;
 
 // Service class to interact with Order entities
 @Service
-@AllArgsConstructor
 public class OrderService {
 
     private OrderRepository orderRepository;

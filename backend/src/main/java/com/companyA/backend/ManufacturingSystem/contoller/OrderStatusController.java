@@ -5,19 +5,16 @@ import com.companyA.backend.ManufacturingSystem.service.OrderStatusService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@AllArgsConstructor
+@RequestMapping("/api/production/task")
 public class OrderStatusController {
 
     private OrderStatusService orderStatusService;
 
     // Endpoint to retrieve order status by order ID
-    @GetMapping("/api/production/task/updateOrderStatus")
+    @GetMapping("/updateGetOrderStatus")
     public ResponseEntity<Object> getOrderStatus(@RequestParam("order_ID") String order_ID) {
         // Call the service to get order status
         OrderStatus response = orderStatusService.getOrderStatus(order_ID);
@@ -31,7 +28,7 @@ public class OrderStatusController {
     }
 
     // Endpoint to update order status by order ID
-    @PostMapping("/api/production/task/updateOrderStatus")
+    @PostMapping("/updatePostOrderStatus")
     public ResponseEntity<String> updateOrderStatus(@RequestParam("order_ID") String order_ID, @RequestParam("status") String status) {
         // Call the service to update order status
         OrderStatus response = orderStatusService.updateOrderStatus(order_ID, status);

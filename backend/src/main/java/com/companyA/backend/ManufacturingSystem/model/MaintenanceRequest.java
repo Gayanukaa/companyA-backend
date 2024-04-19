@@ -1,8 +1,6 @@
 package com.companyA.backend.ManufacturingSystem.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,21 +9,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "MaintenanceRequests")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Setter
 public class MaintenanceRequest {
     @Id
     private ObjectId id;           // Unique identifier for the maintenance request
     private Integer machineId;     // ID of the machine associated with the maintenance request
     private String maintenanceType;// Type of maintenance requested
     private String date;           // Date of the maintenance request
-
-    public Integer getMachineId() {
-        return machineId;               //Retrieves the ID of the machine associated with the maintenance request.
-    }
-
-    public String getMaintenanceType() {
-        return maintenanceType;         //Retrieves the type of maintenance requested.
-    }
 
     public void setDate(String string) {
         this.date = date;               //Sets the date of the maintenance request.

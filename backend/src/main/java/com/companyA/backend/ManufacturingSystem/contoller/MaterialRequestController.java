@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 // Endpoint to add a new material request
 @RestController
 @RequestMapping("/api/inventory")
-@AllArgsConstructor
+
 public class MaterialRequestController {
     private MaterialRequestService materialRequestService;
 

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 // Controller class for handling ProductionLine requests
 @RestController
 @RequestMapping("/api/production/line")
-@AllArgsConstructor
+
 public class ProductionLineController {
     private ProductionDataService productionDataService;
 

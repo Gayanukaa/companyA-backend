@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 // Controller class for handling MaintenanceRequest requests
 @RestController
 @RequestMapping("/api/maintenance")
-@AllArgsConstructor
 
 public class MaintenanceRequestController {
     private MaintenanceRequestService maintenanceRequestService;

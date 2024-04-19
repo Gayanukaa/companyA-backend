@@ -10,7 +10,6 @@ import java.util.Optional;
 
 // Service class for handling MaterialRequest entities
 @Service
-@AllArgsConstructor
 public class MaterialRequestService {
     private MaterialRequestRepository materialRequestRepository;
 

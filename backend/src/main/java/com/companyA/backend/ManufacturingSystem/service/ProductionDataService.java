@@ -9,7 +9,7 @@ import java.util.List;
 
 // Service class to interact with ProductionData entities
 @Service
-@AllArgsConstructor
+
 public class ProductionDataService {
 
     private ProductionDataRepository productionDataRepository;

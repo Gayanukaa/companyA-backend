@@ -3,11 +3,8 @@ package com.companyA.backend.ManufacturingSystem.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-// Represents an employee entity
 @Document(collection = "Employee")
 @Data
 @AllArgsConstructor

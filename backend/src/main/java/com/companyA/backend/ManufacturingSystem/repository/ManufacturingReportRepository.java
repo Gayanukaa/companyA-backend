@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface ReportRepository extends MongoRepository<Report, String> {
+public interface ManufacturingReportRepository extends MongoRepository<Report, String> {
     List<Report> findByCreatedBy(String createdBy);
 
 }
