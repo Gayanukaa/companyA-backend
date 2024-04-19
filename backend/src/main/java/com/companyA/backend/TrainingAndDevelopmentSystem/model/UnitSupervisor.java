@@ -10,7 +10,7 @@ public class UnitSupervisor {
     @Id
     private String id;
     private int uSupervisorId;
-    private String uSupervisorName;
+    private String uSupervisorEmail;
     private String uPassword;
 
     public void updateStage(int projectcode, int stage){
@@ -33,12 +33,12 @@ public class UnitSupervisor {
         this.uSupervisorId = uSupervisorId;
     }
 
-    public String getuSupervisorName() {
-        return uSupervisorName;
+    public String getuSupervisorEmail() {
+        return uSupervisorEmail;
     }
 
-    public void setuSupervisorName(String uSupervisorName) {
-        this.uSupervisorName = uSupervisorName;
+    public void setuSupervisorEmail(String uSupervisorEmail) {
+        this.uSupervisorEmail = uSupervisorEmail;
     }
 
     public String getuPassword() {
