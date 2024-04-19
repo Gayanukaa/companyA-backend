@@ -1,5 +1,6 @@
 package com.companyA.backend.TrainingAndDevelopmentSystem.contoller;
 
+import com.companyA.backend.TrainingAndDevelopmentSystem.exception.UserNotFoundException;
 import com.companyA.backend.TrainingAndDevelopmentSystem.model.MainSupervisor;
 import com.companyA.backend.TrainingAndDevelopmentSystem.repository.MainSupervisorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +56,14 @@ public class MainSupervisorController {
         public void setPassword(String password) {
             this.mPassword = password;
         }
+    }
+
+    @DeleteMapping("/api/tms/main-supervisor/delete/{id}")
+    String deleteMainSupervisor(@PathVariable String id){
+        if(!mainSupervisorRepository.existsById(id)){
+            throw new UserNotFoundException(id);
+        }
+        mainSupervisorRepository.deleteById(id);
+        return "Main Supervisor with "+id+" has been deleted successfully";
     }
 }
