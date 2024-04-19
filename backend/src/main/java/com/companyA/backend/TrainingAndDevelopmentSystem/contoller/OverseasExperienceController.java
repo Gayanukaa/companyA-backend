@@ -21,7 +21,7 @@ public class OverseasExperienceController {
         return overseasExperienceRepository.save(newCourse);
     }
 
-    @GetMapping("/api/tms/courses(overseas)")
+    @GetMapping("/api/tms/overseas")
     List<OverseasExperience> getAllCourses(){
         return overseasExperienceRepository.findAll();
     }
