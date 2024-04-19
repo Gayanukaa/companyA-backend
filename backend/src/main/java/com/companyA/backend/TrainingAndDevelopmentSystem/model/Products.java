@@ -10,6 +10,15 @@ public class Products {
     private String productName;
     private String productDetails;
 
+    public boolean productCompleted(String productId, boolean qaApproval){
+        if (qaApproval){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public String getProductId() {
         return productId;
     }
