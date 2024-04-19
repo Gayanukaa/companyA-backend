@@ -29,6 +29,28 @@ public class CourseController {
         return courseRepository.findById(id)
                 .orElseThrow(()->new UserNotFoundException(id));
     }
+    @PutMapping("/course/{id}")
+    Course updateCourse(@RequestBody Course newUser,@PathVariable String id){
+        return courseRepository.findById(id)
+                .map(user -> {
+                    user.setCourseName(newUser.getCourseName());
+                    user.setInstructor(newUser.getInstructor());
+                    user.setLink(newUser.getLink());
+                    user.setDetails(newUser.getDetails());
+                    user.setCourseId(newUser.getCourseId());
+                    return courseRepository.save(user);
+                }).orElseThrow(()->new UserNotFoundException(id));
+    }
+
+    @DeleteMapping("/course/{id}")
+    String deleteCourse(@PathVariable String id){
+        if(!courseRepository.existsById(id)){
+            throw new UserNotFoundException(id);
+        }
+        courseRepository.deleteById(id);
+        return "Course with "+id+" has been deleted successfully";
+    }
+
 
 
 }
