@@ -76,7 +76,7 @@ public class StockController{
         }
     }
 
-    @GetMapping("/stateofproduct/{value}")
+    @GetMapping("/stateOfproduct/{value}")
     public ResponseEntity <List<Stocks>> getStockByStateOfProduct(@PathVariable String value) {
         StateOfProduct valueNew = StateOfProduct.valueOf(value);
         return new ResponseEntity<List<Stocks>>(stocksService.getStockByStateOfProduct(valueNew), HttpStatus.OK);

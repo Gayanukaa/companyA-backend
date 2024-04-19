@@ -5,12 +5,8 @@ import com.companyA.backend.InventoryManagementSystem.repository.InventoryManage
 import com.companyA.backend.InventoryManagementSystem.repository.ShipmentRepository;
 import com.companyA.backend.InventoryManagementSystem.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
-import java.security.PrivateKey;
 import java.util.*;
 
 @Service
@@ -28,7 +24,6 @@ public class ShipmentService {
     @Autowired
     private StocksService stocksService;
 
-    private MongoTemplate mongoTemplate;
     @Autowired
     private StockAlertService stockAlertService;
 

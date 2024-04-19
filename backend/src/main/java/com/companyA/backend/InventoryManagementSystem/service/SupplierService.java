@@ -2,7 +2,6 @@ package com.companyA.backend.InventoryManagementSystem.service;
 
 import com.companyA.backend.InventoryManagementSystem.model.InventoryManager;
 import com.companyA.backend.InventoryManagementSystem.model.Suppliers;
-import com.companyA.backend.InventoryManagementSystem.model.Warehouse;
 import com.companyA.backend.InventoryManagementSystem.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;

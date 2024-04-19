@@ -1,10 +1,7 @@
 package com.companyA.backend.InventoryManagementSystem.contoller;
 
-import com.companyA.backend.InventoryManagementSystem.model.StockAlert;
 import com.companyA.backend.InventoryManagementSystem.service.StockAlertService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

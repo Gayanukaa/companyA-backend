@@ -11,6 +11,4 @@ public class ShipmentRequest {
     private List<StockAlert> stockAlerts;
     private String inventoryManagerId;
     private String supplierId;
-
-    // Getters and setters
 }
