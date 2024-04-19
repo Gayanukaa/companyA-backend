@@ -10,8 +10,16 @@ public class MainSupervisor {
     @Id
     private String id;
     private int mSupervisorId;
-    private String mSupervisorName;
+    private String mSupervisorEmail;
     private String mPassword;
+
+    public String getmSupervisorEmail() {
+        return mSupervisorEmail;
+    }
+
+    public void setmSupervisorEmail(String mSupervisorEmail) {
+        this.mSupervisorEmail = mSupervisorEmail;
+    }
 
     public void viewDevelopmentStage(int projectCode, int stage){
         System.out.println(projectCode+" ,"+stage+" monitored successfully");
@@ -42,13 +50,7 @@ public class MainSupervisor {
         this.mSupervisorId = mSupervisorId;
     }
 
-    public String getmSupervisorName() {
-        return mSupervisorName;
-    }
 
-    public void setmSupervisorName(String mSupervisorName) {
-        this.mSupervisorName = mSupervisorName;
-    }
 
     public String getmPassword() {
         return mPassword;
