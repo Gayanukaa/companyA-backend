@@ -16,11 +16,27 @@ public class ProductDevelopment {
     private int progress;
     private String prototypeType;
 
- 
+    private int getComplexityValue(String complexity) {
+        switch (complexity.toLowerCase()) {
+            case "low":
+                return 1;
+            case "medium":
+                return 3;
+            case "high":
+                return 5;
+            default:
+                return 0;
+        }
+    }
 
-    public void notifyQA() {
+    public void developProduct(int projectCode, String complexity) {
+        int complexScale=getComplexityValue(complexity);
+        System.out.println(projectCode+", "+" add to develop successfully with complex scale "+ complexScale);
+    }
+
+    public void notifyQA(int projectCode) {
         // Simulate notifying QA team
-        System.out.println("QA team notified for project: " + projectName);
+        System.out.println("QA team notified for project: " + projectCode);
     }
 
     public String getId() {
