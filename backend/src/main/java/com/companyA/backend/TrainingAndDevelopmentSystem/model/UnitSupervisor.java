@@ -11,6 +11,10 @@ public class UnitSupervisor {
     private String uSupervisorName;
     private String uPassword;
 
+    public void updateStage(int projectcode, int stage){
+        System.out.println(projectcode+", "+stage+" completed successfully");
+    }
+
     public String getId() {
         return id;
     }
