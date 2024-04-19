@@ -1,7 +1,10 @@
 package com.companyA.backend.LogisticsAndMaintenanceSystem.service;
 
-import org.springframework.stereotype.Service;
+import com.companyA.backend.LogisticsAndMaintenanceSystem.repository.MachineryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+/*import org.springframework.stereotype.Service;
 
-@Service
+@Service*/
 public class SampleService6 {
+
 }
