@@ -1,7 +1,6 @@
 package com.companyA.backend.LogisticsAndMaintenanceSystem.contoller;
 
 import com.companyA.backend.LogisticsAndMaintenanceSystem.model.Vehicle;
-import com.companyA.backend.LogisticsAndMaintenanceSystem.repository.VehicleRepository;
 import com.companyA.backend.LogisticsAndMaintenanceSystem.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,13 +18,10 @@ public class VehicleController {
 
     @Autowired
     private VehicleService vehicleService;
-    @Autowired
-    private VehicleRepository vehicleRepository;
-    private String id;
 
     @GetMapping("/getVehicles")
     public ResponseEntity<List<Vehicle>> getAllVehicles() {
-        return new ResponseEntity<List<Vehicle>>(vehicleService.allVehicle(), HttpStatus.OK);
+        return new ResponseEntity<>(vehicleService.allVehicle(), HttpStatus.OK);
     }
 
     @GetMapping("/byId/getVehicle/{vehicleId}")
