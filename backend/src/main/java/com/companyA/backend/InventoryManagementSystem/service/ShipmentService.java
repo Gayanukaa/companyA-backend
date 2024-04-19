@@ -64,6 +64,7 @@ public class ShipmentService {
             stock.setStateOfProduct(StateOfProduct.valueOf("ORDERED"));
             stocksService.updateStock(stock);
             orderList.put(stock.getId(), stock.getReorderQuantity());
+            stockAlertService.deleteStockAlert(stockAlert.getAlertId());
         }
         shipment.setOrderList(orderList);
         return shipmentRepository.save(shipment);
@@ -75,11 +76,10 @@ public class ShipmentService {
             Stocks stock = stocksService.getStockById(entry.getKey());
             stock.setQuantity(stock.getQuantity() + entry.getValue());
             stock.setStateOfProduct(StateOfProduct.valueOf("IN_STOCK"));
-            StockAlert stockAlert = stockAlertService.getStockAlertByItemId(entry.getKey());
-            stockAlertService.deleteStockAlert(stockAlert.getAlertId());
             stocksService.updateStock(stock);
             stocks.add(stock);
         }
+        shipmentRepository.deleteById(shipment.getId());
         return stocks;
     }
 }
