@@ -34,8 +34,16 @@ public class ProductDevelopment {
         System.out.println(projectCode+", "+" add to develop successfully with complex scale "+ complexScale);
     }
 
+    public void improveProcess(int pastDevelopmentTime,double improvementPercentage) {
+
+        int suggestedImprovement = (int) (pastDevelopmentTime * improvementPercentage);
+
+        System.out.println("Analyzing development process for project:");
+        System.out.println("Past development time: " + pastDevelopmentTime + " hours");
+        System.out.println("Suggested improvement: " + suggestedImprovement + " hours");
+    }
+
     public void notifyQA(int projectCode) {
-        // Simulate notifying QA team
         System.out.println("QA team notified for project: " + projectCode);
     }
 
