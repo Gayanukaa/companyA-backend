@@ -20,13 +20,13 @@ import java.util.List;
 @Setter
 public class InventoryManager {
     @Id@NotBlank
-    private String managerId;
+    private String managerId; //Manager Id
     @NotBlank
-    private String managerName;
+    private String managerName; //Manager name
     @NotBlank
-    private String managerEmail;
+    private String managerEmail; //Manager email
     @NotBlank
-    private String managerPhone;
+    private String managerPhone; //Manager phone number
     @DocumentReference
     private List<Suppliers> listOfSuppliers; // List to store list of suppliers offered
 }
