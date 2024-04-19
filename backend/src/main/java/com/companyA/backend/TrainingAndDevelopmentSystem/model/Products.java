@@ -2,7 +2,10 @@ package com.companyA.backend.TrainingAndDevelopmentSystem.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 @Data
+@Document(collection = "Products")
 public class Products {
     @Id
     private String productId;

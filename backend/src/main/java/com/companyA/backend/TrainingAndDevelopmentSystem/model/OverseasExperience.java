@@ -1,7 +1,9 @@
 package com.companyA.backend.TrainingAndDevelopmentSystem.model;
 
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "OverseasExperience")
 @Data
 public class OverseasExperience extends Training{
     private String companyName;

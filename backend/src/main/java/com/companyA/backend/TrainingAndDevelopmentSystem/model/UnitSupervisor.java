@@ -2,7 +2,9 @@ package com.companyA.backend.TrainingAndDevelopmentSystem.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "UnitSupervisor")
 @Data
 public class UnitSupervisor {
     @Id
