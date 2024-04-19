@@ -17,7 +17,7 @@ public class ProductDevelopment {
     private boolean stageThree;
     private int stageCompleted;
     private int progress;
-    private String prototypeType;
+
 
     private int getComplexityValue(String complexity) {
         switch (complexity.toLowerCase()) {
@@ -123,11 +123,5 @@ public class ProductDevelopment {
         this.progress = progress;
     }
 
-    public String getPrototypeType() {
-        return prototypeType;
-    }
 
-    public void setPrototypeType(String prototypeType) {
-        this.prototypeType = prototypeType;
-    }
 }
