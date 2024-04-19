@@ -31,7 +31,7 @@ public class ReportService {
         return reportRepository.findAll();
     }
 
-    public Optional<Report> getReportById(String id) {
+    public Optional<Report> getSampleReportById(String id) {
         return reportRepository.findById(id);
     }
 

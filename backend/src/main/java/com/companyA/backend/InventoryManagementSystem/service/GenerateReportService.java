@@ -78,7 +78,7 @@ public class GenerateReportService {
     }
 
     //Get a specific report by report Id
-    public GenerateReport getReportById(String id) {
+    public GenerateReport getInvReportById(String id) {
         return generateReportRepository.findById(id).orElse(null);
     }
 

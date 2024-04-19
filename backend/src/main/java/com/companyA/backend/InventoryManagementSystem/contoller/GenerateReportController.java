@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/reports")
+@RequestMapping("/api/v1/InvReports")
 public class GenerateReportController {
     @Autowired
     private GenerateReportService generateReportService;
@@ -30,8 +30,8 @@ public class GenerateReportController {
 
     //Get a specific report by report Id
     @GetMapping("/getReport/{id}")
-    public GenerateReport getReportById(@PathVariable String id){
-        return generateReportService.getReportById(id);
+    public GenerateReport getInvReportById(@PathVariable String id){
+        return generateReportService.getInvReportById(id);
     }
 
     //Delete a report by report Id

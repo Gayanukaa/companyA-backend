@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/reports")
+@RequestMapping("/api/v1/SmpReports")
 public class ReportController {
 
     @Autowired
@@ -25,8 +25,8 @@ public class ReportController {
     }
 
     @GetMapping("/getReport/{id}")
-    public Optional<Report> getReportById(@PathVariable String id) {
-        return reportService.getReportById(id);
+    public Optional<Report> getSampleReportById(@PathVariable String id) {
+        return reportService.getSampleReportById(id);
     }
 
     @PostMapping("/prototypes/generate")
