@@ -1,7 +1,6 @@
 package com.companyA.backend.InventoryManagementSystem.repository;
 
 import com.companyA.backend.InventoryManagementSystem.model.Stocks;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 

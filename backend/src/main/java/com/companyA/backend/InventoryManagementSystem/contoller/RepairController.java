@@ -22,12 +22,8 @@ public class RepairController {
     //Ok
     @GetMapping("/getDamagedItems")
     public ResponseEntity<List<String>> getIdsOfDamagedProducts() {
-        try {
-            List<String> damagedProductIds = repairService.getIdsOfDamagedProducts();
-            return ResponseEntity.ok(damagedProductIds);
-        } catch (IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonList("No items to repair."));
-        }
+        List<String> damagedProductIds = repairService.getIdsOfDamagedProducts();
+        return ResponseEntity.ok(damagedProductIds);
     }
 
 

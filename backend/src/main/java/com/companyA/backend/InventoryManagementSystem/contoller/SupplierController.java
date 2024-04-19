@@ -1,6 +1,5 @@
 package com.companyA.backend.InventoryManagementSystem.contoller;
 
-import com.companyA.backend.InventoryManagementSystem.model.Stocks;
 import com.companyA.backend.InventoryManagementSystem.model.Suppliers;
 import com.companyA.backend.InventoryManagementSystem.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
