@@ -7,27 +7,16 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
-@Document (collection = "Machinery")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
-public class Machinery {
+@Document(collection = "Vendor")
+public class Vendor {
     @Id
     private ObjectId id;
-    private String machineId;
-    private int machineModel;
-    private boolean machineStatus;
-    private List<String> maintenance;
-    private String currentJob;
-    private String machineName;
-
-    public boolean getMachineStatus() {
-        return machineStatus;
-    }
-
-
-
+    private String vendorId;
+    private String name;
+    private String contactNumber;
+    private String address;
+    private String email;
 }

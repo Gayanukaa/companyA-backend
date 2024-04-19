@@ -3,10 +3,10 @@ package com.companyA.backend.LogisticsAndMaintenanceSystem.service;
 import com.companyA.backend.LogisticsAndMaintenanceSystem.model.Machinery;
 import com.companyA.backend.LogisticsAndMaintenanceSystem.repository.MachineryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
-import org.w3c.dom.ls.LSOutput;
+
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -19,19 +19,25 @@ import java.util.Optional;
 public class MachineryService {
 
     @Autowired
-    private MachineryRepository machineryRepository;
+    private MachineryRepository machineryRepository; // Injects the repository used for database operations.
 
-
+    // Returns all machinery entries from the database.
     public List<Machinery> allMachinery() {
 
         return machineryRepository.findAll();
     }
+
+    // Saves a new machinery object to the database.
+
     public void addMachinery(Machinery machine) {
         machineryRepository.save(machine);
     }
 
 
+    // Finds a machinery by its machineId. Throws an exception if not found.
+
     public Optional<Machinery> machineryById(String machineId){
+        //check is the machine exist
         Optional<Machinery> machine = machineryRepository.findMachineryByMachineId(machineId);
         if (machine.isPresent()) {
             return machine;
@@ -39,20 +45,24 @@ public class MachineryService {
         else{
             throw new RuntimeException("Machinery not found with id: " + machineId);
         }
-        //return machineryRepository.findMachineryByMachineId(machineId);
+
     }
 
+
+    // Finds a machinery by its name. Throws an exception if not found.
     public Optional<Machinery> machineryByName(String machineName) {
         Optional<Machinery> machine = machineryRepository.findMachineryByMachineName(machineName);
         if (machine.isPresent()) {
             return machine;
         }
         else{ throw new RuntimeException("Machinery not found with name: " + machineName);}
-        //return machineryRepository.findMachineryByMachineName(machineName);
+
 
 
     }
 
+
+    // Updates fields of an existing machinery using reflection. Saves the updated machinery.
 
     public Machinery updateMachine(String id, Map<String , Object> fields) {
 
@@ -78,14 +88,13 @@ public class MachineryService {
         else {
             throw new RuntimeException("Machinery not found with id: " + id);
         }
-        //return null;
-
 
 
 
 
     }
 
+    //Deletes a machinery by its machineId
     public void deleteMachinery(String machineId) {
         // Optional: Check if the machinery exists before trying to delete
         Optional<Machinery> existMachine =machineryRepository.findMachineryByMachineId(machineId);
@@ -98,5 +107,9 @@ public class MachineryService {
         }
 
         }
+
+
+
+
 
 }
