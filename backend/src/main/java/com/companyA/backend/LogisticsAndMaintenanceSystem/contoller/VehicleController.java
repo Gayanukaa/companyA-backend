@@ -1,6 +1,7 @@
 package com.companyA.backend.LogisticsAndMaintenanceSystem.contoller;
 
 import com.companyA.backend.LogisticsAndMaintenanceSystem.model.Vehicle;
+import com.companyA.backend.LogisticsAndMaintenanceSystem.repository.VehicleRepository;
 import com.companyA.backend.LogisticsAndMaintenanceSystem.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,15 +14,17 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/vv2")
+@RequestMapping("/api/v1")
 public class VehicleController {
 
     @Autowired
     private VehicleService vehicleService;
+    @Autowired
+    private VehicleRepository vehicleRepository;
 
-    @GetMapping("/get allVehicle")
+    @GetMapping("/getVehicles")
     public ResponseEntity<List<Vehicle>> getAllVehicles() {
-        return new ResponseEntity<>(vehicleService.allVehicle(), HttpStatus.OK);
+        return new ResponseEntity<List<Vehicle>>(vehicleService.allVehicle(), HttpStatus.OK);
     }
 
     @GetMapping("/byId/getVehicle/{vehicleId}")
@@ -29,19 +32,27 @@ public class VehicleController {
         return new ResponseEntity<>(vehicleService.vehicleById(vehicleId), HttpStatus.OK);
     }
 
-    @GetMapping("/byId/getVehicleLocation/{vehicleId}")
-    public ResponseEntity<String> getVehicleLocationById(@PathVariable String vehicleId) {
-        Optional<String> locationOptional = vehicleService.getLocationById(vehicleId);
-        return locationOptional.map(s -> new ResponseEntity<>(s, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>("Location not found for vehicle ID: " + vehicleId, HttpStatus.NOT_FOUND));
-    }
 
     @PostMapping("/addVehicle")
-    public ResponseEntity<Vehicle> addVehicle(@RequestBody Vehicle vehicle) {
+    public ResponseEntity<Map<String, String>> addVehicle(@RequestBody Vehicle vehicle) {
         vehicleService.addVehicle(vehicle);
         Map<String, String> response = new HashMap<>();
         response.put("status", "Vehicle added successfully");
-        return new ResponseEntity<>(vehicle, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @PutMapping("/updateVehicle/{vehicleId}")
+    public ResponseEntity<Map<String, String>> updateVehicle(@PathVariable String vehicleId, @RequestBody Vehicle vehicle) {
+        return vehicleService.updateVehicle(vehicleId, vehicle);
+    }
+
+    @DeleteMapping("/deleteVehicle/{vehicleId}")
+    public ResponseEntity<String> deleteVehicle(@PathVariable String vehicleId) {
+        vehicleService.deleteVehicle(vehicleId);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }
 
 
