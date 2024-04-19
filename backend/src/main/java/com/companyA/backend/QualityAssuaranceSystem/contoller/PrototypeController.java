@@ -2,6 +2,7 @@ package com.companyA.backend.QualityAssuaranceSystem.contoller;
 
 import com.companyA.backend.QualityAssuaranceSystem.model.Prototype;
 import com.companyA.backend.QualityAssuaranceSystem.model.Test;
+import com.companyA.backend.QualityAssuaranceSystem.model.TestSubjects;
 import com.companyA.backend.QualityAssuaranceSystem.service.PrototypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,12 +42,15 @@ public class PrototypeController {
     }
 
     @PostMapping("/inspect")    // Check Api
-    @ResponseStatus(HttpStatus.CREATED)
+    //@ResponseStatus(HttpStatus.CREATED)
     public String testNewPrototype(@RequestBody Prototype prototype, @RequestBody Test test) {
         String response = prototypeService.testPrototype(prototype, test); // prototype ekt find by id eka dla aye check krnna
-        prototype.setTestStatus("Test Initiated");
         return response;
     }
 
-
+    @PutMapping("/changTest")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String updateTestMethodById(@RequestBody String prototypeId, String newTestName) {
+         return updateTestMethodById(prototypeId, newTestName);
+    }
 }

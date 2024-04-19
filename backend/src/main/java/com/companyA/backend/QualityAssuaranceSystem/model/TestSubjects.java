@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotBlank;
 @Getter
 @Setter
 
-public class TestSubjects {
+public abstract class TestSubjects {
     @Id
     private String id;
 

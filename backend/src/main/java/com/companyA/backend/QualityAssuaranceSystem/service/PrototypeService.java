@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+
 @Service
 public class PrototypeService {
 
@@ -23,7 +24,6 @@ public class PrototypeService {
 
     @Autowired
     private ReportRepository reportRepository;
-
 
     public List<Prototype> getAllPrototypes() {
         return prototypeRepository.findAll();
@@ -68,4 +68,15 @@ public class PrototypeService {
 
     }
 
+
+    public String updateTestMethodById(String prototypeId, String newTestName) {
+        Optional<Prototype> outdatedPrototype = prototypeRepository.findById(prototypeId);
+        if(outdatedPrototype.isPresent()){
+        prototypeRepository.deleteById(prototypeId);
+        outdatedPrototype.get().setTestName(newTestName);
+        prototypeRepository.save(outdatedPrototype.get());
+        return "Test method successfully changed";}
+        else return "invalid request";
+    }
 }
+
