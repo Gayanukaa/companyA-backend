@@ -4,10 +4,9 @@ package com.companyA.backend.QualityAssuaranceSystem.contoller;
 import com.companyA.backend.QualityAssuaranceSystem.model.Report;
 import com.companyA.backend.QualityAssuaranceSystem.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
@@ -28,5 +27,22 @@ public class ReportController {
     @GetMapping("/getReport/{id}")
     public Optional<Report> getReportById(@PathVariable String id) {
         return reportService.getReportById(id);
+    }
+
+    @PostMapping("/prototypes/generate")
+    public ResponseEntity<String> generatePrototypeReport() {
+        String result = reportService.generatePrototypeReport();
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/samples/generate")
+    public ResponseEntity<String> generateSampleReport() {
+        String result = reportService.generateSampleReport();
+        return ResponseEntity.ok(result);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteReport(@PathVariable String id){
+        return reportService.deleteReport(id);
     }
 }

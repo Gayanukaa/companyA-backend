@@ -1,6 +1,5 @@
 package com.companyA.backend.QualityAssuaranceSystem.contoller;
 
-import com.companyA.backend.QualityAssuaranceSystem.model.Prototype;
 import com.companyA.backend.QualityAssuaranceSystem.model.Sample;
 import com.companyA.backend.QualityAssuaranceSystem.model.Test;
 import com.companyA.backend.QualityAssuaranceSystem.service.SampleService;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-//Make necessary changes
 
 @RestController
 @RequestMapping("/api/v1/samples")
@@ -49,9 +47,4 @@ public class SampleController {
         return response;
     }
 
-    @PostMapping("/generateReport")
-    @ResponseStatus(HttpStatus.CREATED)
-    public String generateReport() {
-        return sampleService.generateReport();
-    }
 }

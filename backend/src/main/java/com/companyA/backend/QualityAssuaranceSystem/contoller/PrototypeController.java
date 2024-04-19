@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-//Make necessary changes
 
 @RestController
 @RequestMapping("/api/v1/prototypes")
@@ -49,10 +48,5 @@ public class PrototypeController {
         return response;
     }
 
-    @PostMapping("/generateReport")
-    @ResponseStatus(HttpStatus.CREATED)
-    public String generateReport() {
-        return prototypeService.generateReport();
-    }
 
 }
