@@ -11,11 +11,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product{
-    @Id                             // Marks the field as the primary identifier for the document
-    private String id;
-    private String name;
-    private String description;
-    private double price;
-    private int quantity;
+    @Id                                     // Marks the field as the primary identifier for the document
+    private String id;                      // Unique identifier for the product
+    private String name;                    // Name of the product
+    private String description;             // Description of the product
+    private double price;                   // Price of the product
+    private int quantity;                   // Quantity of the product
     // Other fields as needed
 }

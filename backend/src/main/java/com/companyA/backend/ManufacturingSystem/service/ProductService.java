@@ -9,7 +9,11 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ProductService {
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     // Method to retrieve all products
     public List<Product> getAllProducts() {         // Call the product repository to fetch all products
