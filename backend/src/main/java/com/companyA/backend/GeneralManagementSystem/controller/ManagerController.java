@@ -13,6 +13,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/manager")
 @AllArgsConstructor
+@CrossOrigin
 public class ManagerController {
 
     private ManagerService managerService;

@@ -15,7 +15,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/feedback")
 @AllArgsConstructor
-
+@CrossOrigin
 public class ContactusController {
     private ContactusService contactusService;
 

@@ -25,4 +25,7 @@ public class User {
 
     @NotBlank(message = "Password is Required")
     private String password;
+
+    @NotBlank(message = "Role is Required")
+    private String role;
 }

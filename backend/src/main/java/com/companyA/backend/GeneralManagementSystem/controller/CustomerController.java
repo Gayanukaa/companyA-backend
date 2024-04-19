@@ -17,6 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/customer")
 @AllArgsConstructor
+@CrossOrigin
 public class CustomerController {
 
     private CustomerService customerService;
