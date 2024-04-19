@@ -2,7 +2,8 @@ package com.companyA.backend.QualityAssuaranceSystem.contoller;
 
 import com.companyA.backend.QualityAssuaranceSystem.model.Prototype;
 import com.companyA.backend.QualityAssuaranceSystem.model.Test;
-import com.companyA.backend.QualityAssuaranceSystem.model.TestSubjects;
+import com.companyA.backend.QualityAssuaranceSystem.repository.PrototypeRepository;
+import com.companyA.backend.QualityAssuaranceSystem.repository.TestRepository;
 import com.companyA.backend.QualityAssuaranceSystem.service.PrototypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,10 @@ public class PrototypeController {
 
     @Autowired
     private PrototypeService prototypeService;
+    @Autowired
+    private PrototypeRepository prototypeRepository;
+    @Autowired
+    private TestRepository testRepository;
 
     @PostMapping("/addPrototype")
     @ResponseStatus(HttpStatus.CREATED)
@@ -42,15 +47,19 @@ public class PrototypeController {
     }
 
     @PostMapping("/inspect")    // Check Api
-    //@ResponseStatus(HttpStatus.CREATED)
-    public String testNewPrototype(@RequestBody Prototype prototype, @RequestBody Test test) {
-        String response = prototypeService.testPrototype(prototype, test); // prototype ekt find by id eka dla aye check krnna
-        return response;
+    @ResponseStatus(HttpStatus.CREATED)
+    public String testNewPrototype(@PathVariable String prototypeId, @PathVariable String testId) {
+        if (prototypeRepository.existsById(prototypeId)&&testRepository.existsById(testId)) {
+            Prototype newPrototype = prototypeRepository.findById(prototypeId).get();
+            Test newTest = testRepository.findById(testId).get();
+            String response = prototypeService.testPrototype(newPrototype, newTest); // prototype ekt find by id eka dla aye check krnna
+        }
+        return "Invalid request";
     }
 
-    @PutMapping("/changTest")
+    @PutMapping ("/changeTest")
     @ResponseStatus(HttpStatus.CREATED)
-    public String updateTestMethodById(@RequestBody String prototypeId, String newTestName) {
+    public String updateTestMethodById(@RequestBody String prototypeId,String newTestName) {
          return updateTestMethodById(prototypeId, newTestName);
     }
 }
