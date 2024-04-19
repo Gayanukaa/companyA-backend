@@ -27,7 +27,12 @@ public class VehicleService {
     }
 
     public void addVehicle(Vehicle vehicle) {
-        vehicleRepository.save(vehicle);
+        Optional<Vehicle> existingVehicleOptional = vehicleRepository.findVehicleByVehicleId(vehicle.getVehicleId());
+        if (existingVehicleOptional.isPresent()) {
+            throw new RuntimeException("Vehicle with ID " + vehicle.getVehicleId() + " already exists");
+        } else {
+            vehicleRepository.save(vehicle);
+        }
     }
 
 
@@ -43,36 +48,43 @@ public class VehicleService {
         }
     }
 
-    public ResponseEntity<Map<String, String>> updateVehicle(String vehicleId, Vehicle updatedVehicle) {
-        Optional<Vehicle> existingVehicleOptional = vehicleRepository.findVehicleByVehicleId(vehicleId);
+    public ResponseEntity<Map<String, String>> updateVehicle(String id, Map<String, String> updateData) {
+        Optional<Vehicle> existingVehicleOptional = vehicleRepository.findById(id);
         if (existingVehicleOptional.isPresent()) {
             Vehicle existingVehicle = existingVehicleOptional.get();
 
-            if (updatedVehicle.getModel() != null) {
-                existingVehicle.setModel(updatedVehicle.getModel());
-            }
-            if (updatedVehicle.getLocation() != null) {
-                existingVehicle.setLocation(updatedVehicle.getLocation());
-            }
+            // Update the fields based on the provided update data
+            updateData.forEach((key, value) -> {
+                switch (key) {
+                    case "model":
+                        existingVehicle.setModel(value);
+                        break;
+                    case "location":
+                        existingVehicle.setLocation(value);
+                        break;
+                    case "vehicleStatus":
+                        existingVehicle.setVehicleStatus(Boolean.parseBoolean(value));
+                        break;
+                    case "maintenanceDate":
+                        existingVehicle.setMaintenanceDate(value);
+                        break;
+                    case "fuelLevel":
+                        existingVehicle.setFuelLevel(value);
+                        break;
+                    default:
+                        // Handle unknown fields or ignore them
+                        break;
+                }
+            });
 
-            existingVehicle.setVehicleStatus(updatedVehicle.isVehicleStatus());
-
-            if (updatedVehicle.getFuelLevel() != null) {
-                existingVehicle.setLocation(updatedVehicle.getFuelLevel());
-            }
-
-            if (updatedVehicle.getMaintenanceDate() != null) {
-                existingVehicle.setMaintenanceDate(updatedVehicle.getMaintenanceDate());
-            }
             vehicleRepository.save(existingVehicle);
 
             Map<String, String> response = new HashMap<>();
             response.put("status", "Vehicle updated successfully");
             return new ResponseEntity<>(response, HttpStatus.OK);
-
         } else {
             Map<String, String> response = new HashMap<>();
-            response.put("error", "Vehicle not found with ID: " + vehicleId);
+            response.put("error", "Vehicle not found with ID: " + id);
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }

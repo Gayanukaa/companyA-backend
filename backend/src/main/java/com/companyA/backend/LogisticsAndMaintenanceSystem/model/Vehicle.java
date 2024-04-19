@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document ;
-import org.springframework.data.mongodb.core.index.Indexed;
+
 
 
 
@@ -26,4 +26,7 @@ public class Vehicle {
     private String maintenanceDate;
     private String fuelLevel;
 
+    public boolean getVehicleStatus() {
+        return vehicleStatus;
+    }
 }

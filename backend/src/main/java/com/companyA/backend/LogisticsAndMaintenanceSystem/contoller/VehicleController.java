@@ -21,6 +21,7 @@ public class VehicleController {
     private VehicleService vehicleService;
     @Autowired
     private VehicleRepository vehicleRepository;
+    private String id;
 
     @GetMapping("/getVehicles")
     public ResponseEntity<List<Vehicle>> getAllVehicles() {
@@ -41,9 +42,9 @@ public class VehicleController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PutMapping("/updateVehicle/{vehicleId}")
-    public ResponseEntity<Map<String, String>> updateVehicle(@PathVariable String vehicleId, @RequestBody Vehicle vehicle) {
-        return vehicleService.updateVehicle(vehicleId, vehicle);
+    @PatchMapping("/updateVehicle/{id}")
+    public ResponseEntity<Map<String, String>> updateVehicle(@PathVariable("id") String id, @RequestBody Map<String, String> updateData) {
+        return vehicleService.updateVehicle(id, updateData);
     }
 
     @DeleteMapping("/deleteVehicle/{vehicleId}")
