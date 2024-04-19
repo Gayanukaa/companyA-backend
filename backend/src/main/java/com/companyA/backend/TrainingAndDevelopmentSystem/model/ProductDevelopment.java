@@ -9,14 +9,19 @@ public class ProductDevelopment {
     private int projectCode;
     private String projectName;
     private String projectManager;
-    private int prototypeId;
-    private String prototypeName;
     private boolean stageOne;
     private boolean stageTwo;
     private boolean stageThree;
     private int stageCompleted;
     private int progress;
     private String prototypeType;
+
+ 
+
+    public void notifyQA() {
+        // Simulate notifying QA team
+        System.out.println("QA team notified for project: " + projectName);
+    }
 
     public String getId() {
         return id;
@@ -50,21 +55,6 @@ public class ProductDevelopment {
         this.projectManager = projectManager;
     }
 
-    public int getPrototypeId() {
-        return prototypeId;
-    }
-
-    public void setPrototypeId(int prototypeId) {
-        this.prototypeId = prototypeId;
-    }
-
-    public String getPrototypeName() {
-        return prototypeName;
-    }
-
-    public void setPrototypeName(String prototypeName) {
-        this.prototypeName = prototypeName;
-    }
 
     public boolean isStageOne() {
         return stageOne;
