@@ -32,4 +32,14 @@ public class PrototypingController {
         return prototypingRepository.findById(id)
                 .orElseThrow(()->new UserNotFoundException(id));
     }
+
+    @PutMapping("/api/tms/prototype/{id}")
+    Prototyping updatePrototype(@RequestBody Prototyping newPrototype,@PathVariable String id){
+        return prototypingRepository.findById(id)
+                .map(prototype -> {
+                    prototype.setPrototypeName(newPrototype.getPrototypeName());
+                    prototype.setPrototypeType(newPrototype.getPrototypeType());
+                    return prototypingRepository.save(prototype);
+                }).orElseThrow(()->new UserNotFoundException(id));
+    }
 }
