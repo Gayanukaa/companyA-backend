@@ -2,6 +2,7 @@ package com.companyA.backend.HumanResourceSystem.contoller;
 
 import com.companyA.backend.HumanResourceSystem.model.EmployeeDetailModel;
 import com.companyA.backend.HumanResourceSystem.model.TrainingManagementModel;
+import com.companyA.backend.HumanResourceSystem.repository.EmployeeDetailRepository;
 import com.companyA.backend.HumanResourceSystem.repository.TrainingManagementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,56 +12,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/Courses")
+@RequestMapping("/Training")
 public class TrainingManagementController {
 
     @Autowired
     TrainingManagementRepository trainingManagementRepository;
 
-    //TO get existing record
-    @GetMapping("/{courseId}")
-    public ResponseEntity<Optional<TrainingManagementModel>> getCourseDetails(@PathVariable String courseId ){
-        Optional<TrainingManagementModel> course = trainingManagementRepository.findByCourseId(courseId);
-        if (course.isEmpty()) {
+    @Autowired
+    EmployeeDetailRepository employeeDetailRepository;
+
+    @GetMapping("/GetDetails/{employeeId}")
+    public ResponseEntity<EmployeeDetailModel> getEmployeeDetail(@PathVariable String employeeId){
+        EmployeeDetailModel employee = employeeDetailRepository.findByIdAndIsActive(employeeId,true);
+        if (employee == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(course);
+        return ResponseEntity.ok(employee);
 
     }
-    // update existing record
-    @PutMapping("/{courseId}")
-    public ResponseEntity<TrainingManagementModel> updateSkillLevel(@PathVariable String courseId,@RequestBody TrainingManagementModel updateCourseDetails ){
-        Optional<TrainingManagementModel> updateCourse = trainingManagementRepository.findById(courseId);
-        if (updateCourse.isEmpty()) {
+
+    @PutMapping("/Update/{id}")
+    public ResponseEntity<TrainingManagementModel> updateEmployee(@PathVariable String id, @RequestBody TrainingManagementModel updateStatus) {
+        EmployeeDetailModel status = employeeDetailRepository.findById(id).orElse(null);
+        if (status == null) {
             return ResponseEntity.notFound().build();
         }
 
-        trainingManagementRepository.save(updateCourseDetails);
-        return ResponseEntity.ok(updateCourseDetails);
-    }
-
-    // Create new record
-    @PostMapping("/Create")
-    public ResponseEntity<TrainingManagementModel> insertCourseDetails(@RequestBody TrainingManagementModel trainingManagementModel) {
-        TrainingManagementModel savedCourse = trainingManagementRepository.save(trainingManagementModel);
-        return ResponseEntity.ok(savedCourse);
-
+        status.setSkillLevel(updateStatus.getSkillLevel());
+        employeeDetailRepository.save(status);
+        return ResponseEntity.ok(updateStatus);
     }
 
 
-    // Delete existing record
-    @DeleteMapping("/{courseId}")
-    public ResponseEntity<String> deleteTrainingDetails(@PathVariable String courseId) {
-        TrainingManagementModel existingCourse = trainingManagementRepository.findById(courseId).orElse(null);
-        if (existingCourse == null) {
-            return ResponseEntity.notFound().build();
-        }
-        else{
-            trainingManagementRepository.delete(existingCourse);
-            return ResponseEntity.ok("Successfully deleted");
-
-        }
-
-    }
 
 }
