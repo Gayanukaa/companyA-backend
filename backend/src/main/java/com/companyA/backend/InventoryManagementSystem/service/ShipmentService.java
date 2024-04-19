@@ -5,12 +5,8 @@ import com.companyA.backend.InventoryManagementSystem.repository.InventoryManage
 import com.companyA.backend.InventoryManagementSystem.repository.ShipmentRepository;
 import com.companyA.backend.InventoryManagementSystem.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
-import java.security.PrivateKey;
 import java.util.*;
 
 @Service
@@ -28,7 +24,6 @@ public class ShipmentService {
     @Autowired
     private StocksService stocksService;
 
-    private MongoTemplate mongoTemplate;
     @Autowired
     private StockAlertService stockAlertService;
 
@@ -69,6 +64,7 @@ public class ShipmentService {
             stock.setStateOfProduct(StateOfProduct.valueOf("ORDERED"));
             stocksService.updateStock(stock);
             orderList.put(stock.getId(), stock.getReorderQuantity());
+            stockAlertService.deleteStockAlert(stockAlert.getAlertId());
         }
         shipment.setOrderList(orderList);
         return shipmentRepository.save(shipment);
@@ -80,11 +76,10 @@ public class ShipmentService {
             Stocks stock = stocksService.getStockById(entry.getKey());
             stock.setQuantity(stock.getQuantity() + entry.getValue());
             stock.setStateOfProduct(StateOfProduct.valueOf("IN_STOCK"));
-            StockAlert stockAlert = stockAlertService.getStockAlertByItemId(entry.getKey());
-            stockAlertService.deleteStockAlert(stockAlert.getAlertId());
             stocksService.updateStock(stock);
             stocks.add(stock);
         }
+        shipmentRepository.deleteById(shipment.getId());
         return stocks;
     }
 }

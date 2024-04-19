@@ -3,7 +3,6 @@ package com.companyA.backend.InventoryManagementSystem.contoller;
 import com.companyA.backend.FinanceSystem.service.FinanceSubsystemService;
 import com.companyA.backend.InventoryManagementSystem.model.Shipment;
 import com.companyA.backend.InventoryManagementSystem.model.ShipmentRequest;
-import com.companyA.backend.InventoryManagementSystem.model.StockAlert;
 import com.companyA.backend.InventoryManagementSystem.model.Stocks;
 import com.companyA.backend.InventoryManagementSystem.service.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
