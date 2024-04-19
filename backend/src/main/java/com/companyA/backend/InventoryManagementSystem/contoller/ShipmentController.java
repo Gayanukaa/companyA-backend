@@ -1,5 +1,6 @@
 package com.companyA.backend.InventoryManagementSystem.contoller;
 
+import com.companyA.backend.FinanceSystem.service.FinanceStockAlertService;
 import com.companyA.backend.FinanceSystem.service.FinanceSubsystemService;
 import com.companyA.backend.InventoryManagementSystem.model.Shipment;
 import com.companyA.backend.InventoryManagementSystem.model.ShipmentRequest;
@@ -18,7 +19,7 @@ public class ShipmentController {
     @Autowired
     private ShipmentService shipmentService;
     @Autowired
-    private FinanceSubsystemService financeSubsystemService;
+    private FinanceStockAlertService financeStockAlertService;
 
     @GetMapping("/getShipments")
     public ResponseEntity<List<Shipment>> getAllShipments() {
@@ -42,7 +43,7 @@ public class ShipmentController {
 
     @PostMapping("/createShipment")
     public ResponseEntity<Shipment> createShipment(@RequestBody ShipmentRequest shipmentRequest) {
-        boolean paymentConfirmed = financeSubsystemService.sendRequestForPaymentConfirmation(shipmentRequest.getStockAlerts());
+        boolean paymentConfirmed = financeStockAlertService.sendRequestForPaymentConfirmation(shipmentRequest.getStockAlerts());
         if (paymentConfirmed) {
             return new ResponseEntity<>(shipmentService.placeShipment(shipmentRequest.getStockAlerts(), shipmentRequest.getInventoryManagerId(), shipmentRequest.getSupplierId()), HttpStatus.CREATED);
         }

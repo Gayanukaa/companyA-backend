@@ -1,10 +1,9 @@
 package com.companyA.backend.FinanceSystem.service;
 
-
-import com.companyA.backend.FinanceSystem.model.FinanceStockAlert;
 import com.companyA.backend.FinanceSystem.model.Stocks;
 import com.companyA.backend.FinanceSystem.repository.PaymentRepo;
 import com.companyA.backend.FinanceSystem.repository.StocksRepo;
+import com.companyA.backend.InventoryManagementSystem.model.StockAlert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +19,11 @@ public class FinanceStockAlertService {
     @Autowired
     private PaymentRepo paymentRepo;
 
-    public boolean sendRequestForPaymentConfirmation(List<FinanceStockAlert> financeStockAlerts){
+    public boolean sendRequestForPaymentConfirmation(List<StockAlert> stockAlerts){
         double totalCost = 0;
         double unitPrice;
-        for (FinanceStockAlert financeStockAlert : financeStockAlerts) {
-            Optional<Stocks> stock = stocksRepo.findById(financeStockAlert.getItemId());
+        for (StockAlert stockAlert : stockAlerts) {
+            Optional<Stocks> stock = stocksRepo.findById(stockAlert.getItemId());
 
             Stocks item = null;
 
@@ -32,7 +31,7 @@ public class FinanceStockAlertService {
                 item = stock.get();
             }
             unitPrice = item.getPrice();
-            totalCost = totalCost + financeStockAlert.getReorderQuantity() * unitPrice;
+            totalCost = totalCost + stockAlert.getReorderQuantity() * unitPrice;
         }
         if(totalCost> 10000){
             return false;
