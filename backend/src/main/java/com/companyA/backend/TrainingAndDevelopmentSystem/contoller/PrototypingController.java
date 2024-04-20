@@ -1,6 +1,7 @@
 package com.companyA.backend.TrainingAndDevelopmentSystem.contoller;
 
 import com.companyA.backend.TrainingAndDevelopmentSystem.exception.UserNotFoundException;
+import com.companyA.backend.TrainingAndDevelopmentSystem.model.ProductDevelopment;
 import com.companyA.backend.TrainingAndDevelopmentSystem.model.Prototyping;
 import com.companyA.backend.TrainingAndDevelopmentSystem.repository.ProductDevelopmentRepository;
 import com.companyA.backend.TrainingAndDevelopmentSystem.repository.PrototypingRepository;
@@ -50,5 +51,20 @@ public class PrototypingController {
         }
         prototypingRepository.deleteById(id);
         return "Prototype with "+id+" has been deleted successfully";
+    }
+
+    @PostMapping("/api/tms/prototype/create/{id}")
+    Prototyping newUser1(@PathVariable String id) {
+
+        Prototyping prototype = prototypingRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+
+        ProductDevelopment productDevelopment = new ProductDevelopment();
+        productDevelopment.setProjectCode(prototype.getPrototypeId());
+        productDevelopment.setProjectName(prototype.getPrototypeType());
+        productDevelopment.setProjectManager("");
+
+        productDevelopmentRepository.save(productDevelopment);
+        return prototypingRepository.save(prototype);
     }
 }
