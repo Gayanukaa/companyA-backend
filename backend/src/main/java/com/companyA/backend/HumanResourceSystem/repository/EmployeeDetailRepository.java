@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface EmployeeDetailRepository extends MongoRepository<EmployeeDetailModel,String> {
-    EmployeeDetailModel findByIdAndIsActive(String id, boolean active);
+    EmployeeDetailModel findByemployeeIdAndIsActive(String employeeId, boolean active);
     List<EmployeeDetailModel> findByLastNameAndIsActive(String lastName, boolean active);
+
 }

@@ -14,8 +14,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Document(collection = "Employee")
 public class EmployeeDetailModel {
-    @Id
-    private String id; //PK auto generated
+
+    private String employeeId;
     private String firstName;
     private String lastName;
     private Date dateOfBirth;
@@ -33,6 +33,7 @@ public class EmployeeDetailModel {
     private double salary;
     private boolean permanentStaff;
     private String insuranceCategory;
+    private String skillLevel;
     private boolean isActive = true;
 
     @DBRef

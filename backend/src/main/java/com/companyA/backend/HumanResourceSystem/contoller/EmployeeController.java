@@ -17,9 +17,9 @@ public class EmployeeController {
     EmployeeDetailRepository employeeDetailRepository;
 
 
-    @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDetailModel> getEmployeeDetail(@PathVariable String id) {
-        EmployeeDetailModel employee = employeeDetailRepository.findByIdAndIsActive(id,true);
+    @GetMapping("/{employeeId}")
+    public ResponseEntity<EmployeeDetailModel> getEmployeeDetail(@PathVariable String employeeId) {
+        EmployeeDetailModel employee = employeeDetailRepository.findByemployeeIdAndIsActive(employeeId,true);
         if (employee == null) {
             return ResponseEntity.notFound().build();
         }
@@ -43,9 +43,9 @@ public class EmployeeController {
     }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<EmployeeDetailModel> updateEmployee(@PathVariable String id, @RequestBody EmployeeDetailModel updatedEmployee) {
-        EmployeeDetailModel existingEmployee = employeeDetailRepository.findById(id).orElse(null);
+    @PutMapping("/{employeeId}")
+    public ResponseEntity<EmployeeDetailModel> updateEmployee(@PathVariable String employeeId, @RequestBody EmployeeDetailModel updatedEmployee) {
+        EmployeeDetailModel existingEmployee = employeeDetailRepository.findById(employeeId).orElse(null);
         if (existingEmployee == null) {
             return ResponseEntity.notFound().build();
         }
@@ -57,9 +57,9 @@ public class EmployeeController {
     }
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable String id) {
-        EmployeeDetailModel existingEmployee = employeeDetailRepository.findById(id).orElse(null);
+    @DeleteMapping("/{employeeId}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable String employeeId) {
+        EmployeeDetailModel existingEmployee = employeeDetailRepository.findById(employeeId).orElse(null);
         if (existingEmployee == null) {
             return ResponseEntity.notFound().build();
         }
