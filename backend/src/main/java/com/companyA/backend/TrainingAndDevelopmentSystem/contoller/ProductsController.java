@@ -5,6 +5,8 @@ import com.companyA.backend.TrainingAndDevelopmentSystem.model.OverseasExperienc
 import com.companyA.backend.TrainingAndDevelopmentSystem.model.Products;
 import com.companyA.backend.TrainingAndDevelopmentSystem.repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +31,16 @@ public class ProductsController {
     Products getCourseById(@PathVariable String id){
         return productsRepository.findById(id)
                 .orElseThrow(()->new UserNotFoundException(id));
+    }
+
+    @GetMapping("/api/tms/product/{id}/details")
+    public ResponseEntity<String> getProductDetailsById(@PathVariable String id) {
+        Products product = productsRepository.findById(id).orElse(null);
+        if (product != null) {
+            return new ResponseEntity<>(product.getProductDetails(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
+        }
     }
 
 
