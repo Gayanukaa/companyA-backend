@@ -5,6 +5,7 @@ import com.companyA.backend.QualityAssuaranceSystem.model.Test;
 import com.companyA.backend.QualityAssuaranceSystem.repository.PrototypeRepository;
 import com.companyA.backend.QualityAssuaranceSystem.repository.ReportRepository;
 import com.companyA.backend.QualityAssuaranceSystem.repository.TestRepository;
+import jakarta.validation.constraints.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,6 @@ public class PrototypeService {
         }
     }
 
-           // creating and adding a prototype is slightly different
     public Prototype addPrototype(Prototype prototype) {
         return prototypeRepository.save(prototype);
     }
@@ -57,25 +57,34 @@ public class PrototypeService {
         Optional<Prototype> AvalilablePrototype = prototypeRepository.findById(tempid);
         Optional<Test> AvalilableTest = testRepository.findById(temptestid);
         if (AvalilablePrototype.isPresent()&&AvalilableTest.isPresent()) {
-            prototype.setAllocatedTest(test);
-            prototypeRepository.save(prototype);
-            return "The prototype with id: "+tempid +" is subjected to test:"+ test.getTestId();
+            String currentStatus = AvalilablePrototype.get().getTestStatus();
+            if (!currentStatus.equals("Test initiated")) {
+                prototype.setAllocatedTest(test);
+                prototype.setTestStatus("Test initiated");
+                prototypeRepository.save(prototype);
+                return "The prototype with id: " + tempid + " is subjected to : " + test.getName();
+            }
+            else return " Previous Test hasn't been finished. Test was not initiated " ;
         }
 
         else {
-            return "Test was not initiated";
+            return "Invalid parameters. Test was not initiated";
         }
 
     }
 
 
     public String updateTestMethodById(String prototypeId, String newTestName) {
-        Optional<Prototype> outdatedPrototype = prototypeRepository.findById(prototypeId);
-        if(outdatedPrototype.isPresent()){
-        prototypeRepository.deleteById(prototypeId);
-        outdatedPrototype.get().setTestName(newTestName);
-        prototypeRepository.save(outdatedPrototype.get());
-        return "Test method successfully changed";}
+        Prototype outdatedPrototype = prototypeRepository.findById(prototypeId).orElse(null);
+        if (outdatedPrototype != null) {
+            if (!outdatedPrototype.getTestStatus().equals("Test initiated")) {
+                prototypeRepository.deleteById(prototypeId);
+                outdatedPrototype.setTestName(newTestName);
+                prototypeRepository.save(outdatedPrototype);
+                return "Test method successfully changed";
+            }
+            else return "Testing process already started. Test method cannot be changed";
+        }
         else return "invalid request";
     }
 }

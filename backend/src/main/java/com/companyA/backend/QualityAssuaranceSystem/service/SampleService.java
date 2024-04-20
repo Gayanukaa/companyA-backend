@@ -4,6 +4,7 @@ import com.companyA.backend.QualityAssuaranceSystem.model.Sample;
 import com.companyA.backend.QualityAssuaranceSystem.model.Test;
 import com.companyA.backend.QualityAssuaranceSystem.repository.ReportRepository;
 import com.companyA.backend.QualityAssuaranceSystem.repository.SampleRepository;
+import com.companyA.backend.QualityAssuaranceSystem.repository.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,9 @@ import java.util.Optional;
 public class SampleService {
     @Autowired
     private SampleRepository sampleRepository;
+
+    @Autowired
+    private TestRepository testRepository;
 
     @Autowired
     private ReportRepository reportRepository;
@@ -46,17 +50,37 @@ public class SampleService {
 
     public String testSample(Sample sample, Test test){
         String tempid = sample.getId();
-        Optional<Sample> AvalilableSample = sampleRepository.findById(tempid);
-        if (AvalilableSample.isPresent()) {
-            sample.setAllocatedTest(test);
-            sampleRepository.save(sample);
-            return "The sample with id: "+tempid +" is subjected to test:"+ test.getTestId();
+        String temptestid = test.getTestId();
+        Optional<Sample> AvalilablePrototype = sampleRepository.findById(tempid);
+        Optional<Test> AvalilableTest = testRepository.findById(temptestid);
+        if (AvalilablePrototype.isPresent()&&AvalilableTest.isPresent()) {
+            String currentStatus = AvalilablePrototype.get().getTestStatus();
+            if (!currentStatus.equals("Test initiated")) {
+                sample.setAllocatedTest(test);
+                sample.setTestStatus("Test initiated");
+                sampleRepository.save(sample);
+                return "The sample with id: " + tempid + " is subjected to : " + test.getName();
+            }
+            else return " Previous Test hasn't been finished. Test was not initiated " ;
         }
 
         else {
-            return "Test was not initiated";
+            return "Invalid parameters. Test was not initiated";
         }
 
     }
 
+    public String updateTestMethodById(String sampleId, String newTestName) {
+        Sample outdatedSample = sampleRepository.findById(sampleId).orElse(null);
+        if(outdatedSample != null) {
+            if (!outdatedSample.getTestStatus().equals("Test initiated")) {
+                sampleRepository.deleteById(sampleId);
+                outdatedSample.setTestName(newTestName);
+                sampleRepository.save(outdatedSample);
+                return "Test method successfully changed";
+            }
+            else return "Testing process already started. Test method cannot be changed";
+        }
+        else return "invalid request";
+    }
 }

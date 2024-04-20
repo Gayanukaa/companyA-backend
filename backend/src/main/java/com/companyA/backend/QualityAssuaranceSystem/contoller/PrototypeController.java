@@ -46,20 +46,20 @@ public class PrototypeController {
 
     }
 
-    @PostMapping("/inspect")    // Check Api
+    @PutMapping("/inspect")    // Check Api
     @ResponseStatus(HttpStatus.CREATED)
-    public String testNewPrototype(@PathVariable String prototypeId, @PathVariable String testId) {
+    public String testNewPrototype(@RequestParam String prototypeId,  String testId) {
         if (prototypeRepository.existsById(prototypeId)&&testRepository.existsById(testId)) {
             Prototype newPrototype = prototypeRepository.findById(prototypeId).get();
             Test newTest = testRepository.findById(testId).get();
-            String response = prototypeService.testPrototype(newPrototype, newTest); // prototype ekt find by id eka dla aye check krnna
+            return prototypeService.testPrototype(newPrototype, newTest); // prototype ekt find by id eka dla aye check krnna
         }
-        return "Invalid request";
+        else return "Invalid request";
     }
 
     @PutMapping ("/changeTest")
     @ResponseStatus(HttpStatus.CREATED)
-    public String updateTestMethodById(@RequestBody String prototypeId,String newTestName) {
-         return updateTestMethodById(prototypeId, newTestName);
+    public String updateTestMethodById(@RequestParam String prototypeId,String newTestName) {
+         return prototypeService.updateTestMethodById(prototypeId, newTestName);
     }
 }
