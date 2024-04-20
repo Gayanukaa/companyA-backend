@@ -29,7 +29,7 @@ public class CourseController {
         return courseRepository.findById(id)
                 .orElseThrow(()->new UserNotFoundException(id));
     }
-    @PutMapping("/course/{id}")
+    @PutMapping("/api/tms/course/{id}")
     Course updateCourse(@RequestBody Course newUser,@PathVariable String id){
         return courseRepository.findById(id)
                 .map(user -> {
@@ -42,13 +42,18 @@ public class CourseController {
                 }).orElseThrow(()->new UserNotFoundException(id));
     }
 
-    @DeleteMapping("/course/{id}")
+    @DeleteMapping("/api/tms/course/{id}")
     String deleteCourse(@PathVariable String id){
         if(!courseRepository.existsById(id)){
             throw new UserNotFoundException(id);
         }
         courseRepository.deleteById(id);
         return "Course with "+id+" has been deleted successfully";
+    }
+
+    @GetMapping("/api/tms/course/{courseId}/link")
+    public String getCourseLinkById(@PathVariable Long courseId) {
+        return courseRepository.findCourseLinkById(courseId);
     }
 
 
