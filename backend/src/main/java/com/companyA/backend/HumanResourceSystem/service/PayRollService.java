@@ -1,8 +1,8 @@
 package com.companyA.backend.HumanResourceSystem.service;
 
-import com.companyA.backend.HumanResourceSystem.model.PayrollModel;
 import com.companyA.backend.HumanResourceSystem.model.DailyAttendanceModel;
-import com.companyA.backend.HumanResourceSystem.repository.PayRollRepository;
+import com.companyA.backend.HumanResourceSystem.repository.DailyAttendanceRepository;
+//import com.companyA.backend.HumanResourceSystem.repository.PayRollRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +19,14 @@ import java.util.Map;
 public class PayRollService {
 
     @Autowired
-    static PayRollRepository payRollRepository;
+    DailyAttendanceRepository dailyAttendanceRepository;
 
     public String calculateWorkHours(List<DailyAttendanceModel> workTimeList) {
         long workMinutes = 0;
 
         for (DailyAttendanceModel workTime : workTimeList) {
-            LocalDateTime signInTime = workTime.getTimeSignedIn();
-            LocalDateTime signOutTime = workTime.getTimeSignedOut();
+            LocalDateTime signInTime = workTime.getSignInTime();
+            LocalDateTime signOutTime = workTime.getSignOutTime();
 
             if (signInTime != null && signOutTime != null) {
                 long minutes = ChronoUnit.MINUTES.between(signInTime, signOutTime);
@@ -51,8 +51,8 @@ public class PayRollService {
         long otMinutes = 0;
 
         for (DailyAttendanceModel workTime : workTimeList) {
-            LocalDateTime signInTime = workTime.getTimeSignedIn();
-            LocalDateTime signOutTime = workTime.getTimeSignedOut();
+            LocalDateTime signInTime = workTime.getSignInTime();
+            LocalDateTime signOutTime = workTime.getSignOutTime();
 
             if (signInTime != null && signOutTime != null) {
                 long minutes = ChronoUnit.MINUTES.between(signInTime, signOutTime);

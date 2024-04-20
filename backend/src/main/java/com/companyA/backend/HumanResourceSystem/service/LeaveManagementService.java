@@ -1,10 +1,8 @@
 package com.companyA.backend.HumanResourceSystem.service;
 
-import com.companyA.backend.HumanResourceSystem.model.WorkTimeModel;
-import com.companyA.backend.HumanResourceSystem.repository.LeaveManagementRepository;
-import org.bson.conversions.Bson;
+import com.companyA.backend.HumanResourceSystem.model.DailyAttendanceModel;
+import com.companyA.backend.HumanResourceSystem.repository.DailyAttendanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
@@ -16,9 +14,9 @@ import java.util.List;
 @Service
 public class LeaveManagementService {
     @Autowired
-    static LeaveManagementRepository leaveManagementRepository;
+    DailyAttendanceRepository dailyAttendanceRepository;
 
-    public int CalculateLeaveBalance (List<WorkTimeModel> attendanceList, int daysOfMonth, int satAndSun){
+    public int CalculateLeaveBalance (List<DailyAttendanceModel> attendanceList, int daysOfMonth, int satAndSun){
         int allocatedLeaves = 3 ;   // allocated leaves per employee
         int workedDays = attendanceList.size() ;
         int leaveBalance = daysOfMonth - satAndSun - workedDays;
@@ -50,10 +48,10 @@ public class LeaveManagementService {
         return yearMonth.lengthOfMonth();
     }
 
-    public List<WorkTimeModel> getWorkTimeByMonthAndYear(List<WorkTimeModel> workTimeList, int year, int month) {
-        List<WorkTimeModel> filteredList = new ArrayList<>();
+    public List<DailyAttendanceModel> getWorkTimeByMonthAndYear(List<DailyAttendanceModel> workTimeList, int year, int month) {
+        List<DailyAttendanceModel> filteredList = new ArrayList<>();
 
-        for (WorkTimeModel workTime : workTimeList) {
+        for (DailyAttendanceModel workTime : workTimeList) {
             if (workTime.getDate().getMonthValue() == month ) {
                 filteredList.add(workTime);
             }

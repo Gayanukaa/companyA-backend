@@ -19,7 +19,7 @@ public class EmployeeController {
 
     @GetMapping("/{employeeId}")
     public ResponseEntity<EmployeeDetailModel> getEmployeeDetail(@PathVariable String employeeId) {
-        EmployeeDetailModel employee = employeeDetailRepository.findByemployeeIdAndIsActive(employeeId,true);
+        EmployeeDetailModel employee = employeeDetailRepository.findByEmployeeIdAndIsActive(employeeId,true);
         if (employee == null) {
             return ResponseEntity.notFound().build();
         }
@@ -45,7 +45,7 @@ public class EmployeeController {
 
     @PutMapping("/{employeeId}")
     public ResponseEntity<EmployeeDetailModel> updateEmployee(@PathVariable String employeeId, @RequestBody EmployeeDetailModel updatedEmployee) {
-        EmployeeDetailModel existingEmployee = employeeDetailRepository.findById(employeeId).orElse(null);
+        EmployeeDetailModel existingEmployee = (EmployeeDetailModel) employeeDetailRepository.findByEmployeeIdAndIsActive(employeeId,true);
         if (existingEmployee == null) {
             return ResponseEntity.notFound().build();
         }
@@ -55,6 +55,7 @@ public class EmployeeController {
         employeeDetailRepository.save(updatedEmployee);
         return ResponseEntity.ok(updatedEmployee);
     }
+
 
 
     @DeleteMapping("/{employeeId}")

@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/Training")
@@ -23,7 +22,7 @@ public class TrainingManagementController {
 
     @GetMapping("/GetDetails/{employeeId}")
     public ResponseEntity<EmployeeDetailModel> getEmployeeDetail(@PathVariable String employeeId){
-        EmployeeDetailModel employee = employeeDetailRepository.findByIdAndIsActive(employeeId,true);
+        EmployeeDetailModel employee = employeeDetailRepository.findByEmployeeIdAndIsActive(employeeId,true);
         if (employee == null) {
             return ResponseEntity.notFound().build();
         }

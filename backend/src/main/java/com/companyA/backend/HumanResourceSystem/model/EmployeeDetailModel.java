@@ -15,6 +15,7 @@ import java.util.Date;
 @Document(collection = "Employee")
 public class EmployeeDetailModel {
 
+    @Id
     private String employeeId;
     private String firstName;
     private String lastName;
