@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/suppliers")
+@CrossOrigin
 public class SupplierController {
 
     @Autowired

@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/InvReports")
+@RequestMapping("/api/v1/invReports")
+@CrossOrigin
 public class GenerateReportController {
+
     @Autowired
     private GenerateReportService generateReportService;
 

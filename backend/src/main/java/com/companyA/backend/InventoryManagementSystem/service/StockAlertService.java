@@ -64,4 +64,8 @@ public class StockAlertService {
     public void deleteStockAlert(String alertId) {
         stockAlertRepository.deleteById(alertId);
     }
+
+    public List<StockAlert> allStockAlerts () {
+        return stockAlertRepository.findAll();
+    }
 }

@@ -1,7 +1,6 @@
 package com.companyA.backend.InventoryManagementSystem.contoller;
 
 import com.companyA.backend.FinanceSystem.service.FinanceStockAlertService;
-import com.companyA.backend.FinanceSystem.service.FinanceSubsystemService;
 import com.companyA.backend.InventoryManagementSystem.model.Shipment;
 import com.companyA.backend.InventoryManagementSystem.model.ShipmentRequest;
 import com.companyA.backend.InventoryManagementSystem.model.Stocks;
@@ -14,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/shipments")
+@CrossOrigin
 public class ShipmentController {
 
     @Autowired

@@ -12,7 +12,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/inventoryManager")
+@CrossOrigin
 public class InventoryManagerController {
+
     @Autowired
     private InventoryManagerService inventoryManagerService;
     @Autowired
