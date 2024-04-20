@@ -11,7 +11,7 @@ public class TrainingEmployee {
     private String id;
     private int employeeId;
     private String name;
-    private String email;
+    private String employeeEmail;
     private String password;
 
     private List<Long> enrolledCourses;
@@ -48,11 +48,11 @@ public class TrainingEmployee {
     }
 
     public String getEmail() {
-        return email;
+        return employeeEmail;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.employeeEmail = email;
     }
 
     public String getPassword() {
