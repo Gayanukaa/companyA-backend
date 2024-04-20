@@ -42,4 +42,13 @@ public class PrototypingController {
                     return prototypingRepository.save(prototype);
                 }).orElseThrow(()->new UserNotFoundException(id));
     }
+
+    @DeleteMapping("/api/tms/prototype/{id}")
+    String deleteUser(@PathVariable String id){
+        if(!prototypingRepository.existsById(id)){
+            throw new UserNotFoundException(id);
+        }
+        prototypingRepository.deleteById(id);
+        return "Prototype with "+id+" has been deleted successfully";
+    }
 }

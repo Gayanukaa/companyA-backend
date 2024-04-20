@@ -20,7 +20,7 @@ public class ProgressController {
         this.progressRepository = progressRepository;
     }
 
-    @PostMapping
+    @PostMapping("/api/tms/progress")
     public ResponseEntity<?> createProgress(@RequestBody Progress progress) {
         try {
             progressRepository.save(progress);
