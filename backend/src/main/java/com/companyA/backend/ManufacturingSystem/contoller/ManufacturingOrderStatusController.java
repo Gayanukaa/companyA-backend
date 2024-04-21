@@ -1,23 +1,22 @@
 package com.companyA.backend.ManufacturingSystem.contoller;
 
 import com.companyA.backend.ManufacturingSystem.model.OrderStatus;
-import com.companyA.backend.ManufacturingSystem.service.OrderStatusService;
-import lombok.AllArgsConstructor;
+import com.companyA.backend.ManufacturingSystem.service.ManufacturingOrderStatusService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/production/task")
-public class OrderStatusController {
+public class ManufacturingOrderStatusController {
 
-    private OrderStatusService orderStatusService;
+    private ManufacturingOrderStatusService manufacturingOrderStatusService;
 
     // Endpoint to retrieve order status by order ID
     @GetMapping("/updateGetOrderStatus")
     public ResponseEntity<Object> getOrderStatus(@RequestParam("order_ID") String order_ID) {
         // Call the service to get order status
-        OrderStatus response = orderStatusService.getOrderStatus(order_ID);
+        OrderStatus response = manufacturingOrderStatusService.getOrderStatus(order_ID);
         // Check if order status is null
         if (response == null) {
             // Return not found response if order status is null
@@ -31,7 +30,7 @@ public class OrderStatusController {
     @PostMapping("/updatePostOrderStatus")
     public ResponseEntity<String> updateOrderStatus(@RequestParam("order_ID") String order_ID, @RequestParam("status") String status) {
         // Call the service to update order status
-        OrderStatus response = orderStatusService.updateOrderStatus(order_ID, status);
+        OrderStatus response = manufacturingOrderStatusService.updateOrderStatus(order_ID, status);
         // Check if order status is null
         if (response == null) {
             // Return not found response if order status is null
