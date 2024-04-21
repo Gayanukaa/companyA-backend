@@ -5,10 +5,7 @@ import com.companyA.backend.InventoryManagementSystem.service.StockAlertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +22,11 @@ public class StockAlertController {
     @GetMapping
     public ResponseEntity<List<StockAlert>> getAllStockAlerts() {
         return new ResponseEntity<List<StockAlert>>(stockAlertService.allStockAlerts(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deleteStockAlert/{stockAlertId}")
+    public ResponseEntity<String> deleteStockAlert(@PathVariable String stockAlertId) {
+        return new ResponseEntity<String>(stockAlertService.deleteStockAlert(stockAlertId),HttpStatus.OK);
     }
 
 }

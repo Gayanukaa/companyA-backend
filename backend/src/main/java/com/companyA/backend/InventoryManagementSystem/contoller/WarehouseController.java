@@ -36,4 +36,9 @@ public class WarehouseController {
         return new ResponseEntity<Warehouse>(warehouseService.getWarehouse(warehouseId),HttpStatus.OK);
     }
 
+    @DeleteMapping("/deleteWarehouse/{warehouseId}")
+    public ResponseEntity<String> deleteWarehouse(@PathVariable String warehouseId) {
+        return new ResponseEntity<String>(warehouseService.deleteWarehouse(warehouseId),HttpStatus.OK);
+    }
+
 }

@@ -28,4 +28,9 @@ public class WarehouseService {
     public Warehouse getWarehouse(String warehouseId) {
         return warehouseRepository.findById(warehouseId).orElse(null);
     }
+
+    public String deleteWarehouse(String warehouseId) {
+        warehouseRepository.deleteById(warehouseId);
+        return "Warehouse with id " + warehouseId + " deleted successfully";
+    }
 }

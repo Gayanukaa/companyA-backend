@@ -30,9 +30,6 @@ public class StockAlertService {
     public List<StockAlert> createStockAlert(List<Stocks> stocks) {
         List<StockAlert> stockAlerts = new ArrayList<>();
         for (Stocks stock : stocks) {
-            if (stockAlertRepository.findByItemId(stock.getId()) != null) {
-                continue;
-            }
             stock.setStateOfProduct(StateOfProduct.valueOf("LOW_STOCK"));
             int reorderQuantity = stock.getThresholdQuantity() - stock.getQuantity();
             StockAlert stockAlert = new StockAlert();
@@ -61,8 +58,9 @@ public class StockAlertService {
         return stockAlertRepository.findByItemId(key);
     }
 
-    public void deleteStockAlert(String alertId) {
+    public String deleteStockAlert(String alertId) {
         stockAlertRepository.deleteById(alertId);
+        return "Stock Alert with id " + alertId + " deleted successfully";
     }
 
     public List<StockAlert> allStockAlerts () {
