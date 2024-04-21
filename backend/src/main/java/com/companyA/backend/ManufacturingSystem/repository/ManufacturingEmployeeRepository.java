@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface EmployeeRepository extends MongoRepository<Employee, String> {
+public interface ManufacturingEmployeeRepository extends MongoRepository<Employee, String> {
 
     // Custom method to retrieve workers from "manufacturing" department
     List<Employee> findBydepartment(String department);
