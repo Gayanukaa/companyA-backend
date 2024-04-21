@@ -36,6 +36,10 @@ public class FinanceEmployeeService {
         if(salary.isPresent()){
             employeeSalary = salary.get();
         }
+        else {
+            // Employee not found, throw an exception
+            throw new IDNotFoundException("Employee not found with ID: " + employeeId);
+        }
         return employeeSalary;
     }
     public void updateEmployee(EmployeeSalary employeeSalary){

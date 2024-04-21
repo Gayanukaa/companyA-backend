@@ -2,6 +2,7 @@ package com.companyA.backend.FinanceSystem.contoller;
 
 import com.companyA.backend.FinanceSystem.model.EmployeeSalary;
 import com.companyA.backend.FinanceSystem.service.FinanceEmployeeService;
+import com.companyA.backend.FinanceSystem.service.IDNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +45,10 @@ public class FinanceEmployeeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
+    @ExceptionHandler
+    public ResponseEntity<String> handleEmployeeNotFoundException(IDNotFoundException ex) {
+        // Create a custom response for EmployeeNotFoundException
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
 
 }

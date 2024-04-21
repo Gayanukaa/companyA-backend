@@ -27,6 +27,10 @@ public class PaymentService {
         if(employee.isPresent()){
             employeeSalary = employee.get();
         }
+        else {
+            // Employee not found, throw an exception
+            throw new IDNotFoundException("Employee not found with ID: " + employeeId);
+        }
         double paymentAmount = employeeSalary.getNetSalary();
         Payment payment = new Payment();
         payment.setType("Outgoing");

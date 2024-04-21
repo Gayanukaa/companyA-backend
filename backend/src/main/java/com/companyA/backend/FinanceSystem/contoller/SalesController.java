@@ -2,8 +2,11 @@ package com.companyA.backend.FinanceSystem.contoller;
 
 import com.companyA.backend.FinanceSystem.model.SalesRecord;
 import com.companyA.backend.FinanceSystem.repository.SalesRecordRepo;
+import com.companyA.backend.FinanceSystem.service.IDNotFoundException;
 import com.companyA.backend.FinanceSystem.service.SalesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -26,6 +29,10 @@ public class SalesController {
         if(salesRecord.isPresent()){
             sales = salesRecord.get();
         }
+        else {
+            // Employee not found, throw an exception
+            throw new IDNotFoundException("Order ID not found: " + order_ID);
+        }
         return salesService.generateBill(sales);
     }
 
@@ -34,6 +41,10 @@ public class SalesController {
         salesService.addRecord(salesRecord);
     }
 
-
+    @ExceptionHandler
+    public ResponseEntity<String> handleEmployeeNotFoundException(IDNotFoundException ex) {
+        // Create a custom response for EmployeeNotFoundException
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
 
 }
