@@ -55,13 +55,13 @@ public class SampleService {
         Optional<Test> AvalilableTest = testRepository.findById(temptestid);
         if (AvalilablePrototype.isPresent()&&AvalilableTest.isPresent()) {
             String currentStatus = AvalilablePrototype.get().getTestStatus();
-            if (!currentStatus.equals("Test initiated")) {
+            if (currentStatus.equals("Assigened")) {
                 sample.setAllocatedTest(test);
                 sample.setTestStatus("Test initiated");
                 sampleRepository.save(sample);
                 return "The sample with id: " + tempid + " is subjected to : " + test.getName();
             }
-            else return " Previous Test hasn't been finished. Test was not initiated " ;
+            else return " Previous Test hasn't been finished or a manager hasn't been assigned yet. Test was not initiated " ;
         }
 
         else {
@@ -83,4 +83,10 @@ public class SampleService {
         }
         else return "invalid request";
     }
+
+    public String deleteSampleById(String id){
+        sampleRepository.deleteById(id);
+        return id +" sample successfully deleted";
+    }
+
 }

@@ -31,4 +31,9 @@ public class TestController {
     public Optional<Test> getTestById(@PathVariable String id) {
         return testService.getTestById(id);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteTest(@PathVariable String id){
+        return testService.deleteTestById(id);
+    }
 }
