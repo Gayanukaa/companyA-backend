@@ -1,11 +1,16 @@
 package com.companyA.backend.FinanceSystem.contoller;
 
 import com.companyA.backend.FinanceSystem.model.CreditFacility;
+import com.companyA.backend.FinanceSystem.model.EmployeeSalary;
+import com.companyA.backend.FinanceSystem.repository.CreditFacilityRepo;
 import com.companyA.backend.FinanceSystem.service.CreditFacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -14,7 +19,24 @@ public class CreditFacilityController {
     @Autowired
     private CreditFacilityService creditFacilityService;
 
-    public boolean loanPaymentConfirmation(@RequestBody CreditFacility creditFacility){
-        return creditFacilityService.monthlyLoanPaymnet(creditFacility);
+    @Autowired
+    private CreditFacilityRepo creditFacilityRepo;
+
+    @PostMapping("/createLoan")
+    public ResponseEntity<Map<String, String>> setEmployeeSalary(@RequestBody CreditFacility loan) {
+        creditFacilityService.createLoan(loan);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Bank loan");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @PutMapping("/updateLoanStatus/{facilityId}")
+    public ResponseEntity<Map<String, String>> updateEmployeeSalary(@PathVariable String facilityId){
+        CreditFacility loan = creditFacilityRepo.findById(facilityId).orElseThrow(null);
+        creditFacilityService.updateLoanStatus(loan);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Current Loan Status Updated");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

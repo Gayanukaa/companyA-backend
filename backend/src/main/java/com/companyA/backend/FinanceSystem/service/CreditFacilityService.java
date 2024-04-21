@@ -10,11 +10,14 @@ import org.springframework.stereotype.Service;
 public class CreditFacilityService {
     @Autowired
     private CreditFacilityRepo creditFacilityRepo;
-    @Scheduled(cron = "0 0 0 1 **")
-    public boolean monthlyLoanPaymnet(CreditFacility creditFacility) {
+
+    public void createLoan(CreditFacility creditFacility){
         creditFacility.setMonthlyLoanAmount(creditFacility.monthlyLoanPayment());
+        creditFacilityRepo.save(creditFacility);
+    }
+    public void updateLoanStatus(CreditFacility creditFacility){
         creditFacility.recordPayment(creditFacility.getMonthlyLoanAmount());
         creditFacilityRepo.save(creditFacility);
-        return true;
     }
+
 }
