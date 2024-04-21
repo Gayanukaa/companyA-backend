@@ -116,5 +116,9 @@ public class QualityAssuaranceManagerController {
         else return "Test Subject Not Found";
     }
 
+    @DeleteMapping("/delete/{id}")
+    public String deleteQAManager(@PathVariable String id){
+        return qualityAssuaranceManagerService.deleteQAManagerById(id);
+    }
 
 }

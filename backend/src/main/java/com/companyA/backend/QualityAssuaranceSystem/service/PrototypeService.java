@@ -87,5 +87,10 @@ public class PrototypeService {
         }
         else return "invalid request";
     }
+
+    public String deletePrototypeById(String id){
+        prototypeRepository.deleteById(id);
+        return id +" prototype successfully deleted";
+    }
 }
 

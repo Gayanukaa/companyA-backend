@@ -83,4 +83,10 @@ public class SampleService {
         }
         else return "invalid request";
     }
+
+    public String deleteSampleById(String id){
+        sampleRepository.deleteById(id);
+        return id +" sample successfully deleted";
+    }
+
 }

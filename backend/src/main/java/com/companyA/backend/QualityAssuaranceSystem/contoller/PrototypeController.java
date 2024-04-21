@@ -62,4 +62,9 @@ public class PrototypeController {
     public String updateTestMethodById(@RequestParam String prototypeId,String newTestName) {
          return prototypeService.updateTestMethodById(prototypeId, newTestName);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public String deletePrototype(@PathVariable String id){
+        return prototypeService.deletePrototypeById(id);
+    }
 }

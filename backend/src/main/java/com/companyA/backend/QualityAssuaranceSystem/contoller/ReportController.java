@@ -43,6 +43,6 @@ public class ReportController {
 
     @DeleteMapping("/delete/{id}")
     public String deleteReport(@PathVariable String id){
-        return reportService.deleteReport(id);
+        return reportService.deleteReportById(id);
     }
 }

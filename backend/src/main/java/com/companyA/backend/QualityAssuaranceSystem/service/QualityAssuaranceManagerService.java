@@ -66,4 +66,9 @@ public class QualityAssuaranceManagerService {
         }
         else return "Invalid Request";
     }
+
+    public String deleteQAManagerById(String id){
+        qualityAssuaranceManagerRepository.deleteById(id);
+        return id +" QA manager removed";
+    }
 }

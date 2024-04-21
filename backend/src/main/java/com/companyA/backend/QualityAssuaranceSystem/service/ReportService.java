@@ -71,9 +71,9 @@ public class ReportService {
     }
 
 
-    public String deleteReport(String id){
+    public String deleteReportById(String id){
         reportRepository.deleteById(id);
-        return id +" report deleted";
+        return id +" report successfully deleted";
     }
 
 }

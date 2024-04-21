@@ -25,6 +25,9 @@ public class TestService {
         return testRepository.save(test);
     }
 
-
+    public String deleteTestById(String id){
+        testRepository.deleteById(id);
+        return id +" test successfully deleted";
+    }
 
 }

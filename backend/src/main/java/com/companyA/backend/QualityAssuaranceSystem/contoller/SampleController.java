@@ -64,4 +64,9 @@ public class SampleController {
         return sampleService.updateTestMethodById(prototypeId, newTestName);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public String deleteSample(@PathVariable String id){
+        return sampleService.deleteSampleById(id);
+    }
+
 }
