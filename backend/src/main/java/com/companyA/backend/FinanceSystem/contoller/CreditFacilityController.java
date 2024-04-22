@@ -14,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class CreditFacilityController {
     @Autowired
     private CreditFacilityService creditFacilityService;
