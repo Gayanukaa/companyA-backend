@@ -15,7 +15,7 @@ public abstract class TestSubjects {
     private String id;
 
     @NotBlank(message = "Name of the expected test is needed")    // do we need this here?
-    private String testName;
+    private String expectedTest;
 
     @NotBlank(message = "Received Date is Required in 'DD/MM/YYYY' format")
     private String receivedDate;  //remove static to check with report generation

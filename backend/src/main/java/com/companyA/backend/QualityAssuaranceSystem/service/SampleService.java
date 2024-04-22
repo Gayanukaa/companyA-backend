@@ -39,12 +39,16 @@ public class SampleService {
         }
 
         else {
+            sample.setTestStatus("Received");
+            sample.setAllocatedTest(null);
             sampleRepository.save(sample);
             return "sample added Successfully";
         }
     }
 
     public Sample addSample(Sample sample) {
+        sample.setTestStatus("Received");
+        sample.setAllocatedTest(null);
         return sampleRepository.save(sample);
     }
 
@@ -75,7 +79,7 @@ public class SampleService {
         if(outdatedSample != null) {
             if (!outdatedSample.getTestStatus().equals("Test initiated")) {
                 sampleRepository.deleteById(sampleId);
-                outdatedSample.setTestName(newTestName);
+                outdatedSample.setExpectedTest(newTestName);
                 sampleRepository.save(outdatedSample);
                 return "Test method successfully changed";
             }
