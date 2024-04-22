@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface TrainingManagementRepository extends MongoRepository<TrainingManagementModel,String> {
-    Optional<TrainingManagementModel> findById(String trainingId);
+    //Optional<TrainingManagementModel> findByCourseId(String courseId);
 }
