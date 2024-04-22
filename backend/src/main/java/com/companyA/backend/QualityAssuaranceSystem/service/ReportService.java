@@ -72,8 +72,15 @@ public class ReportService {
 
 
     public String deleteReportById(String id){
-        reportRepository.deleteById(id);
-        return id +" report successfully deleted";
+//        reportRepository.deleteById(id);
+//        return id +" report successfully deleted";
+        Optional<Report> report = reportRepository.findById(id);
+        if (report.isPresent()) {
+            reportRepository.deleteById(id);
+            return "Report with ID " + id + " successfully deleted";
+        } else {
+            return "Report with ID " + id + " not found";
+        }
     }
 
 }

@@ -85,8 +85,13 @@ public class SampleService {
     }
 
     public String deleteSampleById(String id){
-        sampleRepository.deleteById(id);
-        return id +" sample successfully deleted";
+        Optional<Sample> sample = sampleRepository.findById(id);
+        if (sample.isPresent()) {
+            sampleRepository.deleteById(id);
+            return "Sample with ID " + id + " successfully deleted";
+        } else {
+            return "Sample with ID " + id + " not found";
+        }
     }
 
 }

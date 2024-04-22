@@ -89,8 +89,13 @@ public class PrototypeService {
     }
 
     public String deletePrototypeById(String id){
-        prototypeRepository.deleteById(id);
-        return id +" prototype successfully deleted";
+        Optional<Prototype> prototype = prototypeRepository.findById(id);
+        if (prototype.isPresent()) {
+            prototypeRepository.deleteById(id);
+            return "Prototype with ID " + id + " successfully deleted";
+        } else {
+            return "Prototype with ID " + id + " not found";
+        }
     }
 }
 
