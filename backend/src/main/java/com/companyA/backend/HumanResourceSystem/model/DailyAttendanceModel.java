@@ -26,6 +26,4 @@ public class DailyAttendanceModel {
     private boolean isPresent;
 
 
-   // private AttendanceIdModel employeeId;
-
 }

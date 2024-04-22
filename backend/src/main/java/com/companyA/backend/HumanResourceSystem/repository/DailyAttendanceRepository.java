@@ -8,14 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DailyAttendanceRepository extends MongoRepository<DailyAttendanceModel,String> {
-    DailyAttendanceModel findByIdAndDate(String id, LocalDate date);
-
-
-    //List<DailyAttendanceModel> findByIdAndDateBetween(String id, LocalDate startDate, LocalDate endDate);
 
     List<DailyAttendanceModel> findByDate(LocalDate date);
-
-    //Optional<DailyAttendanceModel> findByEmployeeId(String employeeId);
 
     DailyAttendanceModel findByEmployeeIdAndDate(String employeeId, LocalDate date);
 

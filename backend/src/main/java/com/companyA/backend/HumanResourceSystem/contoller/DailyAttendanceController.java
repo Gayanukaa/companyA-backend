@@ -35,7 +35,7 @@ public class DailyAttendanceController {
         return ResponseEntity.ok(weeklyAttendance);
 
     }
-
+    //Get All employee's attendance for given day
     @GetMapping("/GetDailyAttendance/{date}")
     public ResponseEntity<List<DailyAttendanceModel>> getDailyAttendance(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         List<DailyAttendanceModel> dailyAttendanceList = dailyAttendanceService.getDailyAttendance(date);
