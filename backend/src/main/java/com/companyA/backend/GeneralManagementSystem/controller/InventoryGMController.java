@@ -12,7 +12,7 @@ import java.util.Optional;
 @RequestMapping("/api/inventory")
 @AllArgsConstructor
 @CrossOrigin
-public class InventoryController {
+public class InventoryGMController {
 
     private InventoryService inventoryService;
 
