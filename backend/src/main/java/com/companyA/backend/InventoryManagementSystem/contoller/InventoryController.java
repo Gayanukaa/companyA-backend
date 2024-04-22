@@ -3,8 +3,10 @@ package com.companyA.backend.InventoryManagementSystem.contoller;
 import com.companyA.backend.InventoryManagementSystem.model.StateOfProduct;
 import com.companyA.backend.InventoryManagementSystem.model.StockAlert;
 import com.companyA.backend.InventoryManagementSystem.model.Stocks;
+import com.companyA.backend.InventoryManagementSystem.model.Supplies;
 import com.companyA.backend.InventoryManagementSystem.service.StockAlertService;
 import com.companyA.backend.InventoryManagementSystem.service.StocksService;
+import com.companyA.backend.InventoryManagementSystem.service.SuppliesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,17 +16,21 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/stock")
+@RequestMapping("/api/v1/inventory")
 @CrossOrigin
-public class StockController{
+public class InventoryController {
 
     private final StocksService stocksService;
 
+    private final SuppliesService suppliesService;
+
     private final StockAlertService stockAlertService;
 
+    //Dependency Injection
     @Autowired
-    public StockController(StocksService stocksService, StockAlertService stockAlertService) {
+    public InventoryController(StocksService stocksService, SuppliesService suppliesService, StockAlertService stockAlertService) {
         this.stocksService = stocksService;
+        this.suppliesService = suppliesService;
         this.stockAlertService = stockAlertService;
     }
 
@@ -34,15 +40,26 @@ public class StockController{
     }
 
     @PostMapping("/addStock")
-    public ResponseEntity<Stocks> addStockInventory(@RequestBody Stocks stocks) {
+    public ResponseEntity<Stocks> addToInventory(@RequestBody Stocks stocks) {
         return new ResponseEntity<Stocks>(stocksService.addStocks(stocks),HttpStatus.CREATED);
     }
 
-    //Delete stock by id
-    @DeleteMapping("/deleteStock/{stockId}")
-    public ResponseEntity<String> deleteStock(@PathVariable String stockId) {
-        return new ResponseEntity<String>(stocksService.deleteStock(stockId),HttpStatus.OK);
+    @PostMapping("/addSupplies")
+    public ResponseEntity<Supplies> addToInventory(@RequestBody Supplies supplies) {
+        return new ResponseEntity<Supplies>(suppliesService.addSupplies(supplies),HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/deleteInventory/{itemId}")
+    public ResponseEntity<String> deleteFromInventory(@PathVariable String itemId) {
+        if(stocksService.existsById(itemId)){
+            return new ResponseEntity<String>(stocksService.deleteStock(itemId),HttpStatus.OK);
+        }
+        else if(suppliesService.existsById(itemId)){
+            return new ResponseEntity<String>(suppliesService.deleteSupplies(itemId),HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(HttpStatus.NOT_FOUND.toString(),HttpStatus.NOT_FOUND);
+    }
+
 
     @GetMapping("/{attribute}/{value}")
     public ResponseEntity<Stocks> getStockByAttribute(@PathVariable String attribute, @PathVariable String value) {
@@ -66,9 +83,10 @@ public class StockController{
         }
     }
 
-    @PutMapping("/{id}/{attribute}/{value}")
-    public ResponseEntity<Stocks> updateStockByAttribute(@PathVariable String id, @PathVariable String attribute, @PathVariable String value) {
-        Stocks stock = stocksService.getStockById(id);
+    @PutMapping("/stocks/{stockId}/{attribute}/{value}")
+    public ResponseEntity<Stocks> updateStockByAttribute(@PathVariable String stockId, @PathVariable String attribute, @PathVariable String value) {
+        //find if stock or supplies
+        Stocks stock = stocksService.getStockById(stockId);
         if (stock != null) {
             stocksService.updateStockByAttribute(stock, attribute, value);
             return ResponseEntity.ok(stock);
@@ -77,7 +95,18 @@ public class StockController{
         }
     }
 
-    @GetMapping("/stateOfproduct/{value}")
+    @PutMapping("/supplies/{suppliesId}/{attribute}/{value}")
+    public ResponseEntity<Supplies> updateSuppliesByAttribute(@PathVariable String suppliesId, @PathVariable String attribute, @PathVariable String value) {
+        Supplies supplies = suppliesService.getSuppliesById(suppliesId);
+        if (supplies != null) {
+            suppliesService.updateSuppliesByAttribute(supplies, attribute, value);
+            return ResponseEntity.ok(supplies);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/stateOfProduct/{value}")
     public ResponseEntity <List<Stocks>> getStockByStateOfProduct(@PathVariable String value) {
         StateOfProduct valueNew = StateOfProduct.valueOf(value);
         return new ResponseEntity<List<Stocks>>(stocksService.getStockByStateOfProduct(valueNew), HttpStatus.OK);
@@ -95,6 +124,15 @@ public class StockController{
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found!");
         }
         stocksService.updateStock(stock);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/updateSupplies")
+    public void update(@RequestBody Supplies supplies) {
+        if(!suppliesService.existsById(supplies.getId())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found!");
+        }
+        suppliesService.updateSupplies(supplies);
     }
 
     @PostMapping("/checkQuantity")
