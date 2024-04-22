@@ -21,7 +21,7 @@ public class PaymentController {
 
 
     @PostMapping("/salary/{employeeId}")
-    public ResponseEntity<Map<String, String>> EmployeeSalaryConfirmation(@PathVariable int employeeId) {
+    public ResponseEntity<Map<String, String>> EmployeeSalaryConfirmation(@PathVariable String employeeId) {
         paymentService.SalaryPaymentConfirmation(employeeId);
 
         Map<String, String> response = new HashMap<>();

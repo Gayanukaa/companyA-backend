@@ -2,7 +2,7 @@ package com.companyA.backend.FinanceSystem.service;
 
 import com.companyA.backend.FinanceSystem.model.EmployeeSalary;
 import com.companyA.backend.FinanceSystem.model.Payment;
-import com.companyA.backend.FinanceSystem.repository.EmployeeRepo;
+import com.companyA.backend.FinanceSystem.repository.EmployeeSalaryRepo;
 import com.companyA.backend.FinanceSystem.repository.PaymentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,11 @@ public class PaymentService {
     private PaymentRepo paymentRepo;
 
     @Autowired
-    private EmployeeRepo employeeRepo;
+    private EmployeeSalaryRepo employeeSalaryRepo;
 
 
-    public void SalaryPaymentConfirmation(int employeeId){
-        Optional<EmployeeSalary> employee = employeeRepo.findById(employeeId);
+    public void SalaryPaymentConfirmation(String employeeId){
+        Optional<EmployeeSalary> employee = employeeSalaryRepo.findById(employeeId);
 
         EmployeeSalary employeeSalary = null;
 

@@ -14,19 +14,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class EmployeeSalary {
 
     @Id
-    private int _id;
+    private String employeeId;
+    private String employeeName;
     private double basicSalary;
-    private double payForNormalHour;
     private double payForOtHour;
-    private double normalHours;
     private double otHours;
+    private int numberOfAbsentDays;
     private double grossSalary;
     private double netSalary;
     private double tax;
 
-    public double calGrossSalary(double basicSalary,double normalHours, double otHours, double payForNormalHour, double payForOtHour){
+    public double calGrossSalary(double basicSalary, double otHours, double payForOtHour, int numberOfAbsentDays){
         double calculatedGrossSalary;
-        calculatedGrossSalary = basicSalary + normalHours*payForNormalHour + otHours*payForOtHour;
+        calculatedGrossSalary = basicSalary + otHours*payForOtHour - numberOfAbsentDays*500;
         return calculatedGrossSalary;
     }
 

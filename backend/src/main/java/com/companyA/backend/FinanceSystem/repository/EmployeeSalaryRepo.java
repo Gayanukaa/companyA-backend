@@ -5,6 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EmployeeRepo extends MongoRepository<EmployeeSalary,Integer> {
+public interface EmployeeSalaryRepo extends MongoRepository<EmployeeSalary,String> {
 
 }

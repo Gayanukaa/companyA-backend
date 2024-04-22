@@ -23,7 +23,7 @@ public class FinanceEmployeeController {
         return financeEmployeeService.getAllEmployee();
     }
     @GetMapping("/getEmployeeSalary/{employeeId}")
-    public EmployeeSalary getEmployeeSalary(@PathVariable int employeeId) {
+    public EmployeeSalary getEmployeeSalary(@PathVariable String employeeId) {
         return financeEmployeeService.getEmployee(employeeId);
     }
 

@@ -1,7 +1,8 @@
 package com.companyA.backend.FinanceSystem.service;
 
 import com.companyA.backend.FinanceSystem.model.EmployeeSalary;
-import com.companyA.backend.FinanceSystem.repository.EmployeeRepo;
+import com.companyA.backend.FinanceSystem.repository.EmployeeSalaryRepo;
+import com.companyA.backend.HumanResourceSystem.repository.EmployeeDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,25 +12,29 @@ import java.util.Optional;
 @Service
 public class FinanceEmployeeService {
     @Autowired
-    private EmployeeRepo employeeRepo;
+    private EmployeeSalaryRepo employeeSalaryRepo;
+
+    @Autowired
+    private EmployeeDetailRepository employeeDetailRepository;
 
     public List<EmployeeSalary> getAllEmployee(){
-        return employeeRepo.findAll();
+        return employeeSalaryRepo.findAll();
     }
 
-    public void addEmployee(EmployeeSalary employee){
-        double calculatedGross = employee.calGrossSalary(employee.getBasicSalary(), employee.getNormalHours(), employee.getOtHours(), employee.getPayForNormalHour(), employee.getPayForOtHour());
-        employee.setGrossSalary(calculatedGross);
-        double calculatedTax = employee.calTax();
-        employee.setTax(calculatedTax);
-        double calculatedNet = employee.calNetSalary();
-        employee.setNetSalary(calculatedNet);
-        employeeRepo.save(employee);
+    public void addEmployee(EmployeeSalary employeeSalary){
+        double calculatedGross = employeeSalary.calGrossSalary(employeeSalary.getBasicSalary(), employeeSalary.getOtHours(), employeeSalary.getPayForOtHour(), employeeSalary.getNumberOfAbsentDays());
+        employeeSalary.setGrossSalary(calculatedGross);
+        double calculatedTax = employeeSalary.calTax();
+        employeeSalary.setTax(calculatedTax);
+        employeeSalary.setEmployeeName(employeeDetailRepository.findByEmployeeId(employeeSalary.getEmployeeId()).getFirstName());
+        double calculatedNet = employeeSalary.calNetSalary();
+        employeeSalary.setNetSalary(calculatedNet);
+        employeeSalaryRepo.save(employeeSalary);
     }
 
 
-    public EmployeeSalary getEmployee(int employeeId) {
-        Optional<EmployeeSalary> salary = employeeRepo.findById(employeeId);
+    public EmployeeSalary getEmployee(String employeeId) {
+        Optional<EmployeeSalary> salary = employeeSalaryRepo.findById(employeeId);
 
         EmployeeSalary employeeSalary = null;
 
@@ -43,12 +48,12 @@ public class FinanceEmployeeService {
         return employeeSalary;
     }
     public void updateEmployee(EmployeeSalary employeeSalary){
-        double calculatedGross = employeeSalary.calGrossSalary(employeeSalary.getBasicSalary(), employeeSalary.getNormalHours(), employeeSalary.getOtHours(), employeeSalary.getPayForNormalHour(), employeeSalary.getPayForOtHour());
+        double calculatedGross = employeeSalary.calGrossSalary(employeeSalary.getBasicSalary(), employeeSalary.getOtHours(), employeeSalary.getPayForOtHour(),employeeSalary.getNumberOfAbsentDays());
         employeeSalary.setGrossSalary(calculatedGross);
         double calculatedTax = employeeSalary.calTax();
         employeeSalary.setTax(calculatedTax);
         double calculatedNet = employeeSalary.calNetSalary();
         employeeSalary.setNetSalary(calculatedNet);
-        employeeRepo.save(employeeSalary);
+        employeeSalaryRepo.save(employeeSalary);
     }
 }
