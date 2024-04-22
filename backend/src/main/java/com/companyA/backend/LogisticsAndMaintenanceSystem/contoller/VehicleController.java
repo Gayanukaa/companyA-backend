@@ -29,6 +29,13 @@ public class VehicleController {
         return new ResponseEntity<>(vehicleService.vehicleById(vehicleId), HttpStatus.OK);
     }
 
+    @GetMapping("/vehiclesByStatus/{status}")
+    public ResponseEntity<List<Vehicle>> getVehiclesByStatus(@PathVariable boolean status) {
+        List<Vehicle> vehicles = vehicleService.getVehiclesByStatus(status);
+        return new ResponseEntity<>(vehicles, HttpStatus.OK);
+    }
+
+
 
     @PostMapping("/addVehicle")
     public ResponseEntity<Map<String, String>> addVehicle(@RequestBody Vehicle vehicle) {

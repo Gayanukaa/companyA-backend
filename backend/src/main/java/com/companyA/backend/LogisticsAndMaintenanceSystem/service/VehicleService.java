@@ -26,6 +26,10 @@ public class VehicleService {
         return vehicleRepository.findVehicleByVehicleId(vehicleId);
     }
 
+    public List<Vehicle> getVehiclesByStatus(boolean vehicleStatus) {
+        return vehicleRepository.findVehicleByVehicleStatus(vehicleStatus);
+    }
+
     public void addVehicle(Vehicle vehicle) {
         Optional<Vehicle> existingVehicleOptional = vehicleRepository.findVehicleByVehicleId(vehicle.getVehicleId());
         if (existingVehicleOptional.isPresent()) {
@@ -88,6 +92,5 @@ public class VehicleService {
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
-
 
 }
