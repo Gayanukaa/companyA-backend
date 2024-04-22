@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@Document(collection = "reports")
+@Document(collection = "ManufacturingReports")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,5 +19,7 @@ public class Report {
     private Date reportDate;
     private String createdBy;
     private String description;
+    private int ordersCompleted;
+    private int totalQuantityOfProductsCompleted;
 
 }
