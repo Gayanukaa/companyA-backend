@@ -19,7 +19,7 @@ public class Report {
     private Date reportDate;
     private String createdBy;
     private String description;
-    private int ordersCompleted;
+    private int numberOfOrdersCompleted;
     private int totalQuantityOfProductsCompleted;
 
 }
