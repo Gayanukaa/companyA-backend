@@ -50,7 +50,7 @@ public class ReportService {
 
         for (TestSubjects subject : subjects) {
             reportContent.append(type).append(" ID: ").append(subject.getId()).append("\n");
-            reportContent.append("Test Name: ").append(subject.getTestName() != null ? subject.getTestName() : "Unknown").append("\n");
+            reportContent.append("Test Name: ").append(subject.getExpectedTest() != null ? subject.getExpectedTest() : "Unknown").append("\n");
             reportContent.append("Received Date: ").append(subject.getReceivedDate() != null ? subject.getReceivedDate() : "Unknown").append("\n");
             reportContent.append("Test Status: ").append(subject.getTestStatus() != null ? subject.getTestStatus() : "Unknown").append("\n");
             reportContent.append("\n");

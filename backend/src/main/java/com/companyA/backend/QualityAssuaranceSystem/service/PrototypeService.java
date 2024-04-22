@@ -42,12 +42,16 @@ public class PrototypeService {
         }
 
         else {
+            prototype.setTestStatus("Received");
+            prototype.setAllocatedTest(null);
             prototypeRepository.save(prototype);
             return "Prototype added Successfully";
         }
     }
 
     public Prototype addPrototype(Prototype prototype) {
+        prototype.setTestStatus("Received");
+        prototype.setAllocatedTest(null);
         return prototypeRepository.save(prototype);
     }
 
@@ -79,7 +83,7 @@ public class PrototypeService {
         if (outdatedPrototype != null) {
             if (!outdatedPrototype.getTestStatus().equals("Test initiated")) {
                 prototypeRepository.deleteById(prototypeId);
-                outdatedPrototype.setTestName(newTestName);
+                outdatedPrototype.setExpectedTest(newTestName);
                 prototypeRepository.save(outdatedPrototype);
                 return "Test method successfully changed";
             }
