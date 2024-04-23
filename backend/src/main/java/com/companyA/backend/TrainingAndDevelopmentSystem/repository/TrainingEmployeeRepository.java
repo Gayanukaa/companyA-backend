@@ -9,7 +9,8 @@ import java.util.Optional;
 public interface TrainingEmployeeRepository extends MongoRepository<TrainingEmployee,String> {
     @Query("{ 'employeeEmail' : ?0, 'password' : ?1 }")
     TrainingEmployee findByEmailAndPassword(String email, String password);
-//
+
     boolean existsByEmployeeEmail(String email);
-//    Optional<TrainingEmployee> findByUsername(String username);
+
+    TrainingEmployee findByEmployeeEmail(String email);
 }
