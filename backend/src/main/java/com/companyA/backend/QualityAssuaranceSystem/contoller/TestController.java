@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/tests")
+@CrossOrigin
 public class TestController {
 
     @Autowired

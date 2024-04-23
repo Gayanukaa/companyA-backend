@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/SmpReports")
+@CrossOrigin
 public class ReportController {
 
     @Autowired

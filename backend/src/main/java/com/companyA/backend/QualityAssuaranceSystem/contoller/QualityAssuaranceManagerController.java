@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/qaManager")
-
+@CrossOrigin
 public class QualityAssuaranceManagerController {
 
     @Autowired
