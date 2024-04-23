@@ -1,9 +1,7 @@
 package com.companyA.backend.HumanResourceSystem.service;
 
 import com.companyA.backend.HumanResourceSystem.model.DailyAttendanceModel;
-//import com.companyA.backend.HumanResourceSystem.model.WorkTimeModel;
 import com.companyA.backend.HumanResourceSystem.repository.DailyAttendanceRepository;
-import com.companyA.backend.HumanResourceSystem.repository.LeaveManagementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +14,6 @@ import java.util.List;
 @Service
 public class LeaveManagementService {
     @Autowired
-    //LeaveManagementRepository leaveManagementRepository;
     DailyAttendanceRepository dailyAttendanceRepository;
 
     public int CalculateLeaveBalance (List<DailyAttendanceModel> attendanceList, int daysOfMonth, int satAndSun){

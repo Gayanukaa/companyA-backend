@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/Employee")
@@ -56,62 +55,6 @@ public class EmployeeController {
         employeeDetailRepository.save(updatedEmployee);
         return ResponseEntity.ok(updatedEmployee);
     }
-
-
-/*
-    @PutMapping("/{employeeId}")
-    public ResponseEntity<EmployeeDetailModel> updateEmployee(@PathVariable String employeeId, @RequestBody EmployeeDetailModel updatedEmployee) {
-        Optional<Object> optionalExistingEmployee = employeeDetailRepository.findByEmployeeId(employeeId);
-        if (optionalExistingEmployee.isPresent()) {
-            EmployeeDetailModel existingEmployee = (EmployeeDetailModel) optionalExistingEmployee.get();
-            // Update existing employee fields with the new values
-
-            // Update other fields as needed
-            employeeDetailRepository.save(updatedEmployee);
-            return ResponseEntity.ok(updatedEmployee);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-    @PutMapping("/{employeeId}")
-    public ResponseEntity<EmployeeDetailModel> updateEmployee(@PathVariable String employeeId,@RequestBody EmployeeDetailModel updatedEmployee) {
-        //EmployeeDetailModel savedEmployee = employeeDetailRepository.save(employeeDetailModel);
-        EmployeeDetailModel optionalEmployee = employeeDetailRepository.findByEmployeeId(employeeId);
-        if (optionalEmployee!= null){
-            EmployeeDetailModel existingEmployee = optionalEmployee;
-            //employeeDetailRepository.save(updatedEmployee);
-
-            existingEmployee.setFirstName(updatedEmployee.getFirstName());
-            existingEmployee.setLastName(updatedEmployee.getLastName());
-            existingEmployee.setDateOfBirth(updatedEmployee.getDateOfBirth());
-            existingEmployee.setAge(updatedEmployee.getAge());
-            existingEmployee.setNic(updatedEmployee.getNic());
-            existingEmployee.setAddress(updatedEmployee.getAddress());
-            existingEmployee.setEmailAddress(updatedEmployee.getEmailAddress());
-            existingEmployee.setPhoneNumber(updatedEmployee.getPhoneNumber());
-            existingEmployee.setEmergencyContactNumber(updatedEmployee.getEmergencyContactNumber());
-            existingEmployee.setGender(updatedEmployee.getGender());
-            existingEmployee.setBankAccountNumber(updatedEmployee.getBankAccountNumber());
-            existingEmployee.setDepartment(updatedEmployee.getDepartment());
-            existingEmployee.setJobRole(updatedEmployee.getJobRole());
-            existingEmployee.setRecruitmentDate(updatedEmployee.getRecruitmentDate());
-            existingEmployee.setSalary(updatedEmployee.getSalary());
-            existingEmployee.setPermanentStaff(updatedEmployee.isPermanentStaff());
-            existingEmployee.setInsuranceCategory(updatedEmployee.getInsuranceCategory());
-            existingEmployee.setSkillLevel(updatedEmployee.getSkillLevel());
-            //existingEmployee.setIsActive(updatedEmployee.isActive());
-            //existingEmployee.setTrainingManagement(updatedEmployee.getTrainingManagement());
-            employeeDetailRepository.save(existingEmployee);
-            return ResponseEntity.ok(updatedEmployee);
-        }
-        else{
-            return ResponseEntity.notFound().build();
-        }
-
-    }
-
- */
-
 
 
 

@@ -1,12 +1,9 @@
 package com.companyA.backend.HumanResourceSystem.contoller;
 
 import com.companyA.backend.HumanResourceSystem.model.DailyAttendanceModel;
-//import com.companyA.backend.HumanResourceSystem.model.WorkTimeModel;
 import com.companyA.backend.HumanResourceSystem.repository.DailyAttendanceRepository;
-import com.companyA.backend.HumanResourceSystem.repository.LeaveManagementRepository;
 import com.companyA.backend.HumanResourceSystem.service.LeaveManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +17,6 @@ import java.util.List;
 public class LeaveManagementController {
 
     @Autowired
-    //LeaveManagementRepository leaveManagementRepository ;
      DailyAttendanceRepository dailyAttendanceRepository;
 
     @Autowired

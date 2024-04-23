@@ -1,4 +1,4 @@
-package com.companyA.backend.HumanResourceSystem.repository;
+/*package com.companyA.backend.HumanResourceSystem.repository;
 
 import com.companyA.backend.HumanResourceSystem.model.DailyAttendanceModel;
 //import com.companyA.backend.HumanResourceSystem.model.WorkTimeModel;
@@ -13,3 +13,5 @@ import java.util.List;
 public interface LeaveManagementRepository extends MongoRepository<DailyAttendanceModel, String> {
     //List<DailyAttendanceModel> findByEmployeeId(String employeeId) ;
 }
+
+ */

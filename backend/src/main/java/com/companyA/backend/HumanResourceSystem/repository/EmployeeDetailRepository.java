@@ -13,5 +13,5 @@ public interface EmployeeDetailRepository extends MongoRepository<EmployeeDetail
 
     EmployeeDetailModel findByEmployeeId(String employeeId);
 
-    //EmployeeDetailModel findByEmployeeIdAndIsActive(String employeeId, boolean b);
+
 }

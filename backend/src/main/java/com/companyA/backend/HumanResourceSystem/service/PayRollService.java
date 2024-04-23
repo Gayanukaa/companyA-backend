@@ -1,6 +1,5 @@
 package com.companyA.backend.HumanResourceSystem.service;
 
-//import com.companyA.backend.HumanResourceSystem.model.PayrollModel;
 import com.companyA.backend.HumanResourceSystem.model.DailyAttendanceModel;
 import com.companyA.backend.HumanResourceSystem.repository.DailyAttendanceRepository;
 //import com.companyA.backend.HumanResourceSystem.repository.PayRollRepository;
@@ -20,7 +19,6 @@ import java.util.Map;
 public class PayRollService {
 
     @Autowired
-    //PayRollRepository payRollRepository;
     DailyAttendanceRepository dailyAttendanceRepository;
 
     public String calculateWorkHours(List<DailyAttendanceModel> workTimeList) {

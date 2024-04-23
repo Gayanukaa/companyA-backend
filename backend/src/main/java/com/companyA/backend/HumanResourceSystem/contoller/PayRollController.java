@@ -1,17 +1,14 @@
 package com.companyA.backend.HumanResourceSystem.contoller;
 
-import com.companyA.backend.HumanResourceSystem.model.EmployeeDetailModel;
-//import com.companyA.backend.HumanResourceSystem.model.PayrollModel;
+
 import com.companyA.backend.HumanResourceSystem.model.DailyAttendanceModel;
 import com.companyA.backend.HumanResourceSystem.repository.DailyAttendanceRepository;
-//import com.companyA.backend.HumanResourceSystem.repository.PayRollRepository;
 import com.companyA.backend.HumanResourceSystem.service.PayRollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -25,7 +22,6 @@ public class PayRollController {
 
 
     @Autowired
-    //PayRollRepository payRollRepository;
     DailyAttendanceRepository dailyAttendanceRepository;
 
     @Autowired
