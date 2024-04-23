@@ -52,4 +52,15 @@ public class ProductDevelopmentController {
 
         return ResponseEntity.ok(savedProductDevelopment);
     }
+    //updateSystem method implement here
+    @GetMapping("/api/tms/product-development/update-system")
+    public String updateSystem(@RequestBody String year) {
+        return "System updates successfully for year "+year;
+    }
+
+    //improveProcess method implement here
+    @GetMapping("/api/tms/product-development/improve-process")
+    public String improveProcess() {
+        return "Our process development is slow. It should be improved.";
+    }
 }
