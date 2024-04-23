@@ -3,6 +3,7 @@ package com.companyA.backend.ManufacturingSystem.contoller;
 import  com.companyA.backend.ManufacturingSystem.model.MaterialRequest;
 import com.companyA.backend.ManufacturingSystem.service.MaterialRequestService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/inventory")
 
 public class MaterialRequestController {
+    @Autowired
     private MaterialRequestService materialRequestService;
 
     // Endpoint to add a new material request

@@ -3,6 +3,7 @@ package com.companyA.backend.ManufacturingSystem.service;
 import com.companyA.backend.ManufacturingSystem.model.MaterialRequest;
 import com.companyA.backend.ManufacturingSystem.repository.MaterialRequestRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.util.Optional;
 // Service class for handling MaterialRequest entities
 @Service
 public class MaterialRequestService {
+    @Autowired
     private MaterialRequestRepository materialRequestRepository;
 
     // Method to add a new material request
