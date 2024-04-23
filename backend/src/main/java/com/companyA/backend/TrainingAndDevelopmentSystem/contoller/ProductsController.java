@@ -28,11 +28,13 @@ public class ProductsController {
     }
 
     @GetMapping("/api/tms/products/{id}")
-    Products getCourseById(@PathVariable String id){
+    Products getProductById(@PathVariable String id){
         return productsRepository.findById(id)
                 .orElseThrow(()->new UserNotFoundException(id));
     }
 
+
+    //productDetails method implements here
     @GetMapping("/api/tms/product/{id}/details")
     public ResponseEntity<String> getProductDetailsById(@PathVariable String id) {
         Products product = productsRepository.findById(id).orElse(null);

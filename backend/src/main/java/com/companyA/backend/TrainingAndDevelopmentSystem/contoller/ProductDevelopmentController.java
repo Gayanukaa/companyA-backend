@@ -25,15 +25,16 @@ public class ProductDevelopmentController {
     ProductDevelopment newProductDevelopment(@RequestBody ProductDevelopment newProductDevelopment){
         return productDevelopmentRepository.save(newProductDevelopment);
     }
-
+    //viewDevelopmentStage method implement here
     @GetMapping("/api/tms/product-development/{id}")
-    ProductDevelopment getProgress(@PathVariable String id) {
+    ProductDevelopment viewDevelopmentStage(@PathVariable String id) {
         return productDevelopmentRepository.findById(id)
                 .orElseThrow(()->new UserNotFoundException(id));
     }
 
+    //updateDevelopmentStage method implement here
     @PutMapping("/api/tms/product-development/{id}")
-    public ResponseEntity<ProductDevelopment> updateStage(@PathVariable String id, @RequestBody ProductDevelopment updatedProductDevelopment) {
+    public ResponseEntity<ProductDevelopment> updateDevelopmentStage(@PathVariable String id, @RequestBody ProductDevelopment updatedProductDevelopment) {
         Optional<ProductDevelopment> existingProductDevelopmentOptional = productDevelopmentRepository.findById(id);
 
         if (existingProductDevelopmentOptional.isEmpty()) {
