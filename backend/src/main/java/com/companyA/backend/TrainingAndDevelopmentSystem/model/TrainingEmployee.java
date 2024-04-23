@@ -18,6 +18,8 @@ public class TrainingEmployee {
 
     private List<Long> completedCourses;
 
+    // Here, I have implemented getter and setter methods, constructors instead of lombok annotations
+
     public TrainingEmployee() {
         this.enrolledCourses = new ArrayList<>();
         this.completedCourses = new ArrayList<>();

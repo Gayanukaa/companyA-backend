@@ -13,20 +13,9 @@ public class Prototyping {
     private String prototypeName;
     private String prototypeType;
 
-    public void createPrototype(int prototypeId){
-        System.out.println(prototypeId+ " created successfully");
-    }
+    // Here, I have implemented getter and setter methods instead of lombok annotations
 
-    public void testPrototype(int prototypeId, int test_score){
-        if (test_score>5 && test_score<10){
-            System.out.println(prototypeId+ " ,prototype tested successfully");
-        } else if (test_score>0 && test_score<5) {
-            System.out.println(prototypeId+ " ,prototype test failed");
-        }
-        else{
-            System.out.println("Test Score Invalid!");
-        }
-    }
+
 
     public String getId() {
         return id;

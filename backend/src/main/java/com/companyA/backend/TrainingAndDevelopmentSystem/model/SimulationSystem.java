@@ -11,6 +11,8 @@ public class SimulationSystem {
 
     //need to implement simulateSystem method
     //need to implement analyzeResults method
+    // this model will not deeply implement as it not need to use case scenarios
+    // Here, I have implemented getter and setter methods instead of lombok annotations
     public int getSystemId() {
         return systemId;
     }

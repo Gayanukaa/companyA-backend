@@ -13,9 +13,7 @@ public class UnitSupervisor {
     private String uSupervisorEmail;
     private String uPassword;
 
-    public void updateStage(int projectcode, int stage){
-        System.out.println(projectcode+", "+stage+" completed successfully");
-    }
+    // Here, I have implemented getter and setter methods instead of lombok annotations
 
     public String getId() {
         return id;

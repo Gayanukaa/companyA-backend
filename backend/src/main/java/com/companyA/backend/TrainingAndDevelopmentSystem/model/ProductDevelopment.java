@@ -18,37 +18,8 @@ public class ProductDevelopment {
     private int stageCompleted;
     private int progress;
 
+    // Here, I have implemented getter and setter methods instead of lombok annotations
 
-    private int getComplexityValue(String complexity) {
-        switch (complexity.toLowerCase()) {
-            case "low":
-                return 1;
-            case "medium":
-                return 3;
-            case "high":
-                return 5;
-            default:
-                return 0;
-        }
-    }
-
-    public void developProduct(int projectCode, String complexity) {
-        int complexScale=getComplexityValue(complexity);
-        System.out.println(projectCode+", "+" add to develop successfully with complex scale "+ complexScale);
-    }
-
-    public void improveProcess(int pastDevelopmentTime,double improvementPercentage) {
-
-        int suggestedImprovement = (int) (pastDevelopmentTime * improvementPercentage);
-
-        System.out.println("Analyzing development process for project:");
-        System.out.println("Past development time: " + pastDevelopmentTime + " hours");
-        System.out.println("Suggested improvement: " + suggestedImprovement + " hours");
-    }
-
-    public void notifyQA(int projectCode) {
-        System.out.println("QA team notified for project: " + projectCode);
-    }
 
     public String getId() {
         return id;

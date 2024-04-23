@@ -13,14 +13,7 @@ public class Products {
     private String productName;
     private String productDetails;
 
-    public boolean productCompleted(String productId, boolean qaApproval){
-        if (qaApproval){
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+    // Here, I have implemented getter and setter methods instead of lombok annotations
 
     public String getProductId() {
         return productId;

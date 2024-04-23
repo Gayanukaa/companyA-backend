@@ -12,6 +12,7 @@ public class Progress {
     private Long userId;
     private int stage;
 
+    // Here, I have implemented getter and setter methods instead of lombok annotations
     public String getId() {
         return id;
     }
