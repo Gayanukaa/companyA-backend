@@ -1,5 +1,6 @@
 package com.companyA.backend.GeneralManagementSystem.controller;
 
+import com.companyA.backend.GeneralManagementSystem.DTO.CustomerDTO;
 import com.companyA.backend.GeneralManagementSystem.model.Customer;
 import com.companyA.backend.GeneralManagementSystem.service.CustomerService;
 import jakarta.validation.Valid;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -38,7 +40,6 @@ public class CustomerController {
     }
 
 
-
     // Error handling for Bad Requests
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -53,5 +54,11 @@ public class CustomerController {
         });
 
         return errors;
+    }
+
+
+    @GetMapping("/getAll")
+    public List<CustomerDTO>getAllCustormers(){
+        return customerService.getAllCustomers();
     }
 }
