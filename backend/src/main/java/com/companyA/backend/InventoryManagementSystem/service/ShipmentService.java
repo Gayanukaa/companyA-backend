@@ -63,7 +63,7 @@ public class ShipmentService {
             Stocks stock = stocksService.getStockById(stockAlert.getItemId());
             stock.setStateOfProduct(StateOfProduct.valueOf("ORDERED"));
             stocksService.updateStock(stock);
-            orderList.put(stock.getId(), stock.getReorderQuantity());
+            orderList.put(stock.getId(), stockAlert.getReorderQuantity());
             stockAlertService.deleteStockAlert(stockAlert.getAlertId());
         }
         shipment.setOrderList(orderList);
