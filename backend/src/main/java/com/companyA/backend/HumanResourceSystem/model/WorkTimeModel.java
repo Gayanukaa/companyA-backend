@@ -1,4 +1,4 @@
-package com.companyA.backend.HumanResourceSystem.model;
+/*package com.companyA.backend.HumanResourceSystem.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -22,3 +22,5 @@ public class WorkTimeModel {
     private LocalDateTime timeSignedIn ;
     private LocalDateTime timeSignedOut;
 }
+
+ */

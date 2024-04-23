@@ -1,4 +1,4 @@
-package com.companyA.backend.HumanResourceSystem.repository;
+/*package com.companyA.backend.HumanResourceSystem.repository;
 
 import com.companyA.backend.HumanResourceSystem.model.DailyAttendanceModel;
 import io.micrometer.common.lang.NonNullApi;
@@ -12,5 +12,7 @@ import java.util.Optional;
 @Repository
 @NonNullApi
 public interface PayRollRepository extends MongoRepository<DailyAttendanceModel,String> {
-    List<DailyAttendanceModel> findByUidAndDateBetween(String uid, LocalDate startDate, LocalDate endDate);
+    //List<DailyAttendanceModel> findByUidAndDateBetween(String uid, LocalDate startDate, LocalDate endDate);
 }
+
+ */

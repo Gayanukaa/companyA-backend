@@ -14,4 +14,6 @@ public interface DailyAttendanceRepository extends MongoRepository<DailyAttendan
     DailyAttendanceModel findByEmployeeIdAndDate(String employeeId, LocalDate date);
 
     List<DailyAttendanceModel> findByEmployeeIdAndDateBetween(String id, LocalDate startDate, LocalDate endDate);
+
+    List<DailyAttendanceModel> findByEmployeeId(String employeeId);
 }

@@ -1,4 +1,4 @@
-package com.companyA.backend.HumanResourceSystem.contoller;
+/*package com.companyA.backend.HumanResourceSystem.contoller;
 
 import com.companyA.backend.HumanResourceSystem.model.EmployeeDetailModel;
 import com.companyA.backend.HumanResourceSystem.model.WorkTimeModel;
@@ -43,3 +43,5 @@ public class WorkTimeController {
         return new ResponseEntity<>(workTimeModels, HttpStatus.CREATED);
     }
 }
+
+ */

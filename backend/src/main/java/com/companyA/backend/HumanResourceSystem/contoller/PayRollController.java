@@ -1,9 +1,10 @@
 package com.companyA.backend.HumanResourceSystem.contoller;
 
 import com.companyA.backend.HumanResourceSystem.model.EmployeeDetailModel;
-import com.companyA.backend.HumanResourceSystem.model.PayrollModel;
+//import com.companyA.backend.HumanResourceSystem.model.PayrollModel;
 import com.companyA.backend.HumanResourceSystem.model.DailyAttendanceModel;
-import com.companyA.backend.HumanResourceSystem.repository.PayRollRepository;
+import com.companyA.backend.HumanResourceSystem.repository.DailyAttendanceRepository;
+//import com.companyA.backend.HumanResourceSystem.repository.PayRollRepository;
 import com.companyA.backend.HumanResourceSystem.service.PayRollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,15 +25,18 @@ public class PayRollController {
 
 
     @Autowired
-    PayRollRepository payRollRepository;
+    //PayRollRepository payRollRepository;
+    DailyAttendanceRepository dailyAttendanceRepository;
+
+    @Autowired
     PayRollService payRollService;
 
     @GetMapping("/WorkTime/WorkHours")
 
-        public ResponseEntity<String> getEmployeeWorkHours(@RequestParam String uid,
+        public ResponseEntity<String> getEmployeeWorkHours(@RequestParam String employeeId,
                                                                           @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                                                           @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-            List<DailyAttendanceModel> workTimeModels = payRollRepository.findByUidAndDateBetween(uid , startDate, endDate);
+            List<DailyAttendanceModel> workTimeModels = dailyAttendanceRepository.findByEmployeeIdAndDateBetween(employeeId, startDate, endDate);
 
             PayRollService payRoll1 = new PayRollService() ;
             String ans = payRoll1.calculateWorkHours(workTimeModels) ;
@@ -45,10 +49,10 @@ public class PayRollController {
 
     @GetMapping("/WorkTime/WorkOtHours")
 
-    public ResponseEntity<String> getEmployeeOtHours(@RequestParam String uid,
+    public ResponseEntity<String> getEmployeeOtHours(@RequestParam String employeeId,
                                                          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                                          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        List<DailyAttendanceModel> workTimeModels = payRollRepository.findByUidAndDateBetween(uid , startDate, endDate);
+        List<DailyAttendanceModel> workTimeModels = dailyAttendanceRepository.findByEmployeeIdAndDateBetween(employeeId , startDate, endDate);
 
         PayRollService payRoll1 = new PayRollService() ;
         String ans = payRoll1.calculaOtHours(workTimeModels) ;

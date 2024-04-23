@@ -1,4 +1,4 @@
-package com.companyA.backend.HumanResourceSystem.repository;
+/*package com.companyA.backend.HumanResourceSystem.repository;
 
 import com.companyA.backend.HumanResourceSystem.model.WorkTimeModel;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -12,3 +12,5 @@ import java.util.Optional;
 public interface WorkTimeRepository extends MongoRepository<WorkTimeModel, String> {
     List<WorkTimeModel> findByIdAndDate(String id, LocalDate date);
 }
+
+ */
