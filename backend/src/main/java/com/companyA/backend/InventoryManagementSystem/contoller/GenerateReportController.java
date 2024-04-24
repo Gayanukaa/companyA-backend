@@ -21,7 +21,7 @@ public class GenerateReportController {
         String sup =  generateReportService.createReport(report);
         return ResponseEntity.status(HttpStatus.OK).body(sup);
     }
-
+//chc
     //Get all the reports
     @GetMapping("/details")
     public List<GenerateReport> reportDetails(){
