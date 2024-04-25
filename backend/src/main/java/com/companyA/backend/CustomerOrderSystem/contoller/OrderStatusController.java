@@ -17,9 +17,9 @@ public class OrderStatusController {
     private OrderStatusService orderStatusService;
 
     @GetMapping("/getOrderStatus")
-    public ResponseEntity<Optional<OrderStatus>> getOrderStatus(@RequestParam("order_ID") String order_ID) {
+    public ResponseEntity<Optional<OrderStatus>> getOrderStatus(@RequestParam("orderID") String orderID) {
 
-        Optional<OrderStatus> response = orderStatusService.getOrderStatus(order_ID);
+        Optional<OrderStatus> response = orderStatusService.getOrderStatus(orderID);
         return new ResponseEntity<Optional<OrderStatus>>(response, HttpStatus.OK);
     }
 }
