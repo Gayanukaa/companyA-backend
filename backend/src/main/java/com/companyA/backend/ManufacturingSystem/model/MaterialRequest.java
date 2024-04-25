@@ -1,21 +1,24 @@
 package com.companyA.backend.ManufacturingSystem.model;
 
-import lombok.AllArgsConstructor;
+import com.companyA.backend.InventoryManagementSystem.model.InventoryType;
+import com.companyA.backend.InventoryManagementSystem.model.StateOfProduct;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-// Represents a material request entity
-@Document(collection = "MaterialRequests")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Document(collection = "inventory")
 public class MaterialRequest {
+
     @Id
-    private ObjectId id;         // Unique identifier for the material request
-    private Integer materialId;  // ID of the requested material
-    private Integer quantity;    // Quantity of the requested material
-    private String date;         // Date of the material request
+    private String id;                     // Unique identifier for the material request
+    private String warehouseId;            // Identifier for the warehouse
+    private String name;                   // Name of the material
+    private int quantity;                  // Quantity of the material
+    private int thresholdQuantity;         // Name of the material
+    private int weight;                    // Weight of the material
+    private int size;                      // Size of the material
+    private int reorderQuantity;           // Reorder quantity for the material
+    private StateOfProduct stateOfProduct; // State of the product
+    private InventoryType inventoryType;   // Type of inventory
 }

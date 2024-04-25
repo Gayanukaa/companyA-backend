@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.bson.types.ObjectId;
+import java.util.List;
+
+import com.companyA.backend.ManufacturingSystem.model.Employee;
 
 // Entity class representing production data
 @Document(collection = "ProductionData")
@@ -21,4 +24,7 @@ public class ProductionData {
     private int production_output; // Output of the production line
     private int downtime;          // Downtime of the production line
     private int efficiency;        // Efficiency of the production line
+    private String productId;
+    private String orderId;
+    private List<Employee> workers; // List of workers who work in the production line
 }
