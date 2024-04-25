@@ -17,5 +17,6 @@ public class Product{
     private String description;             // Description of the product
     private double price;                   // Price of the product
     private int quantity;                   // Quantity of the product
-    // Other fields as needed
+    private String productName;
+    private String productDetails;
 }
