@@ -56,9 +56,9 @@ public class VehicleController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/assignVehicleToAddress")
-    public ResponseEntity<Map<String, String>> assignVehicleToAddress(@RequestBody String orderAddress) {
-        return vehicleService.assignVehicleToAddress(orderAddress);
+    @PostMapping("/assignVehicleToAddress/{deliveryAddressId}")
+    public ResponseEntity<Map<String, String>> assignVehicleToAddress(@PathVariable String deliveryAddressId) {
+        return vehicleService.assignVehicleToAddress(deliveryAddressId);
     }
 
 }

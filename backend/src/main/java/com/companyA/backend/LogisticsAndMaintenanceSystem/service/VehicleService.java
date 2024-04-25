@@ -1,11 +1,14 @@
 package com.companyA.backend.LogisticsAndMaintenanceSystem.service;
 
+import com.companyA.backend.LogisticsAndMaintenanceSystem.model.UserDeliveryAddress;
 import com.companyA.backend.LogisticsAndMaintenanceSystem.model.Vehicle;
 import com.companyA.backend.LogisticsAndMaintenanceSystem.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +17,9 @@ import java.util.Optional;
 
 @Service
 public class VehicleService {
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Autowired
     private VehicleRepository vehicleRepository;
@@ -93,17 +99,25 @@ public class VehicleService {
         }
     }
 
-    public ResponseEntity<Map<String, String>> assignVehicleToAddress(String orderAddress) {
-        // Find a vehicle with a true status
+    public ResponseEntity<Map<String, String>> assignVehicleToAddress(String deliveryAddressId) {
+        // Retrieve user delivery address from MongoDB collection
+        UserDeliveryAddress deliveryAddress = mongoTemplate.findById(deliveryAddressId, UserDeliveryAddress.class);
+        if (deliveryAddress == null) {
+            Map<String, String> response = new HashMap<>();
+            response.put("error", "User delivery address not found with ID: " + deliveryAddressId);
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+
+        // Find a vehicle with status set to true
         List<Vehicle> availableVehicles = vehicleRepository.findVehicleByVehicleStatus(true);
         if (!availableVehicles.isEmpty()) {
-            // Assign the first available vehicle to the order address
+            // Assign the first available vehicle to the delivery address
             Vehicle assignedVehicle = availableVehicles.get(0);
-            assignedVehicle.setLocation(orderAddress);
+            assignedVehicle.setLocation(deliveryAddress.getAddressLine1() + ", " + deliveryAddress.getCity() + ", " + deliveryAddress.getState());
             vehicleRepository.save(assignedVehicle);
 
             Map<String, String> response = new HashMap<>();
-            response.put("status", "Vehicle assigned successfully to the address: " + orderAddress);
+            response.put("status", "Vehicle assigned successfully to the address: " + assignedVehicle.getLocation());
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             Map<String, String> response = new HashMap<>();
@@ -111,4 +125,5 @@ public class VehicleService {
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
+
 }

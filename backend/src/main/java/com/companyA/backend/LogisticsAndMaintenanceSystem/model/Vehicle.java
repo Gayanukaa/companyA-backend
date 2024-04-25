@@ -24,4 +24,5 @@ public class Vehicle {
     private String maintenanceDate;
     private String fuelLevel;
 
+
 }
