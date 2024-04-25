@@ -13,17 +13,27 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class TechnicianService {
+public class TechnicianService extends AbstractService<Technician> {
 
     @Autowired
-    private TechnicianRepository technicianRepository;
+    private TechnicianRepository technicianRepository ;
 
-    public List<Technician> allTechnicians() {
+    public List<Technician> findAll() {
         return technicianRepository.findAll();
     }
 
-    public void addTechnician(Technician technician) {
-        technicianRepository.save(technician);
+    public void add(Technician technician) {
+        Optional<Technician> existingTechnician = technicianRepository.findTechnicianByTechnicianId(technician.getTechnicianId());
+        if (existingTechnician.isPresent()) {
+            throw new RuntimeException("Technician already existing with Id: " + technician.getTechnicianId());
+
+        }
+        else{
+            technicianRepository.save(technician);
+
+        }
+
+
     }
 
     public Optional<Technician> technicianById(String technicianId){
