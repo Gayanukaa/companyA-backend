@@ -93,4 +93,22 @@ public class VehicleService {
         }
     }
 
+    public ResponseEntity<Map<String, String>> assignVehicleToAddress(String orderAddress) {
+        // Find a vehicle with a true status
+        List<Vehicle> availableVehicles = vehicleRepository.findVehicleByVehicleStatus(true);
+        if (!availableVehicles.isEmpty()) {
+            // Assign the first available vehicle to the order address
+            Vehicle assignedVehicle = availableVehicles.get(0);
+            assignedVehicle.setLocation(orderAddress);
+            vehicleRepository.save(assignedVehicle);
+
+            Map<String, String> response = new HashMap<>();
+            response.put("status", "Vehicle assigned successfully to the address: " + orderAddress);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            Map<String, String> response = new HashMap<>();
+            response.put("error", "No available vehicles with true status to assign");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+    }
 }

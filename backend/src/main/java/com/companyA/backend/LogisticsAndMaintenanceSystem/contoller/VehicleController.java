@@ -56,6 +56,10 @@ public class VehicleController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/assignVehicleToAddress")
+    public ResponseEntity<Map<String, String>> assignVehicleToAddress(@RequestBody String orderAddress) {
+        return vehicleService.assignVehicleToAddress(orderAddress);
+    }
 
 }
 
