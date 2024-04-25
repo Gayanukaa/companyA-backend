@@ -19,7 +19,7 @@ public class TestController {
 
     @PostMapping("/addTest")
     @ResponseStatus(HttpStatus.CREATED)
-    public Test addSample(@RequestBody Test test) {
+    public Test addTest(@RequestBody Test test) {
         return testService.addTest(test);
     }
 
