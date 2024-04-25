@@ -41,20 +41,19 @@ public class ExistingProductController {
     @PostMapping("/validateStock-Muliple")
     public ResponseEntity<List<StockValidation>> validateStock(@RequestBody List<CartItem> cartItem) {
         List<StockValidation> validationResults = new ArrayList<>();
-        double subTotal = 0;
+
         for (CartItem itemBOM : cartItem) {
+            double subTotal = 0;
             boolean hasStock = existingProductService.hasSufficientStock(itemBOM.getItemId(), itemBOM.getQuantity());
-            validationResults.add(new StockValidation(itemBOM.getItemId(), hasStock));
+
             if (hasStock){
                 System.out.println("In the if clasue");
                 System.out.println(itemBOM.getQuantity());
                 System.out.println(itemBOM.getUnitPrice());
-                subTotal = subTotal + itemBOM.getQuantity()*itemBOM.getUnitPrice();
+                subTotal = itemBOM.getQuantity()*itemBOM.getUnitPrice();
             }
+            validationResults.add(new StockValidation(itemBOM.getItemId(), hasStock, subTotal));
         }
-        String totalPriceString = String.valueOf(subTotal);
-        System.out.println(totalPriceString);
-        validationResults.add(new StockValidation(totalPriceString, true));
         return ResponseEntity.ok(validationResults);
     }
 
