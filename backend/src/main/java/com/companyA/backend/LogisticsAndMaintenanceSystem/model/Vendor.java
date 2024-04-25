@@ -22,4 +22,5 @@ public class Vendor {
     private String address;
     private String email;
     private List<String> vendorItems;
+
 }
