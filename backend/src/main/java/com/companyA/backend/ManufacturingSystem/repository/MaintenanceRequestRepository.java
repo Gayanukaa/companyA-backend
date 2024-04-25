@@ -13,4 +13,3 @@ public interface MaintenanceRequestRepository extends MongoRepository<Maintenanc
     Optional<MaintenanceRequest> findByMachineIdAndMaintenanceType(Integer machineId, String maintenanceType);
     void deleteByMachineIdAndMaintenanceType(Integer machineId, String maintenanceType);
 }
-
