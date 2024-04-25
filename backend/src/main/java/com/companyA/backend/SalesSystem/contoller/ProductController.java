@@ -15,7 +15,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @GetMapping
-    public ResponseEntity<List<Product>>getAllProduclts(){
+    public ResponseEntity<List<Product>>getAllProducts(){
         return new ResponseEntity<List<Product>>(productService.allProducts(), HttpStatus.OK);
     }
 
@@ -32,7 +32,7 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/validateStock-Muliple")
+    @PostMapping("/validateStock-Multiple")
     public ResponseEntity<List<StockValidation>> validateStock(@RequestBody List<CartItem> cartItems) {
         List<StockValidation> validationResults = new ArrayList<>();
 
