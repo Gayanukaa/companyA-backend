@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/T1")
+@CrossOrigin
 public class TechnicianController {
 
     @Autowired

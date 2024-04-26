@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/SM1/service-maintenance")
+@CrossOrigin
 public class ServiceAndMaintenanceController {
 
     @Autowired
