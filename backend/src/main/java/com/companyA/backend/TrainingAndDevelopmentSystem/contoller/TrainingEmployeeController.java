@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping
+@CrossOrigin
 public class TrainingEmployeeController {
     @Autowired
     private TrainingEmployeeRepository trainingEmployeeRepository;

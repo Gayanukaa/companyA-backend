@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping
+@CrossOrigin
 public class ProductDevelopmentController {
     @Autowired
     private ProductDevelopmentRepository productDevelopmentRepository;
