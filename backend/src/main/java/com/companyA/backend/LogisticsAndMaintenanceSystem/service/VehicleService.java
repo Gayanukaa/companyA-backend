@@ -117,7 +117,7 @@ public class VehicleService {
             vehicleRepository.save(assignedVehicle);
 
             Map<String, String> response = new HashMap<>();
-            response.put("status", "Vehicle assigned successfully to the address: " + assignedVehicle.getLocation());
+            response.put("status",assignedVehicle.getVehicleId()+ " Vehicle assigned successfully to the address: " + assignedVehicle.getLocation());
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             Map<String, String> response = new HashMap<>();
