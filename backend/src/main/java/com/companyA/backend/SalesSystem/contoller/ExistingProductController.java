@@ -38,7 +38,7 @@ public class ExistingProductController {
         }
     }
 
-    @PostMapping("/validateStock-Muliple")
+    @PostMapping("/validateStock-Multiple")
     public ResponseEntity<List<StockValidation>> validateStock(@RequestBody List<CartItem> cartItem) {
         List<StockValidation> validationResults = new ArrayList<>();
 
