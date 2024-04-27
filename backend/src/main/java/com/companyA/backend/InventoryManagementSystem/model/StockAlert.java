@@ -11,7 +11,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "StockAlert")
-
 public class StockAlert {
 
     @Id @NotBlank

@@ -14,10 +14,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Document(collection = "InventoryManager")
 @Data
 @Getter
 @Setter
+@Document(collection = "InventoryManager")
 public class InventoryManager {
     @Id@NotBlank
     private String managerId; //Manager Id
