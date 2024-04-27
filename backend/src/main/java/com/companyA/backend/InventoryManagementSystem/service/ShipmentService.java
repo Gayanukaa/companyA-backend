@@ -93,14 +93,14 @@ public class ShipmentService {
         shipment.setSender(inventoryManagerRepository.findById(customShipmentDTO.getInventoryManagerId()).orElse(null));
         shipment.setSupplierId(supplierRepository.findById(customShipmentDTO.getSupplierId()).orElse(null));
 
-        for (Map.Entry<String, Integer> entry : customShipmentDTO.getOrderList().entrySet()) {
-            Stocks stock = stocksService.getStockById(entry.getKey());
-            stock.setReorderQuantity(stock.getQuantity() + entry.getValue());
-            stock.setStateOfProduct(StateOfProduct.valueOf("ORDERED"));
-            stocksService.updateStock(stock);
-        }
+        Stocks stock = stocksService.getStockById(customShipmentDTO.getItemId());
+        stock.setReorderQuantity(stock.getQuantity() + customShipmentDTO.getRequestedQuantity());
+        stock.setStateOfProduct(StateOfProduct.valueOf("ORDERED"));
+        stocksService.updateStock(stock);
 
-        shipment.setOrderList(customShipmentDTO.getOrderList());
+        HashMap<String, Integer> orderList = new HashMap<>();
+        orderList.put(stock.getId(), customShipmentDTO.getRequestedQuantity());
+        shipment.setOrderList(orderList);
         return shipmentRepository.save(shipment);
     }
 
