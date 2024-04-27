@@ -14,8 +14,12 @@ import java.util.List;
 @CrossOrigin
 public class SupplierController {
 
+    private final SupplierService supplierService;
+
     @Autowired
-    private SupplierService supplierService;
+    public SupplierController(SupplierService supplierService) {
+        this.supplierService = supplierService;
+    }
 
     @PostMapping("/registerSupplier")
     public ResponseEntity<Suppliers> registerSupplier(@RequestBody Suppliers supplier) {

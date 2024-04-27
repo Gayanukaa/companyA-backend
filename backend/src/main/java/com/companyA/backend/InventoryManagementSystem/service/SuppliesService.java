@@ -15,11 +15,15 @@ import java.util.List;
 @Service
 public class SuppliesService {
 
-    @Autowired
-    private SuppliesRepository suppliesRepository;
+    private final SuppliesRepository suppliesRepository;
+
+    private final MongoTemplate mongoTemplate;
 
     @Autowired
-    private MongoTemplate mongoTemplate;
+    public SuppliesService(MongoTemplate mongoTemplate, SuppliesRepository suppliesRepository) {
+        this.mongoTemplate = mongoTemplate;
+        this.suppliesRepository = suppliesRepository;
+    }
 
     public List<Supplies> allSupplies() {
         return suppliesRepository.findAll();

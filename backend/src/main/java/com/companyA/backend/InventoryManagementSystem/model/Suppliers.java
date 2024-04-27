@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document(collection = "Suppliers")
-
 public class Suppliers {
     @Id
     private String supplierId;

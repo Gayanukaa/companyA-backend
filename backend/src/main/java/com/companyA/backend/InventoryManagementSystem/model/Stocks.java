@@ -14,5 +14,4 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Stocks extends Inventory {
     @NotBlank
     private float price;
-
 }
