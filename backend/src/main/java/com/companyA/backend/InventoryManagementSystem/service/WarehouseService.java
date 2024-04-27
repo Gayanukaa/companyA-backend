@@ -11,11 +11,12 @@ import java.util.List;
 @Service
 public class WarehouseService {
 
-    @Autowired
-    private WarehouseRepository warehouseRepository;
+    private final WarehouseRepository warehouseRepository;
 
     @Autowired
-    private MongoTemplate mongoTemplate;
+    public WarehouseService(WarehouseRepository warehouseRepository) {
+        this.warehouseRepository = warehouseRepository;
+    }
 
     public List<Warehouse> allWarehouses() {
         return warehouseRepository.findAll();

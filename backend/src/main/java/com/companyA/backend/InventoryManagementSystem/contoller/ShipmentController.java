@@ -16,10 +16,15 @@ import java.util.List;
 @CrossOrigin
 public class ShipmentController {
 
+    private final ShipmentService shipmentService;
+
+    private final FinanceStockAlertService financeStockAlertService;
+
     @Autowired
-    private ShipmentService shipmentService;
-    @Autowired
-    private FinanceStockAlertService financeStockAlertService;
+    public ShipmentController(ShipmentService shipmentService, FinanceStockAlertService financeStockAlertService) {
+        this.shipmentService = shipmentService;
+        this.financeStockAlertService = financeStockAlertService;
+    }
 
     @GetMapping("/getShipments")
     public ResponseEntity<List<Shipment>> getAllShipments() {

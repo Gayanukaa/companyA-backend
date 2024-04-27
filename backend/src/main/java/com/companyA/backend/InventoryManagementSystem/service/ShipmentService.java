@@ -12,20 +12,24 @@ import java.util.*;
 @Service
 public class ShipmentService {
 
-    @Autowired
-    private ShipmentRepository shipmentRepository;
+    private final ShipmentRepository shipmentRepository;
+
+    private final InventoryManagerRepository inventoryManagerRepository;
+
+    private final SupplierRepository supplierRepository;
+
+    private final StocksService stocksService;
+
+    private final StockAlertService stockAlertService;
 
     @Autowired
-    private InventoryManagerRepository inventoryManagerRepository;
-
-    @Autowired
-    private SupplierRepository supplierRepository;
-
-    @Autowired
-    private StocksService stocksService;
-
-    @Autowired
-    private StockAlertService stockAlertService;
+    public ShipmentService(ShipmentRepository shipmentRepository, InventoryManagerRepository inventoryManagerRepository, SupplierRepository supplierRepository, StocksService stocksService, StockAlertService stockAlertService) {
+        this.shipmentRepository = shipmentRepository;
+        this.inventoryManagerRepository = inventoryManagerRepository;
+        this.supplierRepository = supplierRepository;
+        this.stocksService = stocksService;
+        this.stockAlertService = stockAlertService;
+    }
 
     public List<Shipment> getAllShipments() {
         return shipmentRepository.findAll();
