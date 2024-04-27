@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.Date;
 
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class Machinery {
     private List<String> maintenance;
     private String currentJob;
     private String machineName;
+    private Date lastServicedDate;
+    private Date nextServiceDate;
 
     public boolean getMachineStatus() {
         return machineStatus;
