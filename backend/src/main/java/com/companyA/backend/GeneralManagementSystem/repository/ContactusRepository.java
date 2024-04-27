@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ContactusRepository extends MongoRepository <Contactus, String> {
-
 }

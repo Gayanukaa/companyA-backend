@@ -26,8 +26,22 @@ public class SalesTableController {
 
     @PostMapping("/addRecord")
     public ResponseEntity<CustomerData> createOrder(@RequestBody CustomerData orderDocument) {
-        CustomerData savedOrder = salesTableService.saveOrder(orderDocument);
-        return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
+        ObjectId customerID = orderDocument.get_id();
+        List<SalesRecord> order = orderDocument.getOrders();
+        boolean isCustomerExist = salesTableService.validateID(customerID);
+        if (!isCustomerExist){
+            CustomerData savedOrder = salesTableService.saveOrder(orderDocument);
+            return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
+        }else{
+            SalesRecord newOrder = order.get(0);
+            CustomerData updatedDocument = salesTableService.addOrder(customerID, newOrder);
+            if (updatedDocument != null) {
+                return new ResponseEntity<>(updatedDocument, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);  // Document not found
+            }
+        }
+
     }
 
     @PostMapping("/{id}/add")
