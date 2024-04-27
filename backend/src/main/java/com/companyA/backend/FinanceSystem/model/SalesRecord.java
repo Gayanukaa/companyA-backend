@@ -15,7 +15,7 @@ import java.util.List;
 @Document(collection = "sales")
 public class SalesRecord {
     @Id
-    private ObjectId order_ID;
+    private String order_ID;
     private String order_date;
     private double order_amount;
     private List<String> components;
