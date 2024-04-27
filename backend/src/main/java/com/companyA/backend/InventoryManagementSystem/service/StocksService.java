@@ -74,16 +74,8 @@ public class StocksService{
         return stocksRepository.findByName(name);
     }
 
-    public Stocks getStockByQuantity(int i) {
-        return stocksRepository.findByQuantity(i);
-    }
-
     public List<Stocks> getStockByStateOfProduct(StateOfProduct stateOfProduct) {
         return stocksRepository.findByStateOfProduct(stateOfProduct);
-    }
-
-    public List<Stocks> getStockByPrice(float price) {
-        return stocksRepository.findByPrice(price);
     }
 
     public boolean existsById(String id) {

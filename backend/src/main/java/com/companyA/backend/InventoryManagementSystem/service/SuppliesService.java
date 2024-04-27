@@ -54,17 +54,6 @@ public class SuppliesService {
         return suppliesRepository.save(supplies);
     }
 
-    public String deleteSupplies(String suppliesId) {
-        Supplies supplies = suppliesRepository.findById(suppliesId).orElse(null);
-        if (supplies == null) {
-            return HttpStatus.NOT_FOUND.toString();
-        }
-        mongoTemplate.update(Warehouse.class)
-                .matching(Criteria.where("warehouseId").is(supplies.getWarehouseId())).apply(new Update().pull("inventoryList", supplies.getId())).first();
-        suppliesRepository.deleteById(suppliesId);
-        return HttpStatus.OK.toString();
-    }
-
     public Supplies getSuppliesById(String id) {
         return suppliesRepository.findById(id).orElse(null);
     }
@@ -73,34 +62,4 @@ public class SuppliesService {
         return suppliesRepository.existsById(id);
     }
 
-    public void updateSupplies(Supplies supplies) {
-        suppliesRepository.save(supplies);
-    }
-
-    public void updateSuppliesByAttribute(Supplies supplies, String attribute, String value) {
-        switch (attribute) {
-            case "name":
-                supplies.setName(value);
-                break;
-            case "quantity":
-                supplies.setQuantity(Integer.parseInt(value));
-                break;
-            case "weight":
-                supplies.setWeight(Integer.parseInt(value));
-                break;
-            case "size":
-                supplies.setSize(Integer.parseInt(value));
-                break;
-            case "reorderQuantity":
-                supplies.setReorderQuantity(Integer.parseInt(value));
-                break;
-            case "stateOfProduct":
-                supplies.setStateOfProduct(StateOfProduct.valueOf(value));
-                break;
-            case "inventoryType":
-                supplies.setInventoryType(InventoryType.valueOf(value));
-                break;
-        }
-        suppliesRepository.save(supplies);
-    }
 }

@@ -13,13 +13,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "StockAlert")
 public class StockAlert {
 
-    @Id @NotBlank
+    @Id
     private String alertId;
-    @NotBlank
+    @NotBlank (message = "Item ID cannot be blank")
     private String itemId;
-    @NotBlank
+    @NotBlank (message = "Item name cannot be blank")
     private String itemName;
-    @NotBlank
+    @NotBlank (message = "Item Reorder Quantity cannot be blank")
     private int reorderQuantity;
 
 }

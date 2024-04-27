@@ -54,9 +54,6 @@ public class InventoryController {
         if(stocksService.existsById(itemId)){
             return new ResponseEntity<String>(stocksService.deleteStock(itemId),HttpStatus.OK);
         }
-        else if(suppliesService.existsById(itemId)){
-            return new ResponseEntity<String>(suppliesService.deleteSupplies(itemId),HttpStatus.OK);
-        }
         return new ResponseEntity<String>(HttpStatus.NOT_FOUND.toString(),HttpStatus.NOT_FOUND);
     }
 
@@ -71,8 +68,6 @@ public class InventoryController {
             case "name":
                 stock = stocksService.getStockByName(value);
                 break;
-            case "quantity":
-                stock = stocksService.getStockByQuantity(Integer.parseInt(value));
             default:
                 return ResponseEntity.badRequest().build(); // Return a 400 status code for unknown attributes
         }
@@ -95,26 +90,10 @@ public class InventoryController {
         }
     }
 
-    @PutMapping("/supplies/{suppliesId}/{attribute}/{value}")
-    public ResponseEntity<Supplies> updateSuppliesByAttribute(@PathVariable String suppliesId, @PathVariable String attribute, @PathVariable String value) {
-        Supplies supplies = suppliesService.getSuppliesById(suppliesId);
-        if (supplies != null) {
-            suppliesService.updateSuppliesByAttribute(supplies, attribute, value);
-            return ResponseEntity.ok(supplies);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     @GetMapping("/stateOfProduct/{value}")
     public ResponseEntity <List<Stocks>> getStockByStateOfProduct(@PathVariable String value) {
         StateOfProduct valueNew = StateOfProduct.valueOf(value);
         return new ResponseEntity<List<Stocks>>(stocksService.getStockByStateOfProduct(valueNew), HttpStatus.OK);
-    }
-
-    @GetMapping("/price/{value}")
-    public ResponseEntity <List<Stocks>> getStockByPrice(@PathVariable float value) {
-        return new ResponseEntity<List<Stocks>>(stocksService.getStockByPrice(value), HttpStatus.OK);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -124,15 +103,6 @@ public class InventoryController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found!");
         }
         stocksService.updateStock(stock);
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/updateSupplies")
-    public void update(@RequestBody Supplies supplies) {
-        if(!suppliesService.existsById(supplies.getId())) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found!");
-        }
-        suppliesService.updateSupplies(supplies);
     }
 
     @PostMapping("/checkQuantity")
