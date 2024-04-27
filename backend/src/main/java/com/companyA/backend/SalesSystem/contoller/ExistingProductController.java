@@ -45,14 +45,14 @@ public class ExistingProductController {
         for (CartItem itemBOM : cartItem) {
             double subTotal = 0;
             boolean hasStock = existingProductService.hasSufficientStock(itemBOM.getItemId(), itemBOM.getQuantity());
-
+            int stock = existingProductService.getStock(itemBOM.getItemId());
             if (hasStock){
                 System.out.println("In the if clasue");
                 System.out.println(itemBOM.getQuantity());
                 System.out.println(itemBOM.getUnitPrice());
                 subTotal = itemBOM.getQuantity()*itemBOM.getUnitPrice();
             }
-            validationResults.add(new StockValidation(itemBOM.getItemId(), hasStock, subTotal));
+            validationResults.add(new StockValidation(itemBOM.getItemId(), hasStock, stock, subTotal));
         }
         return ResponseEntity.ok(validationResults);
     }
