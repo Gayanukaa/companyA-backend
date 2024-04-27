@@ -1,5 +1,6 @@
 package com.companyA.backend.TrainingAndDevelopmentSystem.contoller;
 
+import com.companyA.backend.TrainingAndDevelopmentSystem.exception.UserNotFoundException;
 import com.companyA.backend.TrainingAndDevelopmentSystem.model.Course;
 import com.companyA.backend.TrainingAndDevelopmentSystem.model.TrainingEmployee;
 import com.companyA.backend.TrainingAndDevelopmentSystem.repository.TrainingEmployeeRepository;
@@ -9,9 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping
+@CrossOrigin
 public class TrainingEmployeeController {
     @Autowired
     private TrainingEmployeeRepository trainingEmployeeRepository;
@@ -34,7 +37,7 @@ public class TrainingEmployeeController {
         // Check if the email already exists
         if (trainingEmployeeRepository.existsByEmployeeEmail(user.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Username already exists");
+                    .body("Email already exists");
         }
 
         // Save the user if the email is unique
@@ -76,17 +79,45 @@ public class TrainingEmployeeController {
             this.password = password;
         }
     }
-        // this is for cross APIs
 
-//    @PutMapping("/user/{username}/enroll/{courseId}")
-//    public ResponseEntity<String> enrollUserInCourse(@PathVariable String username, @PathVariable Long courseId) {
-//        TrainingEmployee user = userRepository.findByUsername(username)
-//                .orElseThrow();
-//        List<Long> enrolledCourses = user.getEnrolledCourses();
-//        enrolledCourses.add(courseId);
-//        user.setEnrolledCourses(enrolledCourses);
-//        userRepository.save(user);
-//        Course use= new Course();
-//        return ResponseEntity.ok(use.enroll(4554));
-//    }
+
+    //enroll method implements here
+    @PutMapping("/api/tms/{email}/enroll/{courseId}")
+    public ResponseEntity<String> enroll(@PathVariable String email, @PathVariable Long courseId) {
+        // Check if user with the provided email exists
+        boolean userExists = trainingEmployeeRepository.existsByEmployeeEmail(email);
+        if (!userExists) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with email " + email + " not found");
+        }
+
+        // User exists, proceed with enrollment
+        TrainingEmployee user = trainingEmployeeRepository.findByEmployeeEmail(email);
+        List<Long> enrolledCourses = user.getEnrolledCourses();
+        enrolledCourses.add(courseId);
+        user.setEnrolledCourses(enrolledCourses);
+        trainingEmployeeRepository.save(user);
+
+        return ResponseEntity.ok("Enrollment successful for user with email " + email);
+    }
+
+    //complete method implement here
+    @PutMapping("/api/tms/{email}/complete/{courseId}")
+    public ResponseEntity<String> complete(@PathVariable String email, @PathVariable Long courseId) {
+        // Check if user with the provided email exists
+        boolean userExists = trainingEmployeeRepository.existsByEmployeeEmail(email);
+        if (!userExists) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with email " + email + " not found");
+        }
+
+        // User exists, proceed with enrollment
+        TrainingEmployee user = trainingEmployeeRepository.findByEmployeeEmail(email);
+        List<Long> completedCourses = user.getCompletedCourses();
+        completedCourses.add(courseId);
+        user.setCompletedCourses(completedCourses);
+        trainingEmployeeRepository.save(user);
+
+        return ResponseEntity.ok("Course completion recorded successfully for user: " + email);
+    }
+
+
 }

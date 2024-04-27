@@ -15,8 +15,12 @@ import java.util.List;
 @CrossOrigin
 public class StockAlertController {
 
+    private final StockAlertService stockAlertService;
+
     @Autowired
-    private StockAlertService stockAlertService;
+    public StockAlertController(StockAlertService stockAlertService) {
+        this.stockAlertService = stockAlertService;
+    }
 
     //view all stock alerts
     @GetMapping

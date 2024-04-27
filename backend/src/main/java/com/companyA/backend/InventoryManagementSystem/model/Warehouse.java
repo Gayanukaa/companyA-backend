@@ -12,11 +12,11 @@ import java.util.List;
 @Document(collection = "warehouse")
 public class Warehouse {
 
-    @Id @NotBlank
+    @Id
     private String warehouseId;
-    @NotBlank
+    @NotBlank (message = "Warehouse name cannot be blank")
     private String name;
-    @NotBlank
+    @NotBlank (message = "Warehouse location cannot be blank")
     private String location;
     @DocumentReference
     private List<Stocks> inventoryList;

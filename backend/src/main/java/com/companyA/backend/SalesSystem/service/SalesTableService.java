@@ -44,4 +44,11 @@ public class SalesTableService {
             return null;
         }
     }
+    public boolean validateID(ObjectId documentId){
+        CustomerData existingDocument1 = salesTableRepository.findById(documentId).orElse(null);
+        if (existingDocument1 != null && existingDocument1.get_id() != null){
+            return true;
+        }
+        return false;
+    }
 }

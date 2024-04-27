@@ -32,10 +32,5 @@ public class InventoryGMController {
         return InventoryService.updateInventoryById(inventory);
     }
 
-//    @GetMapping("/viewAllManagers")
-//    public List<ManagerDTO> viewAllManagers(){
-//        return managerService.viewAllManagers();
-//    }
-
 
 }

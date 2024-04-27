@@ -12,6 +12,7 @@ public class Course extends Training{
     private String Details;
     private String link;
 
+    // Here, I have implemented getter and setter methods instead of lombok annotations
     public Long getCourseId() {
         return courseId;
     }

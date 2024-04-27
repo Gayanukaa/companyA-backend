@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/feedback")
+@RequestMapping("api/feedback")
 @AllArgsConstructor
 @CrossOrigin
 public class ContactusController {
@@ -32,6 +32,11 @@ public class ContactusController {
     @GetMapping("/view")
     public ResponseEntity<List<Contactus>> viewFeedbackControl() {
         return contactusService.viewAllFeedbacks();
+    }
+
+    @PutMapping("/mark-as-read")
+    public ResponseEntity<Map<String, Object>> MarkAsReadHandle(@RequestParam String id) {
+        return contactusService.MarkAsRead(id);
     }
 }
 

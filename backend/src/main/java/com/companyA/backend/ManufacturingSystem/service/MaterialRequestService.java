@@ -1,35 +1,34 @@
 package com.companyA.backend.ManufacturingSystem.service;
 
+import com.companyA.backend.InventoryManagementSystem.model.Inventory;
 import com.companyA.backend.ManufacturingSystem.model.MaterialRequest;
 import com.companyA.backend.ManufacturingSystem.repository.MaterialRequestRepository;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.Optional;
-
-// Service class for handling MaterialRequest entities
 @Service
 public class MaterialRequestService {
+
+    @Autowired
     private MaterialRequestRepository materialRequestRepository;
 
-    // Method to add a new material request
-    public MaterialRequest addMaterialRequest(MaterialRequest materialRequest) {
-        // Check if the material request already exists
-        Optional<MaterialRequest> existingMaterialRequest = materialRequestRepository.findByMaterialIdAndQuantity(materialRequest.getMaterialId(), materialRequest.getQuantity());
-        if (existingMaterialRequest.isPresent()) {
-            // Throw an exception if the material request already exists
-            throw new RuntimeException("This order is already existing.");
+    // Method to update material request quantity
+    public String updateMaterialRequest(MaterialRequest materialRequest) {
+        // Find the stored material request by ID
+        Inventory storedMaterialRequest = materialRequestRepository.findById(materialRequest.getId()).orElse(null);
+        // Check if material request exists
+        if (storedMaterialRequest == null) {
+            return "Invalid material ID";
         }
-        // Set the current date for the material request
-        materialRequest.setDate(LocalDate.now().toString());
-        // Save and return the added material request
-        return materialRequestRepository.save(materialRequest);
-    }
-
-    // Method to delete a material request
-    public void deleteMaterialRequest(MaterialRequest materialRequest) {
-        // Delete the material request by material ID and quantity
-        materialRequestRepository.deleteByMaterialIdAndQuantity(materialRequest.getMaterialId(), materialRequest.getQuantity());
+        // Calculate new quantity
+        int newQuantity = storedMaterialRequest.getQuantity() - materialRequest.getQuantity();
+        // Check if new quantity is valid
+        if (newQuantity < 0) {
+            return "Current material quantity is not enough in the inventory.";
+        }
+        // Update quantity and save to repository
+        storedMaterialRequest.setQuantity(newQuantity);
+        materialRequestRepository.save(storedMaterialRequest);
+        return "Material request is successful";
     }
 }

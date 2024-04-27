@@ -14,12 +14,15 @@ import java.util.List;
 @Service
 public class StockAlertService {
 
-    @Autowired
-    private StockAlertRepository stockAlertRepository;
+    private final StockAlertRepository stockAlertRepository;
+
+    private final StocksRepository stocksRepository;
 
     @Autowired
-    private StocksRepository stocksRepository;
-
+    public StockAlertService(StockAlertRepository stockAlertRepository, StocksRepository stocksRepository) {
+        this.stockAlertRepository = stockAlertRepository;
+        this.stocksRepository = stocksRepository;
+    }
 
     public List<StockAlert> checkStockAndProcessAlerts() {
         List<Stocks> stocks = stocksRepository.findAllByQuantityLessThanThresholdQuantity();

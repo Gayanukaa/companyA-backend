@@ -14,8 +14,12 @@ import java.util.List;
 @CrossOrigin
 public class RepairController {
 
+    private final RepairService repairService;
+
     @Autowired
-    private RepairService repairService;
+    public RepairController(RepairService repairService) {
+        this.repairService = repairService;
+    }
 
     //Give ids of the items with stateOfProduct = "DAMAGED"
 

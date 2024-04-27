@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "Repair")
-
 public class Repair {
     @Id @NotBlank
     private String id;

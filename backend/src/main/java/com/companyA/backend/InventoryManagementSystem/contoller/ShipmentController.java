@@ -1,8 +1,9 @@
 package com.companyA.backend.InventoryManagementSystem.contoller;
 
 import com.companyA.backend.FinanceSystem.service.FinanceStockAlertService;
+import com.companyA.backend.InventoryManagementSystem.DTO.CustomShipmentDTO;
 import com.companyA.backend.InventoryManagementSystem.model.Shipment;
-import com.companyA.backend.InventoryManagementSystem.model.ShipmentRequest;
+import com.companyA.backend.InventoryManagementSystem.DTO.ShipmentAlertDTO;
 import com.companyA.backend.InventoryManagementSystem.model.Stocks;
 import com.companyA.backend.InventoryManagementSystem.service.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,15 @@ import java.util.List;
 @CrossOrigin
 public class ShipmentController {
 
+    private final ShipmentService shipmentService;
+
+    private final FinanceStockAlertService financeStockAlertService;
+
     @Autowired
-    private ShipmentService shipmentService;
-    @Autowired
-    private FinanceStockAlertService financeStockAlertService;
+    public ShipmentController(ShipmentService shipmentService, FinanceStockAlertService financeStockAlertService) {
+        this.shipmentService = shipmentService;
+        this.financeStockAlertService = financeStockAlertService;
+    }
 
     @GetMapping("/getShipments")
     public ResponseEntity<List<Shipment>> getAllShipments() {
@@ -42,14 +48,19 @@ public class ShipmentController {
     }
 
     @PostMapping("/createShipment")
-    public ResponseEntity<Shipment> createShipment(@RequestBody ShipmentRequest shipmentRequest) {
-        boolean paymentConfirmed = financeStockAlertService.sendRequestForPaymentConfirmation(shipmentRequest.getStockAlerts());
+    public ResponseEntity<Shipment> createShipment(@RequestBody ShipmentAlertDTO shipmentAlertDTO) {
+        boolean paymentConfirmed = financeStockAlertService.sendRequestForPaymentConfirmation(shipmentAlertDTO.getStockAlerts());
         if (paymentConfirmed) {
-            return new ResponseEntity<>(shipmentService.placeShipment(shipmentRequest.getStockAlerts(), shipmentRequest.getInventoryManagerId(), shipmentRequest.getSupplierId()), HttpStatus.CREATED);
+            return new ResponseEntity<>(shipmentService.placeShipment(shipmentAlertDTO.getStockAlerts(), shipmentAlertDTO.getInventoryManagerId(), shipmentAlertDTO.getSupplierId()), HttpStatus.CREATED);
         }
         else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PostMapping("/placeCustomShipment")
+    public ResponseEntity<Shipment> placeCustomShipment(@RequestBody CustomShipmentDTO customShipmentDTO) {
+        return new ResponseEntity<>(shipmentService.saveCustomShipment(customShipmentDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/deleteShipment/{id}")

@@ -35,17 +35,17 @@ public class ReportService {
         return reportRepository.findById(id);
     }
 
-    public String generatePrototypeReport() {
+    public Report generatePrototypeReport() {
         List<Prototype> prototypes = prototypeRepository.findAll();
         return generateReport(prototypes, "Prototype");
     }
 
-    public String generateSampleReport() {
+    public Report generateSampleReport() {
         List<Sample> samples = sampleRepository.findAll();
         return generateReport(samples, "Sample");
     }
 
-    public String generateReport(List<? extends TestSubjects> subjects, String type) {
+    public Report generateReport(List<? extends TestSubjects> subjects, String type) {
         StringBuilder reportContent = new StringBuilder();
 
         for (TestSubjects subject : subjects) {
@@ -65,9 +65,9 @@ public class ReportService {
         String formattedDateTime = now.format(formatter);
         report.setGeneratedDateAndTime(formattedDateTime);
         report.setReportContent(reportContent.toString());
-        reportRepository.save(report);
+        return reportRepository.save(report);
 
-        return "Report generated and saved successfully! Report ID: " + reportId;
+        //return "Report generated and saved successfully! Report ID: " + reportId;
     }
 
 

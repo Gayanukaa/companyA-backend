@@ -12,14 +12,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping
+@CrossOrigin
 public class PrototypingController {
     @Autowired
     private PrototypingRepository prototypingRepository;
     @Autowired
     private ProductDevelopmentRepository productDevelopmentRepository;
 
+    //prototypeCreate method implements here
     @PostMapping("/api/tms/prototype")
-    Prototyping newPrototype(@RequestBody Prototyping newPrototype){
+    Prototyping prototypeCreate(@RequestBody Prototyping newPrototype){
         return prototypingRepository.save(newPrototype);
     }
 
@@ -53,8 +55,9 @@ public class PrototypingController {
         return "Prototype with "+id+" has been deleted successfully";
     }
 
+    //developProduct method implements here
     @PostMapping("/api/tms/prototype/create/{id}")
-    Prototyping newUser1(@PathVariable String id) {
+    Prototyping developProduct(@PathVariable String id) {
 
         Prototyping prototype = prototypingRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));

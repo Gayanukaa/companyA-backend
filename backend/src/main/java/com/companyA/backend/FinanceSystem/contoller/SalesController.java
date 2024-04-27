@@ -30,7 +30,7 @@ public class SalesController {
 
     }
     @GetMapping("/bill/{order_ID}")
-    public String generate_bill(@PathVariable int order_ID){
+    public String generate_bill(@PathVariable String order_ID){
         Optional<SalesRecord> salesRecord = salesRecordRepo.findById(order_ID);
 
         SalesRecord sales = null;
