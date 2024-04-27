@@ -57,6 +57,11 @@ public class ShipmentController {
         }
     }
 
+    @PostMapping("/placeCustomShipment")
+    public ResponseEntity<Shipment> placeCustomShipment(@RequestBody CustomShipmentDTO customShipmentDTO) {
+        return new ResponseEntity<>(shipmentService.saveCustomShipment(customShipmentDTO), HttpStatus.CREATED);
+    }
+
     @DeleteMapping("/deleteShipment/{id}")
     public ResponseEntity<String> deleteShipment(@PathVariable String id) {
         shipmentService.deleteShipment(id);

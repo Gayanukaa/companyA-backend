@@ -22,6 +22,8 @@ public class ShipmentService {
 
     private final StockAlertService stockAlertService;
 
+    private final Shipment shipment;
+
     @Autowired
     public ShipmentService(ShipmentRepository shipmentRepository, InventoryManagerRepository inventoryManagerRepository, SupplierRepository supplierRepository, StocksService stocksService, StockAlertService stockAlertService) {
         this.shipmentRepository = shipmentRepository;
@@ -75,6 +77,31 @@ public class ShipmentService {
     }
 
     public List<Stocks> updateStocks(Shipment shipment) {
+    public Shipment saveCustomShipment(CustomShipmentDTO customShipmentDTO) {
+        if(!shipmentRepository.findAll().isEmpty()) {
+            String lastId = shipmentRepository.findAll().get(shipmentRepository.findAll().size()-1).getId();
+            int id = Integer.parseInt(lastId.substring(4));
+            id++;
+            shipment.setId("SHIP"+String.format("%04d", id));
+        }
+        else {
+            shipment.setId("SHIP0001");
+        }
+        shipment.setTrackingNumber("T"+String.format("%04d", new Random().nextInt(10000)));
+        shipment.setSender(inventoryManagerRepository.findById(customShipmentDTO.getInventoryManagerId()).orElse(null));
+        shipment.setSupplierId(supplierRepository.findById(customShipmentDTO.getSupplierId()).orElse(null));
+
+        for (Map.Entry<String, Integer> entry : customShipmentDTO.getOrderList().entrySet()) {
+            Stocks stock = stocksService.getStockById(entry.getKey());
+            stock.setReorderQuantity(stock.getQuantity() + entry.getValue());
+            stock.setStateOfProduct(StateOfProduct.valueOf("ORDERED"));
+            stocksService.updateStock(stock);
+        }
+
+        shipment.setOrderList(customShipmentDTO.getOrderList());
+        return shipmentRepository.save(shipment);
+    }
+
         List<Stocks> stocks = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : shipment.getOrderList().entrySet()) {
             Stocks stock = stocksService.getStockById(entry.getKey());
