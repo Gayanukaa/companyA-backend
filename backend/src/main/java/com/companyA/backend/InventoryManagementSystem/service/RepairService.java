@@ -28,24 +28,29 @@ public class RepairService {
         return damagedProductIds;
     }
 
-    public void sendItemsForRepair(List<String> itemIds) {
+    public void sendItemsForRepair(String itemIds) {
         // Update stateOfProduct to "UNDER_REPAIR" for items in inventory
         //Done
 
-        List<Stocks> itemsToRepair = stocksRepository.findAllById(itemIds);
-        if (itemsToRepair.size() == itemIds.size()){
-            for (Stocks item : itemsToRepair) {
-                if (item.getStateOfProduct().equals(StateOfProduct.DAMAGED)) {
-                    item.setStateOfProduct(StateOfProduct.UNDER_REPAIR);
-                } else {
-                    throw new IllegalArgumentException();
-                }
+        Optional<Stocks> itemsToRepair = stocksRepository.findById(itemIds);
+        if(itemsToRepair.isPresent()) {
+            Stocks stock = itemsToRepair.get();
+            String state = String.valueOf(stock.getStateOfProduct());
+
+            if (state.equals("DAMAGED")) {
+                // The state is "DAMAGED"
+                System.out.println("The state is DAMAGED");
+                stock.setStateOfProduct(StateOfProduct.UNDER_REPAIR);
+                stocksRepository.save(stock);
+
+            } else {
+                // The state is not "DAMAGED"
+                throw new IllegalArgumentException();
             }
         }
         else{
             throw new IllegalArgumentException();
         }
-        stocksRepository.saveAll(itemsToRepair);
 
         // Save selected data from itemsToRepair to repair collection
         saveSelectedItemsToRepairCollection(itemsToRepair);
@@ -67,9 +72,8 @@ public class RepairService {
         return repairs;
     }
 
-    public String sendForRepairs(Repair repair) {
-        repairRepository.save(repair); // Save supplier to database
-        return "Successfully Registered";
+    public List<Repair> getAllRepairs() {
+        return repairRepository.findAll();
     }
 
     //Commented out this scenario due to the complexity.
@@ -97,44 +101,35 @@ public class RepairService {
     */
 
     //You should give a list of repairIds-----Remember
-    public void updateRepairedItems(List<String> itemIds) {
+    public void updateRepairedItems(String itemId) {
         //repairRepository.deleteAllByIdIn(itemIds);
         // Update stateOfProduct to "REPAIRED" for items in inventory
-        List<Repair> itemsToRemove = repairRepository.findAllById(itemIds);
-        List<String> inventoryIds = new ArrayList<>();
+        Optional<Repair> itemsToRemove = repairRepository.findById(itemId);
+        if (itemsToRemove.isPresent()) {
+            String id = String.valueOf(itemsToRemove.get().getInventoryId());
+            Optional<Stocks> item = stocksRepository.findById(id);
+            String state = String.valueOf(item.get().getStateOfProduct());
 
-        if (itemsToRemove.size() == itemIds.size()) {
-            for (Repair item : itemsToRemove) {
-                inventoryIds.add(item.getInventoryId());
-            }
-            List<Stocks> idsToRemove = stocksRepository.findAllById(inventoryIds);
-            for (Stocks item : idsToRemove) {
-                item.setStateOfProduct(StateOfProduct.REPAIRED);
-            }
-            stocksRepository.saveAll(idsToRemove);
-
-            for (String itemId : itemIds) {
+            if (state.equals("UNDER_REPAIR")) {
+                item.get().setStateOfProduct(StateOfProduct.REPAIRED);
+                stocksRepository.save(item.get());
                 repairRepository.deleteById(itemId);
+
+            } else {
+                throw new IllegalArgumentException();
             }
         } else {
             throw new IllegalArgumentException();
         }
     }
 
-    public void saveSelectedItemsToRepairCollection(List<Stocks> itemsToRepair) {
-        List<Repair> selectedDataList = new ArrayList<>();
-        int lastId = repairRepository.findAll().size();
-        for (Stocks item : itemsToRepair) {
-            // Extract the specific data you want to delete from each Repair item
-            lastId += 1;
-            Repair selectedData = new Repair();
-            selectedData.setInventoryId(item.getId());
-            selectedData.setName(item.getName());
-            selectedData.setQuantity(item.getQuantity());
-            selectedData.setId("R"+String.format("%04d", lastId));
-            selectedDataList.add(selectedData);
-        }
-        repairRepository.saveAll(selectedDataList);
+    public void saveSelectedItemsToRepairCollection(Optional<Stocks> itemsToRepair) {
+        Repair repair = new Repair();
+        repair.setInventoryId(itemsToRepair.get().getId());
+        repair.setName(itemsToRepair.get().getName());
+        repair.setQuantity(itemsToRepair.get().getQuantity());
+        repair.setId("R" + String.format("%04d", repairRepository.findAll().size() + 1));
+        repairRepository.save(repair);
     }
 
 }

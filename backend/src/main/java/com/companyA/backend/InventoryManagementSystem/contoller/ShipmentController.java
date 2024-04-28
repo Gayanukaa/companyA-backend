@@ -27,6 +27,7 @@ public class ShipmentController {
         this.financeStockAlertService = financeStockAlertService;
     }
 
+    //Retrieve all shipments
     @GetMapping("/getShipments")
     public ResponseEntity<List<Shipment>> getAllShipments() {
         List<Shipment> shipments = shipmentService.getAllShipments();
@@ -37,6 +38,7 @@ public class ShipmentController {
         }
     }
 
+    //Retrieve specific shipment details by using the ID
     @GetMapping("/getShipmentsById/{id}")
     public ResponseEntity<Shipment> getShipmentById(@PathVariable String id) {
         Shipment shipment = shipmentService.getShipmentById(id);
@@ -47,6 +49,7 @@ public class ShipmentController {
         }
     }
 
+    //Create a shipment
     @PostMapping("/createShipment")
     public ResponseEntity<Shipment> createShipment(@RequestBody ShipmentAlertDTO shipmentAlertDTO) {
         boolean paymentConfirmed = financeStockAlertService.sendRequestForPaymentConfirmation(shipmentAlertDTO.getStockAlerts());
@@ -58,11 +61,13 @@ public class ShipmentController {
         }
     }
 
+    //Place a custom shipment
     @PostMapping("/placeCustomShipment")
     public ResponseEntity<Shipment> placeCustomShipment(@RequestBody CustomShipmentDTO customShipmentDTO) {
         return new ResponseEntity<>(shipmentService.saveCustomShipment(customShipmentDTO), HttpStatus.CREATED);
     }
 
+    //Delete shipment by its ID
     @DeleteMapping("/deleteShipment/{id}")
     public ResponseEntity<String> deleteShipment(@PathVariable String id) {
         shipmentService.deleteShipment(id);
