@@ -61,8 +61,8 @@ public class SampleController {
 
     @PutMapping ("/changeTest")
     @ResponseStatus(HttpStatus.CREATED)
-    public String updateTestMethodById(@RequestParam String prototypeId,String newTestName) {
-        return sampleService.updateTestMethodById(prototypeId, newTestName);
+    public String updateTestMethodById(@RequestParam String sampleId,String newTestName) {
+        return sampleService.updateTestMethodById(sampleId, newTestName);
     }
 
     @DeleteMapping("/delete/{id}")
