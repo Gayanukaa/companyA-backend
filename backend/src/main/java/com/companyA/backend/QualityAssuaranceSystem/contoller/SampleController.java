@@ -67,7 +67,7 @@ public class SampleController {
 
     @DeleteMapping("/delete/{id}")
     public String deleteSample(@PathVariable String id){
-        return sampleService.deleteSampleById(id);
+        return sampleService.deleteById(id);
     }
 
 }
