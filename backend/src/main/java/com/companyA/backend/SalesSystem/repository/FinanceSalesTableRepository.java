@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 @Repository
 public interface FinanceSalesTableRepository extends MongoRepository<FinanceSalesTableBody, String> {
-    Optional<FinanceSalesTableBody> findById(String _id);
+    Optional<FinanceSalesTableBody> findById(String id);
 
     FinanceSalesTableBody save(FinanceSalesTableBody data);
 }

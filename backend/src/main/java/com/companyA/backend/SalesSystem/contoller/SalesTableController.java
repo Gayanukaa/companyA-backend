@@ -28,7 +28,7 @@ public class SalesTableController {
     }
 
     @PostMapping("/{id}/addRecord")
-    public ResponseEntity<CustomerData> createOrder(@PathVariable ObjectId id, @RequestBody CustomerData orderDocument) {
+    public ResponseEntity<CustomerData> createOrder(@PathVariable ObjectId id,@RequestBody CustomerData orderDocument) {
         boolean isCustomerExist = salesTableService.validateID(id); //returns true if the customer exists
         if (!isCustomerExist){
             CustomerData savedOrder = salesTableService.saveOrder(orderDocument);

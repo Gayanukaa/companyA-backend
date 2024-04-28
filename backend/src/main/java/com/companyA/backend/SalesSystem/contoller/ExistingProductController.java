@@ -59,14 +59,36 @@ public class ExistingProductController {
 
     @PostMapping("/addProduct") // Handles POST requests
     public ResponseEntity<Existing> addProduct(@RequestBody Existing product) {
-        Existing newProduct = existingProductService.addProduct(product);
-        return ResponseEntity.ok(newProduct); // Return created product with status code 200
+        String id = product.getId();
+        boolean isExist = existingProductService.findbyID(id);
+        if(!isExist){
+            System.out.println(("Adding to the database"));
+            Existing newProduct = existingProductService.addProduct(product);
+            return ResponseEntity.ok(newProduct); // Return created product with status code 200
+        }else{
+            Existing newProduct = new Existing();
+            String error = "item already exists";
+            // Return 404 Not Found with the error message
+            return ResponseEntity.badRequest()
+                    .body(new Existing());
+        }
+
     }
 
     @DeleteMapping("/delete/{id}") // Handles DELETE requests with product ID path variable
     public ResponseEntity<?> deleteProduct(@PathVariable String id) {
-        existingProductService.deleteProduct(id);
-        return ResponseEntity.noContent().build(); // Return 204 No Content on success
+        boolean isExist = existingProductService.findbyID(id);
+        if (isExist){
+            existingProductService.deleteProduct(id);
+            return ResponseEntity.noContent().build(); // Return 204 No Content on success
+        }
+        else {
+            String error = "Item not found";
+            // Return 404 Not Found with the error message
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        }
+
+
     }
 
 

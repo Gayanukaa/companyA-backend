@@ -20,6 +20,7 @@ public class SalesTableService {
     @Autowired
     private SalesTableRepository salesTableRepository;
 
+
     public List<CustomerData> allRecords() {
         return salesTableRepository.findAll();
     }
