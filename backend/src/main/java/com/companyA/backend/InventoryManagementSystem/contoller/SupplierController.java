@@ -21,16 +21,19 @@ public class SupplierController {
         this.supplierService = supplierService;
     }
 
+    //Register a new supplier
     @PostMapping("/registerSupplier")
     public ResponseEntity<Suppliers> registerSupplier(@RequestBody Suppliers supplier) {
         return new ResponseEntity<Suppliers>(supplierService.registerSupplier(supplier),HttpStatus.CREATED);
     }
 
+    //Retrieve all suppliers' details
     @GetMapping("/supplierDetails")
     public List<Suppliers> supplierDetails(){
         return supplierService.supplierDetails();
     }
 
+    //Remove a supplier by using its ID
     @DeleteMapping("/deleteById/{id}")
     public ResponseEntity<String> deleteSupplierById(@PathVariable String id) {
         try {

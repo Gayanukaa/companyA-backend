@@ -34,21 +34,25 @@ public class InventoryController {
         this.stockAlertService = stockAlertService;
     }
 
+    //Retrieves details of all stocks available in the inventory
     @GetMapping
     public ResponseEntity<List<Stocks>> getAllStocks() {
         return new ResponseEntity<List<Stocks>>(stocksService.allStocks(), HttpStatus.OK);
     }
 
+    //Add new stock
     @PostMapping("/addStock")
     public ResponseEntity<Stocks> addToInventory(@RequestBody Stocks stocks) {
         return new ResponseEntity<Stocks>(stocksService.addStocks(stocks),HttpStatus.CREATED);
     }
 
+    //Add new supplies
     @PostMapping("/addSupplies")
     public ResponseEntity<Supplies> addToInventory(@RequestBody Supplies supplies) {
         return new ResponseEntity<Supplies>(suppliesService.addSupplies(supplies),HttpStatus.CREATED);
     }
 
+    //Remove an inventory item
     @DeleteMapping("/deleteInventory/{itemId}")
     public ResponseEntity<String> deleteFromInventory(@PathVariable String itemId) {
         if(stocksService.existsById(itemId)){
@@ -57,7 +61,7 @@ public class InventoryController {
         return new ResponseEntity<String>(HttpStatus.NOT_FOUND.toString(),HttpStatus.NOT_FOUND);
     }
 
-
+    //Get stock details
     @GetMapping("/{attribute}/{value}")
     public ResponseEntity<Stocks> getStockByAttribute(@PathVariable String attribute, @PathVariable String value) {
         Stocks stock = null;
@@ -78,6 +82,7 @@ public class InventoryController {
         }
     }
 
+    // Retrieves a specific inventory item based on the provided attribute(id, name) and its value.
     @PutMapping("/stocks/{stockId}/{attribute}/{value}")
     public ResponseEntity<Stocks> updateStockByAttribute(@PathVariable String stockId, @PathVariable String attribute, @PathVariable String value) {
         //find if stock or supplies
@@ -90,12 +95,14 @@ public class InventoryController {
         }
     }
 
+    //Updates a specific stocks item based on the provided attribute and its value.
     @GetMapping("/stateOfProduct/{value}")
     public ResponseEntity <List<Stocks>> getStockByStateOfProduct(@PathVariable String value) {
         StateOfProduct valueNew = StateOfProduct.valueOf(value);
         return new ResponseEntity<List<Stocks>>(stocksService.getStockByStateOfProduct(valueNew), HttpStatus.OK);
     }
 
+    //	Retrieve all details of items that belong to a selected state of the product.
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/updateStock")
     public void update(@RequestBody Stocks stock) {

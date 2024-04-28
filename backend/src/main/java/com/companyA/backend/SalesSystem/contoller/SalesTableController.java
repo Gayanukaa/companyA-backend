@@ -2,6 +2,8 @@ package com.companyA.backend.SalesSystem.contoller;
 
 import com.companyA.backend.SalesSystem.model.CustomerData;
 import com.companyA.backend.SalesSystem.model.SalesRecord;
+import com.companyA.backend.SalesSystem.service.FinanceSalesTableService;
+import com.companyA.backend.SalesSystem.service.ProductService;
 import com.companyA.backend.SalesSystem.service.SalesTableService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,23 +20,22 @@ public class SalesTableController {
     @Autowired
     private SalesTableService salesTableService;
 
+
     @GetMapping
     public ResponseEntity<List<CustomerData>> getAllRecords(){
         System.out.println("In thr java all product controller");
         return new ResponseEntity<List<CustomerData>>(salesTableService.allRecords(), HttpStatus.OK);
     }
 
-    @PostMapping("/addRecord")
-    public ResponseEntity<CustomerData> createOrder(@RequestBody CustomerData orderDocument) {
-        ObjectId customerID = orderDocument.get_id();
-        List<SalesRecord> order = orderDocument.getOrders();
-        boolean isCustomerExist = salesTableService.validateID(customerID);
+    @PostMapping("/{id}/addRecord")
+    public ResponseEntity<CustomerData> createOrder(@PathVariable ObjectId id,@RequestBody CustomerData orderDocument) {
+        boolean isCustomerExist = salesTableService.validateID(id); //returns true if the customer exists
         if (!isCustomerExist){
             CustomerData savedOrder = salesTableService.saveOrder(orderDocument);
             return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
         }else{
-            SalesRecord newOrder = order.get(0);
-            CustomerData updatedDocument = salesTableService.addOrder(customerID, newOrder);
+            SalesRecord newOrder = orderDocument.getOrders().get(0); //accsss the zeroth element of the list
+            CustomerData updatedDocument = salesTableService.addOrder(id, newOrder);
             if (updatedDocument != null) {
                 return new ResponseEntity<>(updatedDocument, HttpStatus.OK);
             } else {

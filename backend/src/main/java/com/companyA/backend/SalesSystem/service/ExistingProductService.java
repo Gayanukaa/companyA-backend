@@ -41,6 +41,13 @@ public class ExistingProductService {
         existingProductRepository.deleteById(id);
     }
 
+    public boolean findbyID(String itemID){
+        Existing item = existingProductRepository.findById(itemID).orElse(null);
+        if (item != null){
+            return true;
+        }
+        return false;
+    }
 
 
 }

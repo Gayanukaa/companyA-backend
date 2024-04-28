@@ -2,7 +2,9 @@ package com.companyA.backend.SalesSystem.service;
 
 import com.companyA.backend.SalesSystem.model.CustomerData;
 import com.companyA.backend.SalesSystem.model.Existing;
+import com.companyA.backend.SalesSystem.model.FinanceSalesTableBody;
 import com.companyA.backend.SalesSystem.model.SalesRecord;
+import com.companyA.backend.SalesSystem.repository.FinanceSalesTableRepository;
 import com.companyA.backend.SalesSystem.repository.SalesTableRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +12,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class SalesTableService {
 
     @Autowired
     private SalesTableRepository salesTableRepository;
+
 
     public List<CustomerData> allRecords() {
         return salesTableRepository.findAll();
@@ -47,8 +51,14 @@ public class SalesTableService {
     public boolean validateID(ObjectId documentId){
         CustomerData existingDocument1 = salesTableRepository.findById(documentId).orElse(null);
         if (existingDocument1 != null && existingDocument1.get_id() != null){
+            System.out.println("True");
             return true;
         }
+        System.out.println("False");
         return false;
     }
+
+
+
+
 }

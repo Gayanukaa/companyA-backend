@@ -61,13 +61,13 @@ public class SampleController {
 
     @PutMapping ("/changeTest")
     @ResponseStatus(HttpStatus.CREATED)
-    public String updateTestMethodById(@RequestParam String prototypeId,String newTestName) {
-        return sampleService.updateTestMethodById(prototypeId, newTestName);
+    public String updateTestMethodById(@RequestParam String sampleId,String newTestName) {
+        return sampleService.updateTestMethodById(sampleId, newTestName);
     }
 
     @DeleteMapping("/delete/{id}")
     public String deleteSample(@PathVariable String id){
-        return sampleService.deleteSampleById(id);
+        return sampleService.deleteById(id);
     }
 
 }
