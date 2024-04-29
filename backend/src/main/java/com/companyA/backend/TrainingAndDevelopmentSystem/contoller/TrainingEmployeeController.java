@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping
+@CrossOrigin
 public class TrainingEmployeeController {
     @Autowired
     private TrainingEmployeeRepository trainingEmployeeRepository;
@@ -117,6 +118,21 @@ public class TrainingEmployeeController {
 
         return ResponseEntity.ok("Course completion recorded successfully for user: " + email);
     }
+    //new apis
+    @GetMapping("/api/tms/{email}/enrolledCourses")
+    public List<Long> getEnrolledCourses(@PathVariable String email) {
+        TrainingEmployee user = trainingEmployeeRepository.findByEmployeeEmail(email);
+        //.orElseThrow(() -> new RuntimeException("User not found: " + email));
 
+        return user.getEnrolledCourses();
+    }
+
+    @GetMapping("/api/tms/{email}/completedCourses")
+    public List<Long> getCompletedCourses(@PathVariable String email) {
+        TrainingEmployee user = trainingEmployeeRepository.findByEmployeeEmail(email);
+        //.orElseThrow(() -> new RuntimeException("User not found: " + name));
+
+        return user.getCompletedCourses();
+    }
 
 }

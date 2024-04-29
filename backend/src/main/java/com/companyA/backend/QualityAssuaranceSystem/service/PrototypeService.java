@@ -92,11 +92,15 @@ public class PrototypeService {
         else return "invalid request";
     }
 
-    public String deletePrototypeById(String id){
+    public String deleteById(String id){
         Optional<Prototype> prototype = prototypeRepository.findById(id);
         if (prototype.isPresent()) {
-            prototypeRepository.deleteById(id);
-            return "Prototype with ID " + id + " successfully deleted";
+            if (prototype.get().getTestStatus().equals("Received")) {
+                prototypeRepository.deleteById(id);
+                return "Prototype with ID " + id + " successfully deleted";
+            } else {
+                return "Prototype with ID " + id + " could not be deleted at the moment";
+            }
         } else {
             return "Prototype with ID " + id + " not found";
         }

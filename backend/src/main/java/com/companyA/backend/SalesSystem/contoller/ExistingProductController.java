@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/existingProducts")
+@CrossOrigin
 public class ExistingProductController {
     @Autowired
     private ExistingProductService existingProductService;
@@ -38,35 +39,57 @@ public class ExistingProductController {
         }
     }
 
-    @PostMapping("/validateStock-Muliple")
+    @PostMapping("/validateStock-Multiple")
     public ResponseEntity<List<StockValidation>> validateStock(@RequestBody List<CartItem> cartItem) {
         List<StockValidation> validationResults = new ArrayList<>();
 
         for (CartItem itemBOM : cartItem) {
             double subTotal = 0;
             boolean hasStock = existingProductService.hasSufficientStock(itemBOM.getItemId(), itemBOM.getQuantity());
-
+            int stock = existingProductService.getStock(itemBOM.getItemId());
             if (hasStock){
                 System.out.println("In the if clasue");
                 System.out.println(itemBOM.getQuantity());
                 System.out.println(itemBOM.getUnitPrice());
                 subTotal = itemBOM.getQuantity()*itemBOM.getUnitPrice();
             }
-            validationResults.add(new StockValidation(itemBOM.getItemId(), hasStock, subTotal));
+            validationResults.add(new StockValidation(itemBOM.getItemId(), hasStock, stock, subTotal));
         }
         return ResponseEntity.ok(validationResults);
     }
 
     @PostMapping("/addProduct") // Handles POST requests
     public ResponseEntity<Existing> addProduct(@RequestBody Existing product) {
-        Existing newProduct = existingProductService.addProduct(product);
-        return ResponseEntity.ok(newProduct); // Return created product with status code 200
+        String id = product.getId();
+        boolean isExist = existingProductService.findbyID(id);
+        if(!isExist){
+            System.out.println(("Adding to the database"));
+            Existing newProduct = existingProductService.addProduct(product);
+            return ResponseEntity.ok(newProduct); // Return created product with status code 200
+        }else{
+            Existing newProduct = new Existing();
+            String error = "item already exists";
+            // Return 404 Not Found with the error message
+            return ResponseEntity.badRequest()
+                    .body(new Existing());
+        }
+
     }
 
     @DeleteMapping("/delete/{id}") // Handles DELETE requests with product ID path variable
     public ResponseEntity<?> deleteProduct(@PathVariable String id) {
-        existingProductService.deleteProduct(id);
-        return ResponseEntity.noContent().build(); // Return 204 No Content on success
+        boolean isExist = existingProductService.findbyID(id);
+        if (isExist){
+            existingProductService.deleteProduct(id);
+            return ResponseEntity.noContent().build(); // Return 204 No Content on success
+        }
+        else {
+            String error = "Item not found";
+            // Return 404 Not Found with the error message
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        }
+
+
     }
 
 

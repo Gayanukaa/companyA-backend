@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/m1") // Sets the base URI for all resource URIs.
+@CrossOrigin
 public class MachineController {
 
 
@@ -23,7 +24,7 @@ public class MachineController {
     // Retrieves a list of all machinery, returning them with an HTTP OK status.
     @GetMapping("/getMachines")
     public ResponseEntity<List<Machinery>> getAllMachinery() {
-        return new ResponseEntity<List<Machinery>>(machineryService.allMachinery(), HttpStatus.OK);
+        return new ResponseEntity<List<Machinery>>(machineryService.findAll(), HttpStatus.OK);
     }
 
 
@@ -44,7 +45,7 @@ public class MachineController {
 
     // Adds a new machinery object, returning a success message and HTTP OK status.
     public ResponseEntity<Map<String, String>> setMachinery(@RequestBody Machinery machine) {
-        machineryService.addMachinery(machine);
+        machineryService.add(machine);
 
         Map<String, String> response = new HashMap<>();
         response.put("message", "Machine is sucessfully added");

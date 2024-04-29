@@ -14,18 +14,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Document(collection = "InventoryManager")
 @Data
 @Getter
 @Setter
+@Document(collection = "InventoryManager")
 public class InventoryManager {
-    @Id@NotBlank
+    @Id@NotBlank (message = "Manager Id cannot be blank")
     private String managerId; //Manager Id
-    @NotBlank
+    @NotBlank (message = "Manager name cannot be blank")
     private String managerName; //Manager name
-    @NotBlank
+    @NotBlank (message = "Manager email cannot be blank")
     private String managerEmail; //Manager email
-    @NotBlank
+    @NotBlank (message = "Manager phone number cannot be blank")
     private String managerPhone; //Manager phone number
     @DocumentReference
     private List<Suppliers> listOfSuppliers; // List to store list of suppliers offered

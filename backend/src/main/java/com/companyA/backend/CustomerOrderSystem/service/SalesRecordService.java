@@ -1,6 +1,5 @@
 package com.companyA.backend.CustomerOrderSystem.service;
 import java.util.Optional;
-
 import com.companyA.backend.CustomerOrderSystem.model.SalesRecord;
 import com.companyA.backend.CustomerOrderSystem.repository.SalesRecordRepository;
 import org.bson.types.ObjectId;

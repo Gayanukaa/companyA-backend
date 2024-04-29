@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -21,8 +22,15 @@ public class SalesController {
 
     @Autowired
     private SalesService salesService;
+
+    @GetMapping("/getOrderHistory")
+    public List<SalesRecord> orderHistory(){
+
+        return salesRecordRepo.findAll();
+
+    }
     @GetMapping("/bill/{order_ID}")
-    public String generate_bill(@PathVariable int order_ID){
+    public String generate_bill(@PathVariable String order_ID){
         Optional<SalesRecord> salesRecord = salesRecordRepo.findById(order_ID);
 
         SalesRecord sales = null;
