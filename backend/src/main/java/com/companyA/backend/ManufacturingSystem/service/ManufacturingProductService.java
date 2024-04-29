@@ -3,12 +3,14 @@ package com.companyA.backend.ManufacturingSystem.service;
 import com.companyA.backend.ManufacturingSystem.model.Product;
 
 import com.companyA.backend.ManufacturingSystem.repository.ManufacturingProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 
 public class ManufacturingProductService {
+    @Autowired
     private final ManufacturingProductRepository manufacturingProductRepository;
 
     public ManufacturingProductService(ManufacturingProductRepository manufacturingProductRepository) {

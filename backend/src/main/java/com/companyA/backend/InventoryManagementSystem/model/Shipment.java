@@ -2,26 +2,29 @@ package com.companyA.backend.InventoryManagementSystem.model;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+@Component
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "Shipments")
 public class Shipment {
 
-    @Id @NotBlank
+    @Id
     private String id;
-    @NotBlank
+    @NotBlank (message = "Tracking number cannot be blank")
     private String trackingNumber;
-    @DocumentReference @NotBlank
+    @DocumentReference @NotBlank (message = "Sender cannot be blank")
     private InventoryManager sender;
-    @DocumentReference @NotBlank
+    @DocumentReference @NotBlank (message = "Supplier cannot be blank")
     private Suppliers supplierId;
-    @NotBlank
+    @NotBlank (message = "Shipment orders cannot be blank")
     private Map<String,Integer> orderList;
 }

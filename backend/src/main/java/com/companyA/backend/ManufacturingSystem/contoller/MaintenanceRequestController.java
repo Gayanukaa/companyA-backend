@@ -2,7 +2,6 @@ package com.companyA.backend.ManufacturingSystem.contoller;
 
 import com.companyA.backend.ManufacturingSystem.model.MaintenanceRequest;
 import com.companyA.backend.ManufacturingSystem.service.MaintenanceRequestService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 // Controller class for handling MaintenanceRequest requests
 @RestController
 @RequestMapping("/api/maintenance")
+@CrossOrigin
 public class MaintenanceRequestController {
     @Autowired
     private MaintenanceRequestService maintenanceRequestService;

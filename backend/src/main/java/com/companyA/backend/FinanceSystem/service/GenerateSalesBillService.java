@@ -1,16 +1,16 @@
 package com.companyA.backend.FinanceSystem.service;
 
-import com.companyA.backend.FinanceSystem.model.SalesRecord;
-import com.companyA.backend.FinanceSystem.repository.SalesRecordRepo;
+import com.companyA.backend.FinanceSystem.model.GenerateSalesBill;
+import com.companyA.backend.FinanceSystem.repository.GenerateSalesBillRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SalesService {
+public class GenerateSalesBillService {
     @Autowired
-    private SalesRecordRepo salesRepo;
+    private GenerateSalesBillRepo salesRepo;
 
-    public String generateBill(SalesRecord salesRecord){
+    public String generateBill(GenerateSalesBill generateSalesBill){
         StringBuilder billBuilder = new StringBuilder();
         billBuilder.append("Electric Equipment Warehouse**\n");
         billBuilder.append("**Address: Bandaranayaka road, katubedda\n");
@@ -21,7 +21,7 @@ public class SalesService {
         billBuilder.append("Component Name | Quantity | Unit Price | Amount\n");
         billBuilder.append("---------------------------------------------\n");
 
-        double totalAmount = salesRecord.getOrder_amount();
+        double totalAmount = generateSalesBill.getOrder_amount();
 
         billBuilder.append(String.format("Total Amount: %.2f\n", totalAmount));
         billBuilder.append("**Thank you for your business!**\n");
@@ -32,7 +32,7 @@ public class SalesService {
 
     }
 
-    public void addRecord(SalesRecord salesRecord){
-        salesRepo.save(salesRecord);
+    public void addRecord(GenerateSalesBill generateSalesBill){
+        salesRepo.save(generateSalesBill);
     }
 }

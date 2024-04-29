@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping
+@CrossOrigin
 public class OverseasExperienceController {
     @Autowired
     private OverseasExperienceRepository overseasExperienceRepository;

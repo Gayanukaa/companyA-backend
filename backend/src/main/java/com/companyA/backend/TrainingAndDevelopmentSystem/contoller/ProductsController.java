@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping
+@CrossOrigin
 public class ProductsController {
     @Autowired
     private ProductsRepository  productsRepository;

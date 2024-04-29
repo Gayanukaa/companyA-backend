@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/m1") // Sets the base URI for all resource URIs.
+@CrossOrigin
 public class MachineController {
 
 

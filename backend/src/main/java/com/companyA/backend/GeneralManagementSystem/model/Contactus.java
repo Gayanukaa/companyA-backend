@@ -4,19 +4,34 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Contactus")
+import java.util.Date;
+
+@Document(collection = "contactus")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Contactus {
-    @NotBlank(message = "Name is Required")
+    @Id
+    private String id;
+
+    @CreatedDate
+    private Date timestamp ;
+
+    @NotBlank
     private String name;
 
-    @NotBlank(message = "Email is Required")
+    @NotBlank
     private String email;
 
-    @NotBlank(message = "Message is Required")
+    @NotBlank
+    private String subject;
+
+    @NotBlank
     private String message;
+
+    private Integer isRead;
 }
