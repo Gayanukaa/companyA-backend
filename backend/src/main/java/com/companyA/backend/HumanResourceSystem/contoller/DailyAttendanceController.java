@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/Attendance")
 public class DailyAttendanceController {
     @Autowired
