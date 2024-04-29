@@ -31,14 +31,14 @@ public class ReportController {
     }
 
     @PostMapping("/prototypes/generate")
-    public ResponseEntity<String> generatePrototypeReport() {
-        String result = reportService.generatePrototypeReport();
+    public ResponseEntity<Report> generatePrototypeReport() {
+        Report result = reportService.generatePrototypeReport();
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/samples/generate")
-    public ResponseEntity<String> generateSampleReport() {
-        String result = reportService.generateSampleReport();
+    public ResponseEntity<Report> generateSampleReport() {
+        Report result = reportService.generateSampleReport();
         return ResponseEntity.ok(result);
     }
 

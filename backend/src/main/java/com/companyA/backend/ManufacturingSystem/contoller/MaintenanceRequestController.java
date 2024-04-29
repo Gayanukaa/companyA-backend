@@ -20,7 +20,7 @@ public class MaintenanceRequestController {
     public ResponseEntity<String> addMaintenanceRequest(@RequestBody MaintenanceRequest maintenanceRequest) {
         try {
             MaintenanceRequest response = maintenanceRequestService.addMaintenanceRequest(maintenanceRequest);
-            return new ResponseEntity<>("Maintenance request successful. Inventory will be replenished.", HttpStatus.CREATED);
+            return new ResponseEntity<>("Maintenance request successful.", HttpStatus.CREATED);
 
         } catch (RuntimeException e) {
             return new ResponseEntity<>("This maintenance request is already existing.", HttpStatus.BAD_REQUEST);

@@ -2,6 +2,7 @@ package com.companyA.backend.ManufacturingSystem.contoller;
 
 import com.companyA.backend.ManufacturingSystem.model.OrderStatus;
 import com.companyA.backend.ManufacturingSystem.service.ManufacturingOrderStatusService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/production/task")
 public class ManufacturingOrderStatusController {
-
+    @Autowired
     private ManufacturingOrderStatusService manufacturingOrderStatusService;
 
     // Endpoint to retrieve order status by order ID

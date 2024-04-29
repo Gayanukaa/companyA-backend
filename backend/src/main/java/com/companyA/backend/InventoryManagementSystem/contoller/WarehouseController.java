@@ -26,16 +26,19 @@ public class WarehouseController {
         return new ResponseEntity<List<Warehouse>>(warehouseService.allWarehouses(), HttpStatus.OK);
     }
 
+    //Add a new warehouse
     @PostMapping("/addWarehouse")
     public ResponseEntity<Warehouse> addWarehouse(@RequestBody Warehouse warehouse) {
         return new ResponseEntity<Warehouse>(warehouseService.addWarehouse(warehouse),HttpStatus.CREATED);
     }
 
+    //Retrieve details of a specific warehouse by using its ID
     @GetMapping("/getWarehouse/{warehouseId}")
     public ResponseEntity<Warehouse> getWarehouse(@PathVariable String warehouseId) {
         return new ResponseEntity<Warehouse>(warehouseService.getWarehouse(warehouseId),HttpStatus.OK);
     }
 
+    //Remove a warehouse
     @DeleteMapping("/deleteWarehouse/{warehouseId}")
     public ResponseEntity<String> deleteWarehouse(@PathVariable String warehouseId) {
         return new ResponseEntity<String>(warehouseService.deleteWarehouse(warehouseId),HttpStatus.OK);

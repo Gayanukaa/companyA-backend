@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping
+@CrossOrigin
 public class UnitSupervisorController {
     @Autowired
     private UnitSupervisorRepository unitSupervisorRepository;

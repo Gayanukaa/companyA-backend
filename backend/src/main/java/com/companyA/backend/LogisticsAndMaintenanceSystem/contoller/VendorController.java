@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/vendor")
+@CrossOrigin
 public class VendorController {
 
     @Autowired
@@ -23,7 +24,7 @@ public class VendorController {
 
     @GetMapping("/getVendors")
     public ResponseEntity<List<Vendor>> getAllVendors() {
-        return new ResponseEntity<>(vendorService.findAllVendors(), HttpStatus.OK);
+        return new ResponseEntity<>(vendorService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/vendorById/{vendorId}")
@@ -33,7 +34,7 @@ public class VendorController {
 
     @PostMapping("/addVendor")
     public ResponseEntity<Map<String,String>> setVendor(@RequestBody Vendor vendor) {
-        vendorService.addVendor(vendor);
+        vendorService.add(vendor);
         Map<String,String> response = new HashMap<>();
         response.put("status", "Vendor is successfully added ");
         return new ResponseEntity<>(response, HttpStatus.OK);

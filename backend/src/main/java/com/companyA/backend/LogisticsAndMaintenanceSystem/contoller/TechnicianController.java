@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/T1")
+@CrossOrigin
 public class TechnicianController {
 
     @Autowired
@@ -21,7 +22,7 @@ public class TechnicianController {
 
     @GetMapping("/getTechnicians")
     public ResponseEntity<List<Technician>> getAllTechnicians() {
-        return new ResponseEntity<>(technicianService.allTechnicians(), HttpStatus.OK);
+        return new ResponseEntity<>(technicianService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/technicianById/{technicianId}")
@@ -31,7 +32,7 @@ public class TechnicianController {
 
     @PostMapping("/addTechnician")
     public ResponseEntity<Map<String , String >> setTechnician(@RequestBody Technician technician) {
-        technicianService.addTechnician(technician);
+        technicianService.add(technician);
         Map<String , String > response = new HashMap<>();
         response.put("message", "Technician added successfully");
         return new ResponseEntity<>(response, HttpStatus.OK);

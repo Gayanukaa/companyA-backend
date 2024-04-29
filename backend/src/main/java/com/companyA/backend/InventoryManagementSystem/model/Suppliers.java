@@ -7,14 +7,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document(collection = "Suppliers")
-
 public class Suppliers {
     @Id
     private String supplierId;
-    @NotBlank
+    @NotBlank (message = "Company name cannot be blank")
     private String companyName;
-    @NotBlank
+    @NotBlank (message = "Contact information cannot be blank")
     private String contactInfo;
-    @NotBlank
+    @NotBlank (message = "Manager Id cannot be blank")
     private String managerId;
 }

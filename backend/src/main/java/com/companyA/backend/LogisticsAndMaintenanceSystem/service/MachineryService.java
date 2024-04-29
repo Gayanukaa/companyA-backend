@@ -16,22 +16,29 @@ import java.util.Optional;
 
 
 @Service
-public class MachineryService {
+public class MachineryService extends AbstractService<Machinery> {
 
     @Autowired
     private MachineryRepository machineryRepository; // Injects the repository used for database operations.
 
     // Returns all machinery entries from the database.
-    public List<Machinery> allMachinery() {
+    public List<Machinery> findAll() {
 
         return machineryRepository.findAll();
     }
 
     // Saves a new machinery object to the database.
 
-    public void addMachinery(Machinery machine) {
-        machineryRepository.save(machine);
+    public void add(Machinery machine) {
+        Optional<Machinery> existingMachine = machineryRepository.findMachineryByMachineId(machine.getMachineId());
+        if (existingMachine.isPresent()) {
+            throw new RuntimeException("Machinery already exist with id: " + machine.getMachineId());
+        } else {
+              machineryRepository.save(machine);
+        }
+
     }
+
 
 
     // Finds a machinery by its machineId. Throws an exception if not found.
