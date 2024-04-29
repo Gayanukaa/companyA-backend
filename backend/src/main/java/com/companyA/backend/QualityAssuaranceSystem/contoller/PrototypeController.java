@@ -66,6 +66,6 @@ public class PrototypeController {
 
     @DeleteMapping("/delete/{id}")
     public String deletePrototype(@PathVariable String id){
-        return prototypeService.deletePrototypeById(id);
+        return prototypeService.deleteById(id);
     }
 }

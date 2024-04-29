@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -23,8 +24,8 @@ public class CreditFacility {
     private double totalPaidAmount;
     private double interestRate;
     private int loanTermInMonths;
-    private LoanStatus loanStatus;
-    private Date startDate;
+    private String loanStatus;
+    private LocalDate startDate;
 
     public void recordPayment(double paymentAmount) {
         if (paymentAmount <= 0) {
@@ -33,10 +34,10 @@ public class CreditFacility {
         this.totalPaidAmount += paymentAmount;
         this.currentLoanAmount = Math.max(0, this.currentLoanAmount - paymentAmount); // Ensure non-negative balance
         if (currentLoanAmount == 0) {
-            loanStatus = LoanStatus.PAID_OFF; // Update status if fully paid
+            loanStatus = "Paid Off"; // Update status if fully paid
         }
         else {
-            loanStatus = LoanStatus.ACTIVE;
+            loanStatus = "Active";
         }
     }
 
@@ -57,9 +58,4 @@ public class CreditFacility {
                 ", startDate=" + startDate +
                 '}';
     }
-}
-enum LoanStatus{
-    ACTIVE,
-    PAID_OFF,
-    DELINQUENT
 }

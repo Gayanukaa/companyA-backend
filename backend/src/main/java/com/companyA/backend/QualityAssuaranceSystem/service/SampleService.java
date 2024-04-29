@@ -55,10 +55,10 @@ public class SampleService {
     public String testSample(Sample sample, Test test){
         String tempid = sample.getId();
         String temptestid = test.getTestId();
-        Optional<Sample> AvalilablePrototype = sampleRepository.findById(tempid);
+        Optional<Sample> AvalilableSample = sampleRepository.findById(tempid);
         Optional<Test> AvalilableTest = testRepository.findById(temptestid);
-        if (AvalilablePrototype.isPresent()&&AvalilableTest.isPresent()) {
-            String currentStatus = AvalilablePrototype.get().getTestStatus();
+        if (AvalilableSample.isPresent()&&AvalilableTest.isPresent()) {
+            String currentStatus = AvalilableSample.get().getTestStatus();
             if (currentStatus.equals("Assigened")) {
                 sample.setAllocatedTest(test);
                 sample.setTestStatus("Test initiated");
@@ -88,11 +88,15 @@ public class SampleService {
         else return "invalid request";
     }
 
-    public String deleteSampleById(String id){
+    public String deleteById(String id){
         Optional<Sample> sample = sampleRepository.findById(id);
         if (sample.isPresent()) {
-            sampleRepository.deleteById(id);
-            return "Sample with ID " + id + " successfully deleted";
+            if (sample.get().getTestStatus().equals("Received")) {
+                sampleRepository.deleteById(id);
+                return "Sample with ID " + id + " successfully deleted";
+            } else {
+                return "Sample with ID " + id + " could not be deleted at the moment";
+            }
         } else {
             return "Sample with ID " + id + " not found";
         }
