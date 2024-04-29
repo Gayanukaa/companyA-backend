@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 
 @Document(collection = "paymentConfirmation")
 public class Payment {
-    private ObjectId id;
+    private String id;
     private String type; // "Incoming" or "Outgoing"
     private Double amount;
     private String referenceNumber;

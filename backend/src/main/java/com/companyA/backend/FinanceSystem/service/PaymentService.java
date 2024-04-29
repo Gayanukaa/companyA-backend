@@ -7,6 +7,8 @@ import com.companyA.backend.FinanceSystem.repository.PaymentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,26 +21,22 @@ public class PaymentService {
     private EmployeeSalaryRepo employeeSalaryRepo;
 
 
-    public void SalaryPaymentConfirmation(String employeeId){
-        Optional<EmployeeSalary> employee = employeeSalaryRepo.findById(employeeId);
-
-        EmployeeSalary employeeSalary = null;
-
-        if(employee.isPresent()){
-            employeeSalary = employee.get();
+    public void SalaryPaymentConfirmation(Payment payment){
+        List<EmployeeSalary> employeeSalaries = employeeSalaryRepo.findAll();
+        double totalPayment = 0;
+        for(EmployeeSalary employeeSalary : employeeSalaries){
+            double salary = employeeSalary.getNetSalary();
+            totalPayment = totalPayment + salary;
         }
-        else {
-            // Employee not found, throw an exception
-            throw new IDNotFoundException("Employee not found with ID: " + employeeId);
-        }
-        double paymentAmount = employeeSalary.getNetSalary();
-        Payment payment = new Payment();
+
         payment.setType("Outgoing");
-        payment.setStatus("Salary successfully deposited ");
-        payment.setAmount(paymentAmount);
+        payment.setStatus("Confirmed");
+        payment.setPaymentDate(LocalDateTime.now());
+        payment.setAmount(totalPayment);
         paymentRepo.save(payment);
 
     }
+
 
 
 

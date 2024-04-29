@@ -19,13 +19,8 @@ public class RepairService {
     @Autowired
     private StocksRepository stocksRepository;
 
-    public List<String> getIdsOfDamagedProducts() {
-        List<Stocks> damagedStock = stocksRepository.findByStateOfProduct(StateOfProduct.DAMAGED);
-        List<String> damagedProductIds = new ArrayList<>();
-        for (Stocks stock : damagedStock) {
-            damagedProductIds.add(stock.getId());
-        }
-        return damagedProductIds;
+    public List<Stocks> getDamagedProducts() {
+        return stocksRepository.findByStateOfProduct(StateOfProduct.DAMAGED);
     }
 
     public void sendItemsForRepair(String itemIds) {
