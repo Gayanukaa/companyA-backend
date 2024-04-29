@@ -14,8 +14,12 @@ import java.util.List;
 @CrossOrigin
 public class GenerateReportController {
 
+    private final GenerateReportService generateReportService;
+
     @Autowired
-    private GenerateReportService generateReportService;
+    public GenerateReportController(GenerateReportService generateReportService) {
+        this.generateReportService = generateReportService;
+    }
 
     //Generate Report
     @PostMapping("/generate")

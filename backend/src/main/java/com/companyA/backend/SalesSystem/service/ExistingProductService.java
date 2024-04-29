@@ -25,6 +25,14 @@ public class ExistingProductService {
         return item.getQuantity() >= quantity;
     }
 
+    public int getStock(String itemId){
+        Existing item = existingProductRepository.findById(itemId).orElse(null);
+        if (item == null) {
+            // Handle error if item not found
+            return 0;
+        }
+        return item.getQuantity();
+    }
     public Existing addProduct(Existing product) {
         return existingProductRepository.save(product); // Save to MongoDB
     }
@@ -33,6 +41,14 @@ public class ExistingProductService {
         existingProductRepository.deleteById(id);
     }
 
+    public boolean findbyID(String itemID){
+        Existing item = existingProductRepository.findById(itemID).orElse(null);
+        if (item != null){
+            System.out.println("Not null add product");
+            return true;
+        }
+        return false;
+    }
 
 
 }

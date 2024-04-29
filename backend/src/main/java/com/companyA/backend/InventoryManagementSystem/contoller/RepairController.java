@@ -1,6 +1,7 @@
 package com.companyA.backend.InventoryManagementSystem.contoller;
 
 import com.companyA.backend.InventoryManagementSystem.model.Repair;
+import com.companyA.backend.InventoryManagementSystem.model.Shipment;
 import com.companyA.backend.InventoryManagementSystem.service.RepairService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,8 +15,12 @@ import java.util.List;
 @CrossOrigin
 public class RepairController {
 
+    private final RepairService repairService;
+
     @Autowired
-    private RepairService repairService;
+    public RepairController(RepairService repairService) {
+        this.repairService = repairService;
+    }
 
     //Give ids of the items with stateOfProduct = "DAMAGED"
 
@@ -29,14 +34,14 @@ public class RepairController {
 
     //StateOfProduct will be updated as "UNDER_REPAIR"("Inventory" collection)
     //Send the details of relevant items to the "Repair" collection
-    @GetMapping("/sendForRepairs")
-    public ResponseEntity<String> sendItemsForRepair(@RequestBody List<String> itemIds) {
+    @GetMapping("/sendForRepairs/{itemId}")
+    public ResponseEntity<String> sendItemsForRepair(@PathVariable String itemId) {
         try {
-            repairService.sendItemsForRepair(itemIds);
-            return ResponseEntity.ok("Items sent for repairs successfully.");
+            repairService.sendItemsForRepair(itemId);
+            return ResponseEntity.ok("Item sent for repairs successfully.");
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong product ID.All items should be DAMAGED to proceed.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong product ID.Selected item should be DAMAGED to proceed.");
         }
     }
 
@@ -46,7 +51,18 @@ public class RepairController {
             List<Repair> repairs = repairService.repairDetails(ids);
             return ResponseEntity.ok(repairs);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("wrong product id");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong product ID.");
+        }
+    }
+
+    //Retrieves all item details which are in under repair
+    @GetMapping("/getAllRepairs")
+    public ResponseEntity<List<Repair>> getAllRepairs() {
+        List<Repair> repairs = repairService.getAllRepairs();
+        if (repairs == null || repairs.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(repairs, HttpStatus.OK);
         }
     }
 
@@ -66,13 +82,13 @@ public class RepairController {
 
 
     //You should provide a list of repair Ids
-    @GetMapping("/itemsRepairDone")
-    public ResponseEntity<String> updateRepairedItems(@RequestBody List<String> itemIds) {
+    @GetMapping("/itemsRepairDone/{itemId}")
+    public ResponseEntity<String> updateRepairedItems(@PathVariable String itemId) {
         try {
-            repairService.updateRepairedItems(itemIds);
-            return ResponseEntity.ok("Items has been repaired.");
+            repairService.updateRepairedItems(itemId);
+            return ResponseEntity.ok("Item has been repaired.");
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("One or more wrong repair IDs has been provided.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong repair ID.");
         }
     }
 }

@@ -13,17 +13,26 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class VendorService {
+public class VendorService extends AbstractService<Vendor> {
 
     @Autowired
     private VendorRepository vendorRepository;
 
-    public List<Vendor> findAllVendors() {
+    public List<Vendor> findAll() {
         return vendorRepository.findAll();
     }
 
-    public void addVendor(Vendor vendor) {
-        vendorRepository.save(vendor);
+    public void add(Vendor vendor) {
+        Optional<Vendor> existingVendor = vendorRepository.findVendorByVendorId(vendor.getVendorId());
+        if (existingVendor.isPresent()) {
+            throw new RuntimeException("Vendor already exist with id: " + vendor.getVendorId());
+        } else {
+            vendorRepository.save(vendor);
+
+        }
+
+
+
     }
 
     public Optional<Vendor> findVendorById(String vendorId) {

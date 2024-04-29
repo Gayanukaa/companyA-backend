@@ -2,6 +2,7 @@ package com.companyA.backend.InventoryManagementSystem.service;
 
 import com.companyA.backend.InventoryManagementSystem.model.*;
 import com.companyA.backend.InventoryManagementSystem.repository.StocksRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -15,11 +16,15 @@ import java.util.List;
 @Service
 public class StocksService{
 
-    @Autowired
-    private StocksRepository stocksRepository;
+    private final StocksRepository stocksRepository;
+
+    private final MongoTemplate mongoTemplate;
 
     @Autowired
-    private MongoTemplate mongoTemplate;
+    public StocksService(StocksRepository stocksRepository, MongoTemplate mongoTemplate) {
+        this.stocksRepository = stocksRepository;
+        this.mongoTemplate = mongoTemplate;
+    }
 
     public List<Stocks> allStocks() {
         return stocksRepository.findAll();
@@ -69,16 +74,8 @@ public class StocksService{
         return stocksRepository.findByName(name);
     }
 
-    public Stocks getStockByQuantity(int i) {
-        return stocksRepository.findByQuantity(i);
-    }
-
     public List<Stocks> getStockByStateOfProduct(StateOfProduct stateOfProduct) {
         return stocksRepository.findByStateOfProduct(stateOfProduct);
-    }
-
-    public List<Stocks> getStockByPrice(float price) {
-        return stocksRepository.findByPrice(price);
     }
 
     public boolean existsById(String id) {

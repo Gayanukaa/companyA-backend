@@ -14,11 +14,15 @@ import java.util.List;
 @Service
 public class SupplierService {
 
-    @Autowired
-    private SupplierRepository supplierRepository;
+    private final SupplierRepository supplierRepository;
+
+    private final MongoTemplate mongoTemplate;
 
     @Autowired
-    private MongoTemplate mongoTemplate;
+    public SupplierService(SupplierRepository supplierRepository, MongoTemplate mongoTemplate) {
+        this.supplierRepository = supplierRepository;
+        this.mongoTemplate = mongoTemplate;
+    }
 
     public Suppliers getSupplierById(String id) {
         return supplierRepository.findById(id)

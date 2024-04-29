@@ -5,6 +5,9 @@ import com.companyA.backend.FinanceSystem.repository.CreditFacilityRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Service
 public class CreditFacilityService {
     @Autowired
@@ -12,11 +15,15 @@ public class CreditFacilityService {
 
     public void createLoan(CreditFacility creditFacility){
         creditFacility.setMonthlyLoanAmount(creditFacility.monthlyLoanPayment());
+        creditFacility.setLoanStatus("Active");
+        creditFacility.setStartDate(LocalDate.now());
         creditFacilityRepo.save(creditFacility);
     }
     public void updateLoanStatus(CreditFacility creditFacility){
         creditFacility.recordPayment(creditFacility.getMonthlyLoanAmount());
         creditFacilityRepo.save(creditFacility);
     }
+
+
 
 }

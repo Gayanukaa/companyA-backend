@@ -1,5 +1,6 @@
 package com.companyA.backend.GeneralManagementSystem.controller;
 
+import com.companyA.backend.GeneralManagementSystem.model.Manager;
 import com.companyA.backend.GeneralManagementSystem.model.Requests;
 import com.companyA.backend.GeneralManagementSystem.service.RequestService;
 import jakarta.validation.Valid;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/request")
@@ -33,4 +35,10 @@ public class RequestControler {
     public ResponseEntity<List<Requests>> viewAllRequests() {
         return requestService.viewAllRequests();
     }
+
+    @PostMapping("/approve")
+    public void approveRequest(@RequestParam("id") String id) { requestService.approveRequest(id); }
+
+    @PostMapping("/reject")
+    public void rejectRequest(@RequestParam("id") String id) { requestService.rejectRequest(id); }
 }

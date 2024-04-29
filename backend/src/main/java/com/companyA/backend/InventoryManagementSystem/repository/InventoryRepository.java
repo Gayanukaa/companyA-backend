@@ -15,5 +15,4 @@ public interface InventoryRepository <T extends Inventory> extends MongoReposito
 
     List<Stocks> findByStateOfProduct(StateOfProduct stateOfProduct);
 
-    Stocks findByQuantity(int i);
 }

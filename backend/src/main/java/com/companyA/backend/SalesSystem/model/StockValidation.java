@@ -5,12 +5,14 @@ import lombok.Data;
 @Data
 public class StockValidation {
     private String itemId;
-    private boolean inStock;
+    private boolean isInStock;
     private double subTotal;
+    private int stock;
 
-    public StockValidation(String id, boolean stock, double total) {
+    public StockValidation(String id, boolean inStock,int stockCount, double total) {
         this.itemId = id;
-        this.inStock = stock;
+        this.isInStock = inStock;
+        this.stock = stockCount;
         this.subTotal = total;
     }
 }

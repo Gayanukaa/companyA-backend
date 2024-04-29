@@ -13,7 +13,8 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
-    public List<Product> allProducts(){
+
+    public List<Product> allProducts() {
         return productRepository.findAll();
     }
 
@@ -25,5 +26,14 @@ public class ProductService {
             return false;
         }
         return item.getQuantity() >= quantity;
+    }
+
+    public int getStock(String itemId) {
+        Product item = productRepository.findById(itemId).orElse(null);
+        if (item == null) {
+            // Handle error if item not found
+            return 0;
+        }
+        return item.getQuantity();
     }
 }
