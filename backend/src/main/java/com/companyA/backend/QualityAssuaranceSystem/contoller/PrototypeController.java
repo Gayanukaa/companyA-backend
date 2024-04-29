@@ -47,13 +47,13 @@ public class PrototypeController {
 
     }
 
-    @PutMapping("/inspect")    // Check Api
+    @PutMapping("/inspect")
     @ResponseStatus(HttpStatus.CREATED)
     public String testNewPrototype(@RequestParam String prototypeId,  String testId) {
         if (prototypeRepository.existsById(prototypeId)&&testRepository.existsById(testId)) {
             Prototype newPrototype = prototypeRepository.findById(prototypeId).get();
             Test newTest = testRepository.findById(testId).get();
-            return prototypeService.testPrototype(newPrototype, newTest); // prototype ekt find by id eka dla aye check krnna
+            return prototypeService.test(newPrototype, newTest);
         }
         else return "Invalid request";
     }
