@@ -2,6 +2,7 @@ package com.companyA.backend.InventoryManagementSystem.contoller;
 
 import com.companyA.backend.InventoryManagementSystem.model.Repair;
 import com.companyA.backend.InventoryManagementSystem.model.Shipment;
+import com.companyA.backend.InventoryManagementSystem.model.Stocks;
 import com.companyA.backend.InventoryManagementSystem.service.RepairService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,8 +27,8 @@ public class RepairController {
 
     //Ok
     @GetMapping("/getDamagedItems")
-    public ResponseEntity<List<String>> getIdsOfDamagedProducts() {
-        List<String> damagedProductIds = repairService.getIdsOfDamagedProducts();
+    public ResponseEntity<List<Stocks>> getDamagedProducts() {
+        List<Stocks> damagedProductIds = repairService.getDamagedProducts();
         return ResponseEntity.ok(damagedProductIds);
     }
 
