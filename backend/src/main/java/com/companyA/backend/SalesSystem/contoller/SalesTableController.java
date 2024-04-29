@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/SalesTable")
+@CrossOrigin
 public class SalesTableController {
 
     @Autowired

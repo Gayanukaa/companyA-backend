@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/existingProducts")
+@CrossOrigin
 public class ExistingProductController {
     @Autowired
     private ExistingProductService existingProductService;

@@ -44,6 +44,7 @@ public class ExistingProductService {
     public boolean findbyID(String itemID){
         Existing item = existingProductRepository.findById(itemID).orElse(null);
         if (item != null){
+            System.out.println("Not null add product");
             return true;
         }
         return false;
