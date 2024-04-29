@@ -16,7 +16,7 @@ public class Test {
     @Id
     private String testId;
 
-    @NotBlank(message = "TestName is Required")    // do we need this here?
+    @NotBlank(message = "TestName is Required")
     private String name;
 
 }

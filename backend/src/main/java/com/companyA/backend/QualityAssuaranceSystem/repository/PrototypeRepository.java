@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PrototypeRepository extends TestSubjectsRepository<Prototype> {
-    //public String testPrototype(Prototype prototype,Test test);
+
 }
