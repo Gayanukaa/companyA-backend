@@ -3,13 +3,11 @@ package com.companyA.backend.ManufacturingSystem.contoller;
 import com.companyA.backend.ManufacturingSystem.model.MaterialRequest;
 import com.companyA.backend.ManufacturingSystem.service.MaterialRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/inventory")
+@CrossOrigin
 public class MaterialRequestController {
 
     @Autowired

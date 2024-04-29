@@ -1,6 +1,7 @@
 package com.companyA.backend.FinanceSystem.contoller;
 
 
+import com.companyA.backend.FinanceSystem.model.Payment;
 import com.companyA.backend.FinanceSystem.service.IDNotFoundException;
 import com.companyA.backend.FinanceSystem.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +22,14 @@ public class PaymentController {
 
 
 
-    @PostMapping("/salary/{employeeId}")
-    public ResponseEntity<Map<String, String>> EmployeeSalaryConfirmation(@PathVariable String employeeId) {
-        paymentService.SalaryPaymentConfirmation(employeeId);
-
+    @PostMapping("/salary")
+    public ResponseEntity<Map<String, String>> EmployeeSalaryConfirmation(@RequestBody Payment payment) {
+        paymentService.SalaryPaymentConfirmation(payment);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Employee Salary is Successfully Deposited");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @ExceptionHandler
-    public ResponseEntity<String> handleEmployeeNotFoundException(IDNotFoundException ex) {
-        // Create a custom response for EmployeeNotFoundException
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
+
+
 }

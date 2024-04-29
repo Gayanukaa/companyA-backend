@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/reports")
+@CrossOrigin
 public class ManufactureReportController {
 
     private final ManufacturingReportService manufacturingReportService;

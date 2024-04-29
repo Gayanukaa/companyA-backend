@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/managers")
+@CrossOrigin
 public class ManufacturingEmployeeController {
 
     @Autowired

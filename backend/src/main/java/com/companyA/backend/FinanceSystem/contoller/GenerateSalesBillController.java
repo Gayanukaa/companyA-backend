@@ -1,9 +1,9 @@
 package com.companyA.backend.FinanceSystem.contoller;
 
-import com.companyA.backend.FinanceSystem.model.SalesRecord;
-import com.companyA.backend.FinanceSystem.repository.SalesRecordRepo;
+import com.companyA.backend.FinanceSystem.model.GenerateSalesBill;
+import com.companyA.backend.FinanceSystem.repository.GenerateSalesBillRepo;
 import com.companyA.backend.FinanceSystem.service.IDNotFoundException;
-import com.companyA.backend.FinanceSystem.service.SalesService;
+import com.companyA.backend.FinanceSystem.service.GenerateSalesBillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,25 +15,25 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class SalesController {
+public class GenerateSalesBillController {
 
     @Autowired
-    private SalesRecordRepo salesRecordRepo;
+    private GenerateSalesBillRepo generateSalesBillRepo;
 
     @Autowired
-    private SalesService salesService;
+    private GenerateSalesBillService generateSalesBillService;
 
     @GetMapping("/getOrderHistory")
-    public List<SalesRecord> orderHistory(){
+    public List<GenerateSalesBill> orderHistory(){
 
-        return salesRecordRepo.findAll();
+        return generateSalesBillRepo.findAll();
 
     }
     @GetMapping("/bill/{order_ID}")
     public String generate_bill(@PathVariable String order_ID){
-        Optional<SalesRecord> salesRecord = salesRecordRepo.findById(order_ID);
+        Optional<GenerateSalesBill> salesRecord = generateSalesBillRepo.findById(order_ID);
 
-        SalesRecord sales = null;
+        GenerateSalesBill sales = null;
 
         if(salesRecord.isPresent()){
             sales = salesRecord.get();
@@ -42,12 +42,12 @@ public class SalesController {
             // Employee not found, throw an exception
             throw new IDNotFoundException("Order ID not found: " + order_ID);
         }
-        return salesService.generateBill(sales);
+        return generateSalesBillService.generateBill(sales);
     }
 
     @PostMapping("/setOrder")
-    public void setOrder(@RequestBody SalesRecord salesRecord){
-        salesService.addRecord(salesRecord);
+    public void setOrder(@RequestBody GenerateSalesBill generateSalesBill){
+        generateSalesBillService.addRecord(generateSalesBill);
     }
 
     @ExceptionHandler

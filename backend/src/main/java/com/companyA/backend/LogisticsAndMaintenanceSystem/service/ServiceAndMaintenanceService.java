@@ -2,9 +2,11 @@ package com.companyA.backend.LogisticsAndMaintenanceSystem.service;
 
 import com.companyA.backend.LogisticsAndMaintenanceSystem.model.ServiceAndMaintenance;
 import com.companyA.backend.LogisticsAndMaintenanceSystem.model.Technician;
+import com.companyA.backend.LogisticsAndMaintenanceSystem.model.Vehicle;
 import com.companyA.backend.LogisticsAndMaintenanceSystem.repository.ServiceAndMaintenanceRepository;
 import com.companyA.backend.LogisticsAndMaintenanceSystem.repository.TechnicianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,47 +26,31 @@ public class ServiceAndMaintenanceService {
     }
 
 
-    public Optional<ServiceAndMaintenance> getServiceAndMaintenanceById(String id) {
-        return serviceAndMaintenanceRepository.findById(id);
+    public ServiceAndMaintenance getServiceAndMaintenanceById(String ServiceId) {
+        return serviceAndMaintenanceRepository.findByServiceId(ServiceId);
     }
 
     public ServiceAndMaintenance saveServiceAndMaintenance(ServiceAndMaintenance serviceAndMaintenance) {
         return serviceAndMaintenanceRepository.save(serviceAndMaintenance);
     }
 
-    public void deleteServiceAndMaintenance(String id) {
-        serviceAndMaintenanceRepository.deleteById(id);
+    public void deleteServiceAndMaintenance(String ServiceId) {
+        serviceAndMaintenanceRepository.deleteByServiceId(ServiceId);
     }
 
     // Method to assign technician to maintenance
-    public void assignTechnician(String serviceId, String technicianId) {
-        Optional<ServiceAndMaintenance> optionalServiceAndMaintenance = serviceAndMaintenanceRepository.findById(serviceId);
-        Optional<Technician> optionalTechnician = technicianRepository.findById(technicianId);
+    public String assignTechnician(String serviceId, String technicianId) {
+        ServiceAndMaintenance serviceAndMaintenance = serviceAndMaintenanceRepository.findByServiceId(serviceId);
+        Technician technician = technicianRepository.findTechnicianByTechnicianId(technicianId).orElse(null);
 
-        if (optionalServiceAndMaintenance.isPresent() && optionalTechnician.isPresent()) {
-            ServiceAndMaintenance serviceAndMaintenance = optionalServiceAndMaintenance.get();
-            Technician technician = optionalTechnician.get();
-            serviceAndMaintenance.assignTechnician(String.valueOf(technician));
+        if (serviceAndMaintenance == null || technician == null) {
+            return HttpStatus.NOT_FOUND.toString();
+        }
+        else{
+            serviceAndMaintenance.setTechnicianId(technician.getTechnicianId());
             serviceAndMaintenanceRepository.save(serviceAndMaintenance);
         }
+        return HttpStatus.OK.toString();
     }
-
-
-    // Method to generate service report
-    public void generateServiceReport(String serviceId) {
-        Optional<ServiceAndMaintenance> optionalServiceAndMaintenance = serviceAndMaintenanceRepository.findById(serviceId);
-        if (optionalServiceAndMaintenance.isPresent()) {
-            ServiceAndMaintenance serviceAndMaintenance = optionalServiceAndMaintenance.get();
-            serviceAndMaintenance.generateServiceReport();
-            serviceAndMaintenanceRepository.save(serviceAndMaintenance);
-        }
-    }
-
-    public ServiceAndMaintenance scheduleMaintenance(ServiceAndMaintenance maintenance) {
-        // Implement scheduling logic here, for example, you can set some default values
-        // or validate the maintenance before saving
-        return serviceAndMaintenanceRepository.save(maintenance);
-    }
-
 
 }

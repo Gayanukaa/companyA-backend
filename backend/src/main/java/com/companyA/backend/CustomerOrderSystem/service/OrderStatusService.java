@@ -12,8 +12,8 @@ public class OrderStatusService {
     @Autowired
     private OrderStatusRepository orderStatusRepository;
 
-    public Optional<OrderStatus> getOrderStatus(String order_ID) {
-        ObjectId objectId = new ObjectId(order_ID);
+    public Optional<OrderStatus> getOrderStatus(String orderID) {
+        ObjectId objectId = new ObjectId(orderID);
         return orderStatusRepository.findById(objectId);
     }
 
