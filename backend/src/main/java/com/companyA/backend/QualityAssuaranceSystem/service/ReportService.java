@@ -35,22 +35,22 @@ public class ReportService {
         return reportRepository.findById(id);
     }
 
-    public String generatePrototypeReport() {
+    public Report generatePrototypeReport() {
         List<Prototype> prototypes = prototypeRepository.findAll();
         return generateReport(prototypes, "Prototype");
     }
 
-    public String generateSampleReport() {
+    public Report generateSampleReport() {
         List<Sample> samples = sampleRepository.findAll();
         return generateReport(samples, "Sample");
     }
 
-    public String generateReport(List<? extends TestSubjects> subjects, String type) {
+    public Report generateReport(List<? extends TestSubjects> subjects, String type) {
         StringBuilder reportContent = new StringBuilder();
 
         for (TestSubjects subject : subjects) {
             reportContent.append(type).append(" ID: ").append(subject.getId()).append("\n");
-            reportContent.append("Test Name: ").append(subject.getTestName() != null ? subject.getTestName() : "Unknown").append("\n");
+            reportContent.append("Test Name: ").append(subject.getExpectedTest() != null ? subject.getExpectedTest() : "Unknown").append("\n");
             reportContent.append("Received Date: ").append(subject.getReceivedDate() != null ? subject.getReceivedDate() : "Unknown").append("\n");
             reportContent.append("Test Status: ").append(subject.getTestStatus() != null ? subject.getTestStatus() : "Unknown").append("\n");
             reportContent.append("\n");
@@ -65,15 +65,22 @@ public class ReportService {
         String formattedDateTime = now.format(formatter);
         report.setGeneratedDateAndTime(formattedDateTime);
         report.setReportContent(reportContent.toString());
-        reportRepository.save(report);
+        return reportRepository.save(report);
 
-        return "Report generated and saved successfully! Report ID: " + reportId;
+        //return "Report generated and saved successfully! Report ID: " + reportId;
     }
 
 
     public String deleteReportById(String id){
-        reportRepository.deleteById(id);
-        return id +" report successfully deleted";
+//        reportRepository.deleteById(id);
+//        return id +" report successfully deleted";
+        Optional<Report> report = reportRepository.findById(id);
+        if (report.isPresent()) {
+            reportRepository.deleteById(id);
+            return "Report with ID " + id + " successfully deleted";
+        } else {
+            return "Report with ID " + id + " not found";
+        }
     }
 
 }

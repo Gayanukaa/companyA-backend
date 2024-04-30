@@ -26,8 +26,13 @@ public class TestService {
     }
 
     public String deleteTestById(String id){
-        testRepository.deleteById(id);
-        return id +" test successfully deleted";
+        Optional<Test> test = testRepository.findById(id);
+        if (test.isPresent()) {
+            testRepository.deleteById(id);
+            return "Test with ID " + id + " successfully deleted";
+        } else {
+            return "Test with ID " + id + " not found";
+        }
     }
 
 }

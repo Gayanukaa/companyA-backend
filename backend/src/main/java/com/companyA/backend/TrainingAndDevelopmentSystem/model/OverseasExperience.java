@@ -11,6 +11,8 @@ public class OverseasExperience extends Training{
     private String Details;
     private Long oseId;
 
+    // Here, I have implemented getter and setter methods instead of lombok annotations
+
     public String getCompanyName() {
         return companyName;
     }

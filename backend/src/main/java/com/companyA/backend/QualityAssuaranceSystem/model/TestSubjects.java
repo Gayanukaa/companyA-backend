@@ -14,11 +14,11 @@ public abstract class TestSubjects {
     @Id
     private String id;
 
-    @NotBlank(message = "Name of the expected test is needed")    // do we need this here?
-    private String testName;
+    @NotBlank(message = "Name of the expected test is needed")
+    private String expectedTest;
 
     @NotBlank(message = "Received Date is Required in 'DD/MM/YYYY' format")
-    private String receivedDate;  //remove static to check with report generation
+    private String receivedDate;
 
     private String testStatus = "Received" ;
 }

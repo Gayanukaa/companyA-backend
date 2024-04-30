@@ -11,11 +11,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
+@CrossOrigin
 public class ProductController {
     @Autowired
     private ProductService productService;
     @GetMapping
-    public ResponseEntity<List<Product>>getAllProduclts(){
+    public ResponseEntity<List<Product>>getAllProducts(){
         return new ResponseEntity<List<Product>>(productService.allProducts(), HttpStatus.OK);
     }
 
@@ -32,23 +33,24 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/validateStock-Muliple")
+    @PostMapping("/validateStock-Multiple")
     public ResponseEntity<List<StockValidation>> validateStock(@RequestBody List<CartItem> cartItems) {
         List<StockValidation> validationResults = new ArrayList<>();
-        double subTotal = 0;
+        System.out.println("In the product controller 1");
         for (CartItem item : cartItems) {
+            double subTotal = 0;
             boolean hasStock = productService.hasSufficientStock(item.getItemId(), item.getQuantity());
-            validationResults.add(new StockValidation(item.getItemId(), hasStock));
+            int stock = productService.getStock(item.getItemId());
+
+            System.out.println("In the product controller");
             if (hasStock){
-                System.out.println("In the if clasue");
+                System.out.println("In the if section product controller");
                 System.out.println(item.getQuantity());
                 System.out.println(item.getUnitPrice());
-                subTotal = subTotal + item.getQuantity()*item.getUnitPrice();
+                subTotal =  item.getQuantity()*item.getUnitPrice();
             }
+            validationResults.add(new StockValidation(item.getItemId(), hasStock, stock, subTotal ));
         }
-        String totalPriceString = String.valueOf(subTotal);
-        System.out.println(totalPriceString);
-        validationResults.add(new StockValidation(totalPriceString, true));
         return ResponseEntity.ok(validationResults);
     }
 

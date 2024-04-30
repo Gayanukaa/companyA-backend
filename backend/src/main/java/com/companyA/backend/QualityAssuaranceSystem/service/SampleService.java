@@ -39,22 +39,26 @@ public class SampleService {
         }
 
         else {
+            sample.setTestStatus("Received");
+            sample.setAllocatedTest(null);
             sampleRepository.save(sample);
             return "sample added Successfully";
         }
     }
 
     public Sample addSample(Sample sample) {
+        sample.setTestStatus("Received");
+        sample.setAllocatedTest(null);
         return sampleRepository.save(sample);
     }
 
-    public String testSample(Sample sample, Test test){
+    public String test(Sample sample, Test test){
         String tempid = sample.getId();
         String temptestid = test.getTestId();
-        Optional<Sample> AvalilablePrototype = sampleRepository.findById(tempid);
+        Optional<Sample> AvalilableSample = sampleRepository.findById(tempid);
         Optional<Test> AvalilableTest = testRepository.findById(temptestid);
-        if (AvalilablePrototype.isPresent()&&AvalilableTest.isPresent()) {
-            String currentStatus = AvalilablePrototype.get().getTestStatus();
+        if (AvalilableSample.isPresent()&&AvalilableTest.isPresent()) {
+            String currentStatus = AvalilableSample.get().getTestStatus();
             if (currentStatus.equals("Assigened")) {
                 sample.setAllocatedTest(test);
                 sample.setTestStatus("Test initiated");
@@ -75,7 +79,7 @@ public class SampleService {
         if(outdatedSample != null) {
             if (!outdatedSample.getTestStatus().equals("Test initiated")) {
                 sampleRepository.deleteById(sampleId);
-                outdatedSample.setTestName(newTestName);
+                outdatedSample.setExpectedTest(newTestName);
                 sampleRepository.save(outdatedSample);
                 return "Test method successfully changed";
             }
@@ -84,9 +88,18 @@ public class SampleService {
         else return "invalid request";
     }
 
-    public String deleteSampleById(String id){
-        sampleRepository.deleteById(id);
-        return id +" sample successfully deleted";
+    public String deleteById(String id){
+        Optional<Sample> sample = sampleRepository.findById(id);
+        if (sample.isPresent()) {
+            if (sample.get().getTestStatus().equals("Received")) {
+                sampleRepository.deleteById(id);
+                return "Sample with ID " + id + " successfully deleted";
+            } else {
+                return "Sample with ID " + id + " could not be deleted at the moment";
+            }
+        } else {
+            return "Sample with ID " + id + " not found";
+        }
     }
 
 }

@@ -15,10 +15,15 @@ import java.util.List;
 @CrossOrigin
 public class InventoryManagerController {
 
+    private final InventoryManagerService inventoryManagerService;
+
+    private final GenerateReportService generateReportService;
+
     @Autowired
-    private InventoryManagerService inventoryManagerService;
-    @Autowired
-    private GenerateReportService generateReportService;
+    public InventoryManagerController(InventoryManagerService inventoryManagerService, GenerateReportService generateReportService) {
+        this.inventoryManagerService = inventoryManagerService;
+        this.generateReportService = generateReportService;
+    }
 
     //Register an inventory manager
     @PostMapping("/registerManager")

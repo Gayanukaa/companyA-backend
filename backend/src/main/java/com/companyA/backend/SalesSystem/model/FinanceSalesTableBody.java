@@ -1,4 +1,4 @@
-package com.companyA.backend.FinanceSystem.model;
+package com.companyA.backend.SalesSystem.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,9 +12,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "sales")
-public class SalesRecord {
+public class FinanceSalesTableBody {
     @Id
-    private int order_ID;
+    private String _id;
     private String order_date;
     private double order_amount;
     private List<String> components;

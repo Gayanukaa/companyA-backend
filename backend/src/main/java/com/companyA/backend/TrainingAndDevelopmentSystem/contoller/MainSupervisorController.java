@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping
+@CrossOrigin
 public class MainSupervisorController {
     @Autowired
     private MainSupervisorRepository mainSupervisorRepository;
@@ -65,5 +66,11 @@ public class MainSupervisorController {
         }
         mainSupervisorRepository.deleteById(id);
         return "Main Supervisor with "+id+" has been deleted successfully";
+    }
+
+    //takeActionsManually method implement here
+    @GetMapping("/api/tms/main-supervisor/take-manual-actions")
+    public String takeActionsManually() {
+        return "I prefer to take actions manually, ensuring a personal touch and precision in every step. ";
     }
 }

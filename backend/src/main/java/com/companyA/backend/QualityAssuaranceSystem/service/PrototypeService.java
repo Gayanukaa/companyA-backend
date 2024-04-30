@@ -23,9 +23,6 @@ public class PrototypeService {
     @Autowired
     private TestRepository testRepository;
 
-    @Autowired
-    private ReportRepository reportRepository;
-
     public List<Prototype> getAllPrototypes() {
         return prototypeRepository.findAll();
     }
@@ -42,16 +39,20 @@ public class PrototypeService {
         }
 
         else {
+            prototype.setTestStatus("Received");
+            prototype.setAllocatedTest(null);
             prototypeRepository.save(prototype);
             return "Prototype added Successfully";
         }
     }
 
     public Prototype addPrototype(Prototype prototype) {
+        prototype.setTestStatus("Received");
+        prototype.setAllocatedTest(null);
         return prototypeRepository.save(prototype);
     }
 
-    public String testPrototype(Prototype prototype,Test test){
+    public String test(Prototype prototype,Test test){
         String tempid = prototype.getId();
         String temptestid = test.getTestId();
         Optional<Prototype> AvalilablePrototype = prototypeRepository.findById(tempid);
@@ -79,7 +80,7 @@ public class PrototypeService {
         if (outdatedPrototype != null) {
             if (!outdatedPrototype.getTestStatus().equals("Test initiated")) {
                 prototypeRepository.deleteById(prototypeId);
-                outdatedPrototype.setTestName(newTestName);
+                outdatedPrototype.setExpectedTest(newTestName);
                 prototypeRepository.save(outdatedPrototype);
                 return "Test method successfully changed";
             }
@@ -88,9 +89,18 @@ public class PrototypeService {
         else return "invalid request";
     }
 
-    public String deletePrototypeById(String id){
-        prototypeRepository.deleteById(id);
-        return id +" prototype successfully deleted";
+    public String deleteById(String id){
+        Optional<Prototype> prototype = prototypeRepository.findById(id);
+        if (prototype.isPresent()) {
+            if (prototype.get().getTestStatus().equals("Received")) {
+                prototypeRepository.deleteById(id);
+                return "Prototype with ID " + id + " successfully deleted";
+            } else {
+                return "Prototype with ID " + id + " could not be deleted at the moment";
+            }
+        } else {
+            return "Prototype with ID " + id + " not found";
+        }
     }
 }
 

@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping
+@CrossOrigin
 public class ProductDevelopmentController {
     @Autowired
     private ProductDevelopmentRepository productDevelopmentRepository;
@@ -25,15 +26,16 @@ public class ProductDevelopmentController {
     ProductDevelopment newProductDevelopment(@RequestBody ProductDevelopment newProductDevelopment){
         return productDevelopmentRepository.save(newProductDevelopment);
     }
-
+    //viewDevelopmentStage method implement here
     @GetMapping("/api/tms/product-development/{id}")
-    ProductDevelopment getProgress(@PathVariable String id) {
+    ProductDevelopment viewDevelopmentStage(@PathVariable String id) {
         return productDevelopmentRepository.findById(id)
                 .orElseThrow(()->new UserNotFoundException(id));
     }
 
+    //updateDevelopmentStage method implement here
     @PutMapping("/api/tms/product-development/{id}")
-    public ResponseEntity<ProductDevelopment> updateStage(@PathVariable String id, @RequestBody ProductDevelopment updatedProductDevelopment) {
+    public ResponseEntity<ProductDevelopment> updateDevelopmentStage(@PathVariable String id, @RequestBody ProductDevelopment updatedProductDevelopment) {
         Optional<ProductDevelopment> existingProductDevelopmentOptional = productDevelopmentRepository.findById(id);
 
         if (existingProductDevelopmentOptional.isEmpty()) {
@@ -50,5 +52,16 @@ public class ProductDevelopmentController {
         ProductDevelopment savedProductDevelopment = productDevelopmentRepository.save(existingProductDevelopment);
 
         return ResponseEntity.ok(savedProductDevelopment);
+    }
+    //updateSystem method implement here
+    @GetMapping("/api/tms/product-development/update-system")
+    public String updateSystem(@RequestBody String year) {
+        return "System updates successfully for year "+year;
+    }
+
+    //improveProcess method implement here
+    @GetMapping("/api/tms/product-development/improve-process")
+    public String improveProcess() {
+        return "Our process development is slow. It should be improved.";
     }
 }

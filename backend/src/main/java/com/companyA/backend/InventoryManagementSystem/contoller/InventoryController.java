@@ -3,8 +3,10 @@ package com.companyA.backend.InventoryManagementSystem.contoller;
 import com.companyA.backend.InventoryManagementSystem.model.StateOfProduct;
 import com.companyA.backend.InventoryManagementSystem.model.StockAlert;
 import com.companyA.backend.InventoryManagementSystem.model.Stocks;
+import com.companyA.backend.InventoryManagementSystem.model.Supplies;
 import com.companyA.backend.InventoryManagementSystem.service.StockAlertService;
 import com.companyA.backend.InventoryManagementSystem.service.StocksService;
+import com.companyA.backend.InventoryManagementSystem.service.SuppliesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,36 +16,52 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/stock")
+@RequestMapping("/api/v1/inventory")
 @CrossOrigin
-public class StockController{
+public class InventoryController {
 
     private final StocksService stocksService;
 
+    private final SuppliesService suppliesService;
+
     private final StockAlertService stockAlertService;
 
+    //Dependency Injection
     @Autowired
-    public StockController(StocksService stocksService, StockAlertService stockAlertService) {
+    public InventoryController(StocksService stocksService, SuppliesService suppliesService, StockAlertService stockAlertService) {
         this.stocksService = stocksService;
+        this.suppliesService = suppliesService;
         this.stockAlertService = stockAlertService;
     }
 
+    //Retrieves details of all stocks available in the inventory
     @GetMapping
     public ResponseEntity<List<Stocks>> getAllStocks() {
         return new ResponseEntity<List<Stocks>>(stocksService.allStocks(), HttpStatus.OK);
     }
 
+    //Add new stock
     @PostMapping("/addStock")
-    public ResponseEntity<Stocks> addStockInventory(@RequestBody Stocks stocks) {
+    public ResponseEntity<Stocks> addToInventory(@RequestBody Stocks stocks) {
         return new ResponseEntity<Stocks>(stocksService.addStocks(stocks),HttpStatus.CREATED);
     }
 
-    //Delete stock by id
-    @DeleteMapping("/deleteStock/{stockId}")
-    public ResponseEntity<String> deleteStock(@PathVariable String stockId) {
-        return new ResponseEntity<String>(stocksService.deleteStock(stockId),HttpStatus.OK);
+    //Add new supplies
+    @PostMapping("/addSupplies")
+    public ResponseEntity<Supplies> addToInventory(@RequestBody Supplies supplies) {
+        return new ResponseEntity<Supplies>(suppliesService.addSupplies(supplies),HttpStatus.CREATED);
     }
 
+    //Remove an inventory item
+    @DeleteMapping("/deleteInventory/{itemId}")
+    public ResponseEntity<String> deleteFromInventory(@PathVariable String itemId) {
+        if(stocksService.existsById(itemId)){
+            return new ResponseEntity<String>(stocksService.deleteStock(itemId),HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(HttpStatus.NOT_FOUND.toString(),HttpStatus.NOT_FOUND);
+    }
+
+    //Get stock details
     @GetMapping("/{attribute}/{value}")
     public ResponseEntity<Stocks> getStockByAttribute(@PathVariable String attribute, @PathVariable String value) {
         Stocks stock = null;
@@ -54,8 +72,6 @@ public class StockController{
             case "name":
                 stock = stocksService.getStockByName(value);
                 break;
-            case "quantity":
-                stock = stocksService.getStockByQuantity(Integer.parseInt(value));
             default:
                 return ResponseEntity.badRequest().build(); // Return a 400 status code for unknown attributes
         }
@@ -66,9 +82,11 @@ public class StockController{
         }
     }
 
-    @PutMapping("/{id}/{attribute}/{value}")
-    public ResponseEntity<Stocks> updateStockByAttribute(@PathVariable String id, @PathVariable String attribute, @PathVariable String value) {
-        Stocks stock = stocksService.getStockById(id);
+    // Retrieves a specific inventory item based on the provided attribute(id, name) and its value.
+    @PutMapping("/stocks/{stockId}/{attribute}/{value}")
+    public ResponseEntity<Stocks> updateStockByAttribute(@PathVariable String stockId, @PathVariable String attribute, @PathVariable String value) {
+        //find if stock or supplies
+        Stocks stock = stocksService.getStockById(stockId);
         if (stock != null) {
             stocksService.updateStockByAttribute(stock, attribute, value);
             return ResponseEntity.ok(stock);
@@ -77,17 +95,14 @@ public class StockController{
         }
     }
 
-    @GetMapping("/stateOfproduct/{value}")
+    //Updates a specific stocks item based on the provided attribute and its value.
+    @GetMapping("/stateOfProduct/{value}")
     public ResponseEntity <List<Stocks>> getStockByStateOfProduct(@PathVariable String value) {
         StateOfProduct valueNew = StateOfProduct.valueOf(value);
         return new ResponseEntity<List<Stocks>>(stocksService.getStockByStateOfProduct(valueNew), HttpStatus.OK);
     }
 
-    @GetMapping("/price/{value}")
-    public ResponseEntity <List<Stocks>> getStockByPrice(@PathVariable float value) {
-        return new ResponseEntity<List<Stocks>>(stocksService.getStockByPrice(value), HttpStatus.OK);
-    }
-
+    //	Retrieve all details of items that belong to a selected state of the product.
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/updateStock")
     public void update(@RequestBody Stocks stock) {

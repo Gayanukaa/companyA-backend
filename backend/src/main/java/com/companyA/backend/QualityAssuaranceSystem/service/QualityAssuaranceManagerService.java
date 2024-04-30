@@ -67,8 +67,13 @@ public class QualityAssuaranceManagerService {
         else return "Invalid Request";
     }
 
-    public String deleteQAManagerById(String id){
-        qualityAssuaranceManagerRepository.deleteById(id);
-        return id +" QA manager removed";
+    public String deleteQAManagerById(String id) {
+        Optional<QualityAssuaranceManager> qaManager = qualityAssuaranceManagerRepository.findById(id);
+        if (qaManager.isPresent()) {
+            qualityAssuaranceManagerRepository.deleteById(id);
+            return "QA manager with ID " + id + " successfully removed";
+        } else {
+            return "QA manager with ID " + id + " not found";
+        }
     }
 }

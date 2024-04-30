@@ -11,17 +11,27 @@ import java.util.List;
 @Service
 public class WarehouseService {
 
-    @Autowired
-    private WarehouseRepository warehouseRepository;
+    private final WarehouseRepository warehouseRepository;
 
     @Autowired
-    private MongoTemplate mongoTemplate;
+    public WarehouseService(WarehouseRepository warehouseRepository) {
+        this.warehouseRepository = warehouseRepository;
+    }
 
     public List<Warehouse> allWarehouses() {
         return warehouseRepository.findAll();
     }
 
     public Warehouse addWarehouse(Warehouse warehouse) {
+        if(!warehouseRepository.findAll().isEmpty()) {
+            String lastId = warehouseRepository.findAll().get(warehouseRepository.findAll().size()-1).getWarehouseId();
+            int id = Integer.parseInt(lastId.substring(1));
+            id++;
+            warehouse.setWarehouseId("W"+String.format("%04d", id));
+        }
+        else {
+            warehouse.setWarehouseId("I0001");
+        }
         return warehouseRepository.save(warehouse);
     }
 

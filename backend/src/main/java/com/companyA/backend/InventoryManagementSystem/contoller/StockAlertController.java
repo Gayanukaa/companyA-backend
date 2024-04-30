@@ -15,8 +15,12 @@ import java.util.List;
 @CrossOrigin
 public class StockAlertController {
 
+    private final StockAlertService stockAlertService;
+
     @Autowired
-    private StockAlertService stockAlertService;
+    public StockAlertController(StockAlertService stockAlertService) {
+        this.stockAlertService = stockAlertService;
+    }
 
     //view all stock alerts
     @GetMapping
@@ -24,6 +28,7 @@ public class StockAlertController {
         return new ResponseEntity<List<StockAlert>>(stockAlertService.allStockAlerts(), HttpStatus.OK);
     }
 
+    //Remove a stock alert
     @DeleteMapping("/deleteStockAlert/{stockAlertId}")
     public ResponseEntity<String> deleteStockAlert(@PathVariable String stockAlertId) {
         return new ResponseEntity<String>(stockAlertService.deleteStockAlert(stockAlertId),HttpStatus.OK);

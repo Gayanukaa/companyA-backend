@@ -2,21 +2,23 @@ package com.companyA.backend.ManufacturingSystem.contoller;
 
 import com.companyA.backend.ManufacturingSystem.model.OrderStatus;
 import com.companyA.backend.ManufacturingSystem.service.ManufacturingOrderStatusService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/production/task")
+@CrossOrigin
 public class ManufacturingOrderStatusController {
-
+    @Autowired
     private ManufacturingOrderStatusService manufacturingOrderStatusService;
 
     // Endpoint to retrieve order status by order ID
-    @GetMapping("/updateGetOrderStatus")
-    public ResponseEntity<Object> getOrderStatus(@RequestParam("order_ID") String order_ID) {
+    @GetMapping("/GetOrderStatus")
+    public ResponseEntity<Object> getOrderStatus(@RequestParam("orderID") String orderID) {
         // Call the service to get order status
-        OrderStatus response = manufacturingOrderStatusService.getOrderStatus(order_ID);
+        OrderStatus response = manufacturingOrderStatusService.getOrderStatus(orderID);
         // Check if order status is null
         if (response == null) {
             // Return not found response if order status is null
@@ -27,10 +29,10 @@ public class ManufacturingOrderStatusController {
     }
 
     // Endpoint to update order status by order ID
-    @PostMapping("/updatePostOrderStatus")
-    public ResponseEntity<String> updateOrderStatus(@RequestParam("order_ID") String order_ID, @RequestParam("status") String status) {
+    @PostMapping("/updateOrderStatus")
+    public ResponseEntity<String> updateOrderStatus(@RequestParam("orderID") String orderID, @RequestParam("status") String status) {
         // Call the service to update order status
-        OrderStatus response = manufacturingOrderStatusService.updateOrderStatus(order_ID, status);
+        OrderStatus response = manufacturingOrderStatusService.updateOrderStatus(orderID, status);
         // Check if order status is null
         if (response == null) {
             // Return not found response if order status is null

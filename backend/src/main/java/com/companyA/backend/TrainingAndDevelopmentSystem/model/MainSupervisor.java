@@ -13,25 +13,13 @@ public class MainSupervisor {
     private String mSupervisorEmail;
     private String mPassword;
 
+    // Here, I have implemented getter and setter methods instead of lombok annotations
     public String getmSupervisorEmail() {
         return mSupervisorEmail;
     }
 
     public void setmSupervisorEmail(String mSupervisorEmail) {
         this.mSupervisorEmail = mSupervisorEmail;
-    }
-
-    public void viewDevelopmentStage(int projectCode, int stage){
-        System.out.println(projectCode+" ,"+stage+" monitored successfully");
-    }
-
-    public void takeActionsManually(int projectCode,boolean check){
-        if (check){
-            System.out.println(projectCode+" manually checked complete");
-        }
-        else{
-            System.out.println("waiting for check");
-        }
     }
 
     public String getId() {
@@ -49,7 +37,6 @@ public class MainSupervisor {
     public void setmSupervisorId(int mSupervisorId) {
         this.mSupervisorId = mSupervisorId;
     }
-
 
 
     public String getmPassword() {

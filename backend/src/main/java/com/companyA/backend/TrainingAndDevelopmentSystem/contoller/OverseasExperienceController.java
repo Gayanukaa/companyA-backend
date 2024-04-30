@@ -6,12 +6,15 @@ import com.companyA.backend.TrainingAndDevelopmentSystem.model.Course;
 import com.companyA.backend.TrainingAndDevelopmentSystem.model.OverseasExperience;
 import com.companyA.backend.TrainingAndDevelopmentSystem.repository.OverseasExperienceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping
+@CrossOrigin
 public class OverseasExperienceController {
     @Autowired
     private OverseasExperienceRepository overseasExperienceRepository;
@@ -52,5 +55,25 @@ public class OverseasExperienceController {
                     user.setCost(newUser.getCost());
                     return overseasExperienceRepository.save(user);
                 }).orElseThrow(()->new UserNotFoundException(id));
+    }
+
+    //getExperienceDetails method implement here
+    @GetMapping("/api/tms/overseas/{id}/details")
+    public ResponseEntity<String> getExperienceDetails(@PathVariable String id) {
+        // Find overseas experience by ID
+        OverseasExperience experience = overseasExperienceRepository.findById(id).orElse(null);
+
+        // Check if the experience exists
+        if (experience == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Incorrect ID: " + id);
+        }
+
+        // Check if details are not null
+        if (experience.getDetails() == null) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Details not found for ID: " + id);
+        }
+
+        // Return details string
+        return ResponseEntity.ok(experience.getDetails());
     }
 }

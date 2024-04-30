@@ -31,7 +31,7 @@ public class ManagerController {
 
     @PostMapping("/updateById")
     public String updateManager(@RequestBody Manager manager){
-        return managerService.updatemanagerById(manager);
+        return managerService.updateManagerById(manager);
     }
 
     @GetMapping("/viewAllManagers")

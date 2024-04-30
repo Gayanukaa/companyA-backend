@@ -37,12 +37,24 @@ public class ManagerService {
         return managerRepository.findById(managerId);
     }
 
-    public String updatemanagerById(Manager manager) {
+    public String updateManagerById(Manager manager) {
         String managerId = manager.getId();
-        managerRepository.deleteById(managerId);
-        managerRepository.save(manager);
-        return "Manager updated successfully.";
+        Optional<Manager> availableManager = managerRepository.findById(managerId);
+
+        if (availableManager.isPresent()) {
+            Manager existingManager = availableManager.get();
+            String password = existingManager.getPassword();
+
+            managerRepository.deleteById(managerId);
+            manager.setPassword(password);
+            managerRepository.save(manager);
+
+            return "Manager updated successfully.";
+        } else {
+            return "Manager with ID " + managerId + " not found.";
+        }
     }
+
 
     public List<ManagerDTO> viewAllManagers(){
         List<Manager> managers = managerRepository.findAll();

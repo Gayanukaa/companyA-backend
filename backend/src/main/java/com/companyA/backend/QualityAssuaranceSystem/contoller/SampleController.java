@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/samples")
+@CrossOrigin
 public class SampleController {
 
     @Autowired
@@ -47,26 +48,26 @@ public class SampleController {
 
     }
 
-    @PutMapping("/inspect")    // Check Api
+    @PutMapping("/inspect")
     @ResponseStatus(HttpStatus.CREATED)
     public String testSample(@RequestParam String sampleId,  String testId) {
         if (sampleRepository.existsById(sampleId)&&testRepository.existsById(testId)) {
             Sample newSample = sampleRepository.findById(sampleId).get();
             Test newTest = testRepository.findById(testId).get();
-            return sampleService.testSample(newSample, newTest); // prototype ekt find by id eka dla aye check krnna
+            return sampleService.test(newSample, newTest);
         }
         else return "Invalid request";
     }
 
     @PutMapping ("/changeTest")
     @ResponseStatus(HttpStatus.CREATED)
-    public String updateTestMethodById(@RequestParam String prototypeId,String newTestName) {
-        return sampleService.updateTestMethodById(prototypeId, newTestName);
+    public String updateTestMethodById(@RequestParam String sampleId,String newTestName) {
+        return sampleService.updateTestMethodById(sampleId, newTestName);
     }
 
     @DeleteMapping("/delete/{id}")
     public String deleteSample(@PathVariable String id){
-        return sampleService.deleteSampleById(id);
+        return sampleService.deleteById(id);
     }
 
 }

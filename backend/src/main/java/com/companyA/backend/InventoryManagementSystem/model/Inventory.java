@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
 @NoArgsConstructor
@@ -16,35 +17,25 @@ public abstract class Inventory {
 
     @Id
     private String id;
-    @NotBlank
+    @NotBlank (message = "Warehouse ID is Required")
     private String warehouseId;
-    @NotBlank
+    @NotBlank (message = "Name is Required")
     private String name;
-    @NotBlank
+    @NotBlank (message = "Quantity is Required")
     private int quantity;
-    @NotBlank
+    @NotBlank (message = "Threshold Quantity is Required")
     private int thresholdQuantity;
-    @NotBlank
+    @NotBlank (message = "Weight is Required")
     private int weight;
-    @NotBlank
+    @NotBlank (message = "Size is Required")
     private int size;
-    @NotBlank
+    @NotBlank (message = "Reorder Quantity is Required")
     private int reorderQuantity;
-    @NotBlank
+    @NotBlank (message = "State of Product is Required")
     private StateOfProduct stateOfProduct;
-    @NotBlank
-    private InventoryType inventoryType;
+    @NotBlank (message = "Inventory Type is Required")
+    private  InventoryType inventoryType;
+    @NotBlank (message = "Price is Required")
+    private float price;
+
 }
-
-/*
-id
-warehouseId
-name
-quantity
-weight
-size
-reorderQuantity
-stateOfProduct
-inventoryType
-*/
-

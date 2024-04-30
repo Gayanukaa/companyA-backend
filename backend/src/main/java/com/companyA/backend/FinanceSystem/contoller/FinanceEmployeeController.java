@@ -14,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class FinanceEmployeeController {
     @Autowired
     private FinanceEmployeeService financeEmployeeService;
@@ -23,7 +24,7 @@ public class FinanceEmployeeController {
         return financeEmployeeService.getAllEmployee();
     }
     @GetMapping("/getEmployeeSalary/{employeeId}")
-    public EmployeeSalary getEmployeeSalary(@PathVariable int employeeId) {
+    public EmployeeSalary getEmployeeSalary(@PathVariable String employeeId) {
         return financeEmployeeService.getEmployee(employeeId);
     }
 

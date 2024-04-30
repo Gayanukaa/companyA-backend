@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/tests")
+@CrossOrigin
 public class TestController {
 
     @Autowired
@@ -18,7 +19,7 @@ public class TestController {
 
     @PostMapping("/addTest")
     @ResponseStatus(HttpStatus.CREATED)
-    public Test addSample(@RequestBody Test test) {
+    public Test addTest(@RequestBody Test test) {
         return testService.addTest(test);
     }
 

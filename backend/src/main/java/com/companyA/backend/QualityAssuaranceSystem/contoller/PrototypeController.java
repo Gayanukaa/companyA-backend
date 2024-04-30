@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/prototypes")
+@CrossOrigin
 public class PrototypeController {
 
     @Autowired
@@ -46,13 +47,13 @@ public class PrototypeController {
 
     }
 
-    @PutMapping("/inspect")    // Check Api
+    @PutMapping("/inspect")
     @ResponseStatus(HttpStatus.CREATED)
     public String testNewPrototype(@RequestParam String prototypeId,  String testId) {
         if (prototypeRepository.existsById(prototypeId)&&testRepository.existsById(testId)) {
             Prototype newPrototype = prototypeRepository.findById(prototypeId).get();
             Test newTest = testRepository.findById(testId).get();
-            return prototypeService.testPrototype(newPrototype, newTest); // prototype ekt find by id eka dla aye check krnna
+            return prototypeService.test(newPrototype, newTest);
         }
         else return "Invalid request";
     }
@@ -65,6 +66,6 @@ public class PrototypeController {
 
     @DeleteMapping("/delete/{id}")
     public String deletePrototype(@PathVariable String id){
-        return prototypeService.deletePrototypeById(id);
+        return prototypeService.deleteById(id);
     }
 }
