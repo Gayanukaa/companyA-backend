@@ -15,4 +15,5 @@ public class OrderStatus {
     @Id
     private ObjectId id;
     private String status;
+    private String orderID;
 }
