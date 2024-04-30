@@ -29,7 +29,8 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: backend
-          path: '${{ github.workspace }}/target/*.jar'
+          #path: '${{ github.workspace }}/target/*.jar'
+          path: 'backend/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
