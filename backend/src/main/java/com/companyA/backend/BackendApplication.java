@@ -43,8 +43,8 @@ public class BackendApplication {
 				"<li>Quality Assurance System </li>" +
 				"<li>Sales System </li>" +
 				"<li>Training and Development System </li>" +
-				"</ol>" +
-				"<b> Overview</b> <br>" +
+				"</ol>";
+				/*"<b> Overview</b> <br>" +
 				"<p>" +
 				"Developed with the software and tools below.<br>" +
 				"</p>" +
@@ -62,7 +62,7 @@ public class BackendApplication {
 				"<b>License</b><br>" +
 				"<p>" +
 				" Apache License 2.0 <img src=\"https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat&logo=Apache&logoColor=white\" alt=\"Apache License 2.0\">" +
-				"</p>";
+				"</p>";*/
 		return meesage;
 	}
 }
