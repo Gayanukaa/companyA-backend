@@ -23,27 +23,41 @@ public class BackendApplication {
 
 	@GetMapping("/")
 	public String apiRoot(){
-		String meesage = "<b>Welcome to the <a href ='https://github.com/Gayanukaa/companyA-backend'>Company A Backend</a></b>" +
+		String message = "<b>Welcome to the <a href ='https://github.com/Gayanukaa/companyA-backend'>Company A Backend</a></b>" +
 				"<br>" +
 				"<br>" +
-				"This is project hosts the backend of the electronic warehouse management system with the use of Spring Boot and MongoDB database to create a full-stack web application. The application allows users to manage the company under 10 different subsystems. "+
-				"The backend is hosted on a apache server using app service. The application is licensed under the Apache License 2.0. For more information, please visit the GitHub repository." +
+				"This is project hosts the backend of a business process management of a factory which manufactures and assembles electronic equipment. "+
+				"The application allows users to manage the company under 10 different subsystems. "+
 				"<br>" +
 				"<br>" +
 				"The following are the 10 subsystems of the Company A Backend:" +
 				"<br>" +
 				"<ol>" +
-				"<li>Inventory Management System </li>" + //: <a href='/api/v1/inventory'>/api/v1/inventory</a>"
+				"<li>Supplies,Stocks,Inventory Management System </li>" + //: <a href='/api/v1/inventory'>/api/v1/inventory</a>"
 				"<li>General Management System </li>" +
-				"<li>Customer Order System </li>" +
-				"<li>Finance System </li>" +
-				"<li>Human Resource System </li>" +
-				"<li>Logistics and Maintenance System </li>" +
-				"<li>Manufacturing System </li>" +
-				"<li>Quality Assurance System </li>" +
-				"<li>Sales System </li>" +
-				"<li>Training and Development System </li>" +
-				"</ol>";
+				"<li>Customer Order Management System </li>" +
+				"<li>Finance, Payroll and Risk Assessment System </li>" +
+				"<li>Human Resource Management System </li>" +
+				"<li>Logistics, Vehicles, Machinery, Services and Maintenance System </li>" +
+				"<li>Manufacturing and Assembly Line Planning and Management System </li>" +
+				"<li>Quality Assurance and Quality Control System </li>" +
+				"<li>Sales and Marketing System </li>" +
+				"<li>Training (Skills Development), Prototyping, Product/Process Development and Simulation System </li>" +
+				"</ol>"+
+				"<b> Overview</b> <br>" +
+				"<p>" +
+				"The backend is built using Spring Boot and MongoDB database to create a full-stack web application. It is deployed on a NGINX server using Azure App Service. The application is licensed under the Apache License 2.0."+
+				"<br>"+
+				"<br>"+
+				"For more information, please visit the GitHub repository." +
+				"<br>"+
+				"Project led by " +
+				"Backend - <a href ='https://github.com/Gayanukaa/'>Gayanuka Amarasuriya</a> and " +
+				"Frontend - <a href ='https://github.com/MalithaPrabhashana'>Malitha Prabhashana</a>"+
+				"<br>"+
+				"Hosted by <a href ='https://github.com/Gayanukaa/'>Gayanuka Amarasuriya</a>"+
+				"</p>";
+
 				/*"<b> Overview</b> <br>" +
 				"<p>" +
 				"Developed with the software and tools below.<br>" +
@@ -63,6 +77,6 @@ public class BackendApplication {
 				"<p>" +
 				" Apache License 2.0 <img src=\"https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat&logo=Apache&logoColor=white\" alt=\"Apache License 2.0\">" +
 				"</p>";*/
-		return meesage;
+		return message;
 	}
 }
