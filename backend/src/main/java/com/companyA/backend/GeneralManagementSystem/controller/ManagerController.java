@@ -43,9 +43,5 @@ public class ManagerController {
     }
 
 
-    @GetMapping("/count")
-    public ResponseEntity<Long>getCountofManagers(){
-        long numberOfManagers = managerService.countManagers();
-        return ResponseEntity.ok(numberOfManagers);
-    }
+
 }

@@ -59,10 +59,6 @@ public class CustomerController {
     }
 
 
-    @GetMapping("/count")
-    public ResponseEntity<Long> getCustomerCount() {
-        long customerCount = customerService.countCustomers();
-        return ResponseEntity.ok(customerCount);
-    }
+
 
 }
