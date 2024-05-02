@@ -46,8 +46,8 @@ public class VehicleController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PatchMapping("/updateVehicle/{id}")
-    public ResponseEntity<Map<String, String>> updateVehicle(@PathVariable("id") String id, @RequestBody Map<String, String> updateData) {
+    @PatchMapping("/updateVehicle/{vehicleId}")
+    public ResponseEntity<Map<String, String>> updateVehicle(@PathVariable("vehicleId") String id, @RequestBody Map<String, String> updateData) {
         return vehicleService.updateVehicle(id, updateData);
     }
 
