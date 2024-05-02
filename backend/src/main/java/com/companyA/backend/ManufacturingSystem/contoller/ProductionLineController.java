@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 // Controller class for handling ProductionLine requests
 @RestController
 @RequestMapping("/api/production/line")
+@CrossOrigin
 public class ProductionLineController {
     @Autowired
     private ProductionDataService productionDataService;

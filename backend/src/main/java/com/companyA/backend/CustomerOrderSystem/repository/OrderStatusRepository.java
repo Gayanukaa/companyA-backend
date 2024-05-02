@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrderStatusRepository extends MongoRepository<OrderStatus, ObjectId> {
-    Optional<OrderStatus> findById(String orderId);
+//    Optional<OrderStatus> findById(String orderID);
+    Optional<OrderStatus> findByOrderID(String orderID);
 }

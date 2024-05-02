@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/production/task")
+@CrossOrigin
 public class ManufacturingOrderStatusController {
     @Autowired
     private ManufacturingOrderStatusService manufacturingOrderStatusService;

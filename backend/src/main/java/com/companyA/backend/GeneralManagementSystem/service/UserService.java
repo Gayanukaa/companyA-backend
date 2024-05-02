@@ -38,10 +38,10 @@ public class UserService {
                 return authenticateUser(managerRepository, userEmail, userPassword, userRole);
             }
 
-            return sendResponseMessage("Invalid User", null, HttpStatus.BAD_REQUEST);
+            return sendResponseMessage("Invalid User", null,null, HttpStatus.BAD_REQUEST);
         }
 
-        return sendResponseMessage("User Role is null", null, HttpStatus.BAD_REQUEST);
+        return sendResponseMessage("User Role is null", null, null, HttpStatus.BAD_REQUEST);
     }
 
 
@@ -60,34 +60,38 @@ public class UserService {
 
                 if (isPasswordCorrect) {
                     String returnRole = relatedUser.getRole();
+                    String userId = relatedUser.getId();
                     String successMessage = "Successfully Logged in";
 
                     if (returnRole != null) {
-                        return sendResponseMessage(successMessage, returnRole, HttpStatus.OK);
+                        return sendResponseMessage(successMessage, userId, returnRole, HttpStatus.OK);
                     }
                 }
             }
 
             String errorMessage = "Authentication failed for " + userRole;
-            return sendResponseMessage(errorMessage, null, HttpStatus.BAD_REQUEST);
+            return sendResponseMessage(errorMessage, null,null, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             // Log the exception for debugging purposes
             e.printStackTrace();
 
             // Handle the exception and return an appropriate response
             String errorMessage = "An error occurred during authentication";
-            return sendResponseMessage(errorMessage, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return sendResponseMessage(errorMessage, null,null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
 
     // Separate Method for create the Response
-    public ResponseEntity <Map<String, String>> sendResponseMessage (String message, String returnRole, HttpStatus requestStatus) {
+    public ResponseEntity <Map<String, String>> sendResponseMessage (String message, String userId, String returnRole, HttpStatus requestStatus) {
         Map <String, String> response = new HashMap<>();
         response.put("message", message);
         if (returnRole != null) {
             response.put("role", returnRole);
+        }
+        if (userId != null) {
+            response.put("userId", userId);
         }
         response.put("status", String.valueOf(!requestStatus.isError()));
         return new ResponseEntity<>(response, requestStatus);

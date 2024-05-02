@@ -24,11 +24,21 @@ public class PaymentController {
 
     @PostMapping("/salary")
     public ResponseEntity<Map<String, String>> EmployeeSalaryConfirmation(@RequestBody Payment payment) {
-        paymentService.SalaryPaymentConfirmation(payment);
+        paymentService.salaryPaymentConfirmation(payment);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Employee Salary is Successfully Deposited");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @PostMapping("/sales")
+    public ResponseEntity<Map<String, String>> SalesIncome(@RequestBody Payment payment) {
+        paymentService.salesIncome(payment);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Payment is received");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
 
 
 

@@ -23,9 +23,6 @@ public class PrototypeService {
     @Autowired
     private TestRepository testRepository;
 
-    @Autowired
-    private ReportRepository reportRepository;
-
     public List<Prototype> getAllPrototypes() {
         return prototypeRepository.findAll();
     }
@@ -55,7 +52,7 @@ public class PrototypeService {
         return prototypeRepository.save(prototype);
     }
 
-    public String testPrototype(Prototype prototype,Test test){
+    public String test(Prototype prototype,Test test){
         String tempid = prototype.getId();
         String temptestid = test.getTestId();
         Optional<Prototype> AvalilablePrototype = prototypeRepository.findById(tempid);
