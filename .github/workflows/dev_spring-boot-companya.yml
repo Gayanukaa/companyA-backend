@@ -26,7 +26,7 @@ jobs:
         run: mvn -f backend/pom.xml clean install
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v1
         with:
           name: java-app
           #path: '${{ github.workspace }}/target/*.jar'
@@ -43,7 +43,7 @@ jobs:
   
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: java-app
       
