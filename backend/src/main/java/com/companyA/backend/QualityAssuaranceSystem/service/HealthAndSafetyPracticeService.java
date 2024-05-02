@@ -26,7 +26,7 @@ public class HealthAndSafetyPracticeService {
 
     // Create a new HealthAndSafetyPractice
     public HealthAndSafetyPractice createHealthAndSafetyPractice(
-            String id, String testName, List<String> equipments, List<String> safetyGuidelines,
+            String id, String hazardType, List<String> equipments, List<String> safetyGuidelines,
             String safetyLevel, String responsiblePersonContactNo
     ) {
         if (healthAndSafetyPracticeRepository.existsById(id)) {
@@ -35,7 +35,7 @@ public class HealthAndSafetyPracticeService {
 
         HealthAndSafetyPractice practice = new HealthAndSafetyPractice();
         practice.setId(id);
-        practice.setTestName(testName);
+        practice.setHazardType(hazardType);
         practice.setEquipments(equipments);
         practice.setSafetyGuidelines(safetyGuidelines);
         practice.setSafetyLevel(safetyLevel);

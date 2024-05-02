@@ -23,7 +23,7 @@ public class HealthAndSafetyPracticeController {
         try {
             if (
                     request.getId() == null || request.getId().isBlank() ||
-                            request.getTestName() == null || request.getTestName().isBlank() ||
+                            request.getHazardType() == null || request.getHazardType().isBlank() ||
                             request.getEquipments() == null || request.getEquipments().isEmpty() ||
                             request.getSafetyGuidelines() == null || request.getSafetyGuidelines().isEmpty() ||
                             request.getSafetyLevel() == null || request.getSafetyLevel().isBlank() ||
@@ -34,7 +34,7 @@ public class HealthAndSafetyPracticeController {
 
             HealthAndSafetyPractice newPractice = healthAndSafetyPracticeService.createHealthAndSafetyPractice(
                     request.getId(),
-                    request.getTestName(),
+                    request.getHazardType(),
                     request.getEquipments(),
                     request.getSafetyGuidelines(),
                     request.getSafetyLevel(),

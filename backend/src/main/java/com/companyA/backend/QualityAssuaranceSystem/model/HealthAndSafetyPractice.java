@@ -16,8 +16,8 @@ public class HealthAndSafetyPractice {
     @NotBlank(message = "ID is required.")
     private String id;
 
-    @NotBlank(message = "Test name is required.")
-    private String testName;
+    @NotBlank(message = "Hazard type is required.")
+    private String hazardType;
 
     @NotBlank(message = "Equipment list is required.")
     private List<String> equipments;
