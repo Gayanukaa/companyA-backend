@@ -4,6 +4,7 @@ import com.companyA.backend.GeneralManagementSystem.model.Customer;
 import com.companyA.backend.GeneralManagementSystem.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -21,6 +22,8 @@ import java.util.Map;
 public class CustomerController {
 
     private CustomerService customerService;
+
+
 
     // Customer Registration
     @PostMapping("/register")
@@ -54,4 +57,12 @@ public class CustomerController {
 
         return errors;
     }
+
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> getCustomerCount() {
+        long customerCount = customerService.countCustomers();
+        return ResponseEntity.ok(customerCount);
+    }
+
 }

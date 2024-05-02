@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -56,10 +57,14 @@ public class ManagerService {
     }
 
 
+
+
+
     public List<ManagerDTO> viewAllManagers(){
         List<Manager> managers = managerRepository.findAll();
         List<ManagerDTO> managerDTOs = new ArrayList<>();
         for (Manager manager : managers) {
+
             ManagerDTO dto = new ManagerDTO();
             dto.setId(manager.getId());
             dto.setMobileNumber(manager.getMobileNumber());
@@ -71,5 +76,10 @@ public class ManagerService {
         }
         return managerDTOs;
     }
+    public long countManagers(){
+        List<Manager>managers=managerRepository.findAll();
+        return managers.size();
+    }
+
 
 }
