@@ -4,7 +4,9 @@ import com.companyA.backend.GeneralManagementSystem.DTO.ManagerDTO;
 import com.companyA.backend.GeneralManagementSystem.model.Manager;
 import com.companyA.backend.GeneralManagementSystem.service.ManagerService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.Optional;
 @CrossOrigin
 public class ManagerController {
 
+    @Autowired
     private ManagerService managerService;
 
     @PostMapping("/createaccount")
@@ -38,5 +41,7 @@ public class ManagerController {
     public List<ManagerDTO> viewAllManagers(){
         return managerService.viewAllManagers();
     }
+
+
 
 }
