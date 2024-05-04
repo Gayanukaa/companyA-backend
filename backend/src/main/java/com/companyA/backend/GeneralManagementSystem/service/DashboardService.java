@@ -46,4 +46,8 @@ public class DashboardService {
         inventoryDTO.setQuantity(Integer.valueOf(String.valueOf(inventoryData.getQuantity())));
         return inventoryDTO;
     }
+    public long countInventoryItems(){
+        return inventoryRepository.count();
+    }
+
 }

@@ -10,6 +10,7 @@ import lombok.Setter;
 public class CountDTO {
     private long customerCount;
     private long managerCount;
+    private long inventoryCount;
 
 
     public long getCustomerCount(){
@@ -19,4 +20,6 @@ public class CountDTO {
     public long getManagerCount(){
         return managerCount;
     }
+
+
 }
