@@ -1,5 +1,7 @@
 package com.companyA.backend.SalesSystem.service;
+import com.companyA.backend.SalesSystem.model.CartItem;
 import com.companyA.backend.SalesSystem.model.Existing;
+import com.companyA.backend.SalesSystem.model.UpdateData;
 import com.companyA.backend.SalesSystem.repository.ExistingProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +52,14 @@ public class ExistingProductService {
         return false;
     }
 
+    public void updateDatabase(UpdateData record){
+        String itemID = record.getItemId();
+        int itemQuantity = record.getQuantity();
+        Existing item = existingProductRepository.findById(itemID).orElse(null);
+        item.setQuantity(item.getQuantity() - itemQuantity);
+        existingProductRepository.save(item);
+
+    }
 
 }
 

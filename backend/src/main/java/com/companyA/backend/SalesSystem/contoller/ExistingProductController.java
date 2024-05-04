@@ -1,9 +1,5 @@
 package com.companyA.backend.SalesSystem.contoller;
-import com.companyA.backend.SalesSystem.model.CartItem;
-import com.companyA.backend.SalesSystem.model.Existing;
-import com.companyA.backend.SalesSystem.model.SingleItemRequest;
-import com.companyA.backend.SalesSystem.model.StockValidationResponse;
-import com.companyA.backend.SalesSystem.model.StockValidation;
+import com.companyA.backend.SalesSystem.model.*;
 import com.companyA.backend.SalesSystem.service.ExistingProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -88,8 +84,14 @@ public class ExistingProductController {
             // Return 404 Not Found with the error message
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
         }
+    }
+    @PostMapping("/updateTable")
+    public ResponseEntity<String> updateDatabase(@RequestBody List<UpdateData> cartItem){
 
-
+        for (UpdateData itemPurchased : cartItem){
+            existingProductService.updateDatabase(itemPurchased);
+        }
+        return new ResponseEntity<String>("Successfully updated", HttpStatus.OK);
     }
 
 

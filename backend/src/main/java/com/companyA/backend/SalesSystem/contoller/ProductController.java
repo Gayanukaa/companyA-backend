@@ -53,5 +53,13 @@ public class ProductController {
         }
         return ResponseEntity.ok(validationResults);
     }
+    @PostMapping("/updateTable")
+    public ResponseEntity<String> updateDatabase(@RequestBody List<UpdateData> cartItem){
+
+        for (UpdateData itemPurchased : cartItem){
+            productService.updateDatabase(itemPurchased);
+        }
+        return new ResponseEntity<String>("Successfully updated", HttpStatus.OK);
+    }
 
 }
