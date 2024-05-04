@@ -94,6 +94,22 @@ public class ExistingProductController {
         return new ResponseEntity<String>("Successfully updated", HttpStatus.OK);
     }
 
-
+    @PostMapping("/updateStock")
+    public ResponseEntity<String> updateStock(@RequestBody UpdateExistingProductData cartItem){
+        String id = cartItem.getItemId();
+        boolean isExist = existingProductService.findbyID(id);
+        if (isExist){
+            boolean result = existingProductService.updateStock(cartItem);
+            if (!result){
+                return new ResponseEntity<String>("Can't update process stopped", HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<String>("Successfully updated", HttpStatus.OK);
+        }
+        else {
+            String error = "Item not found";
+            // Return 404 Not Found with the error message
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        }
+    }
 }
 

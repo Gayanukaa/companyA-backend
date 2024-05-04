@@ -2,7 +2,9 @@ package com.companyA.backend.SalesSystem.service;
 import com.companyA.backend.SalesSystem.model.CartItem;
 import com.companyA.backend.SalesSystem.model.Existing;
 import com.companyA.backend.SalesSystem.model.UpdateData;
+import com.companyA.backend.SalesSystem.model.UpdateExistingProductData;
 import com.companyA.backend.SalesSystem.repository.ExistingProductRepository;
+import jakarta.validation.constraints.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -59,6 +61,22 @@ public class ExistingProductService {
         item.setQuantity(item.getQuantity() - itemQuantity);
         existingProductRepository.save(item);
 
+    }
+
+    public boolean updateStock(UpdateExistingProductData record){
+        String itemID = record.getItemId();
+        int itemQuantity = record.getQuantity();
+        double itemPrice = record.getPrice();
+        String warehouse = record.getWarehouseId();
+        Existing item = existingProductRepository.findById(itemID).orElse(null);
+        if (item == null){
+            return false;
+        }
+        item.setQuantity(item.getQuantity() + itemQuantity);
+        item.setWarehouseId(warehouse);
+        item.setPrice(itemPrice);
+        existingProductRepository.save(item);
+        return true;
     }
 
 }
