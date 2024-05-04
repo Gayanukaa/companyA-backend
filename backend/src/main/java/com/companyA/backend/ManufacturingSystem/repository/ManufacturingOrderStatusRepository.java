@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ManufacturingOrderStatusRepository extends MongoRepository<OrderStatus, String> {
     // Method to find order status by order ID
-    OrderStatus findByOrderID(String order_ID);
+    OrderStatus findByOrderID(String orderID);
 }

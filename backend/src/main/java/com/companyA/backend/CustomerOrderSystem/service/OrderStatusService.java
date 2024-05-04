@@ -12,9 +12,9 @@ public class OrderStatusService {
     @Autowired
     private OrderStatusRepository orderStatusRepository;
 
-    public Optional<OrderStatus> getOrderStatus(String order_ID) {
-        ObjectId objectId = new ObjectId(order_ID);
-        return orderStatusRepository.findById(objectId);
+    public Optional<OrderStatus> getOrderStatus(String orderID) {
+//        ObjectId objectId = new ObjectId(orderID);
+        return orderStatusRepository.findByOrderID(orderID);
     }
 
 }

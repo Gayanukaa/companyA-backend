@@ -6,11 +6,14 @@ import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.http.ResponseEntity;
 
-@Document(collection = "ServicesAndMaintenance")
+import java.util.Optional;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Document(collection = "ServicesAndMaintenance")
 public class ServiceAndMaintenance {
 
     @Id
@@ -20,14 +23,4 @@ public class ServiceAndMaintenance {
     private String technicianId; // Updated to include Technician object
 
 
-    // Method to assign a technician
-   public void assignTechnician(String technicianId) {
-        this.technicianId = technicianId;
-   }
-
-
-    // Method to generate service report
-    public void generateServiceReport() {
-        // Implementation for generating service report
-    }
 }
