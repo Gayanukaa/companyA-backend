@@ -15,11 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1")
 public class UserDetailsController {
     @Autowired
-    private UserDetailsService salesRecordService;
+    private UserDetailsService userDetailsService;
+
+    //@GetMapping("/userDetails")
+    //public ResponseEntity<Optional<UserDetails>> getOrderHistory(@RequestParam("user_ID") ObjectId user_ID) {
+    //    Optional<UserDetails> response = salesRecordService.getUserDetails(user_ID);
+    //    return new ResponseEntity<Optional<UserDetails>>(response, HttpStatus.OK);
+    //}
 
     @GetMapping("/userDetails")
-    public ResponseEntity<Optional<UserDetails>> getOrderHistory(@RequestParam("user_ID") ObjectId user_ID) {
-        Optional<UserDetails> response = salesRecordService.getUserDetails(user_ID);
+    public ResponseEntity<Optional<UserDetails>> getUserDetails(@RequestParam("email") String email) {
+        Optional<UserDetails> response = userDetailsService.getUserDetails(email);
         return new ResponseEntity<Optional<UserDetails>>(response, HttpStatus.OK);
     }
 }
