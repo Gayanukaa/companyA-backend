@@ -16,6 +16,7 @@ public class SupplierController {
 
     private final SupplierService supplierService;
 
+    //Dependency Injection
     @Autowired
     public SupplierController(SupplierService supplierService) {
         this.supplierService = supplierService;
@@ -24,10 +25,14 @@ public class SupplierController {
     //Register a new supplier
     @PostMapping("/registerSupplier")
     public ResponseEntity<Suppliers> registerSupplier(@RequestBody Suppliers supplier) {
-        return new ResponseEntity<Suppliers>(supplierService.registerSupplier(supplier),HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<Suppliers>(supplierService.registerSupplier(supplier),HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
-    //Retrieve all suppliers' details
+    //Retrieve all supplier details
     @GetMapping("/supplierDetails")
     public List<Suppliers> supplierDetails(){
         return supplierService.supplierDetails();
