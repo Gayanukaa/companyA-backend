@@ -23,7 +23,6 @@ The backend is built using Spring Boot and MongoDB database to create a full-sta
 
 [![Build and deploy JAR app to Azure Web App - spring-boot-companyA](https://github.com/Gayanukaa/companyA-backend/actions/workflows/dev_spring-boot-companya.yml/badge.svg?branch=dev)](https://github.com/Gayanukaa/companyA-backend/actions/workflows/dev_spring-boot-companya.yml)
 <p>
- <img src="https://img.shields.io/github/license/Gayanukaa/companyA-backend?style=flat&color=0080ff" alt="license">
  <img src="https://img.shields.io/github/last-commit/Gayanukaa/companyA-backend?style=flat&logo=git&logoColor=white&color=0080ff" alt="last-commit">
  <img src="https://img.shields.io/github/languages/top/Gayanukaa/companyA-backend?style=flat&color=0080ff" alt="repo-top-language">
  <img src="https://img.shields.io/github/languages/count/Gayanukaa/companyA-backend?style=flat&color=0080ff" alt="repo-language-count">
@@ -61,15 +60,11 @@ Before running this application, make sure you have the following tools installe
 
 - Open your web browser and navigate to `https://spring-boot-companya.azurewebsites.net/`
 
-## Contributing
+## Contributors
 
-Contributions are welcome! If you'd like to contribute to this project, please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch: `git checkout -b feature/your-feature-name`
-3. Make your changes and commit them: `git commit -m 'Add some feature'`
-4. Push to the branch: `git push origin feature/your-feature-name`
-5. Submit a pull request.
+<a href="https://github.com/Gayanukaa/companyA-backend/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Gayanukaa/companyA-backend" />
+</a>
 
 ## License
 
