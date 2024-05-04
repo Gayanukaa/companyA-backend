@@ -59,7 +59,7 @@ public class VehicleService {
     }
 
     public ResponseEntity<Map<String, String>> updateVehicle(String id, Map<String, String> updateData) {
-        Optional<Vehicle> existingVehicleOptional = vehicleRepository.findById(id);
+        Optional<Vehicle> existingVehicleOptional = vehicleRepository.findVehicleByVehicleId(id);
         if (existingVehicleOptional.isPresent()) {
             Vehicle existingVehicle = existingVehicleOptional.get();
 
