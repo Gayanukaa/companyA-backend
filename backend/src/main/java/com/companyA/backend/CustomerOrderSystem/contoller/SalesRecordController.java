@@ -1,13 +1,7 @@
 package com.companyA.backend.CustomerOrderSystem.contoller;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
-import com.companyA.backend.CustomerOrderSystem.model.GetQuotation;
-import com.companyA.backend.CustomerOrderSystem.model.Login;
 import com.companyA.backend.CustomerOrderSystem.model.SalesRecord;
-import com.companyA.backend.CustomerOrderSystem.service.GetQuotationService;
-import com.companyA.backend.CustomerOrderSystem.service.LoginService;
 import com.companyA.backend.CustomerOrderSystem.service.SalesRecordService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
