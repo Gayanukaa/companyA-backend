@@ -29,7 +29,8 @@ public class CountController {
         long customerCount = customerService.countCustomers();
         long managerCount= managerService.countManagers();
         long inventoryItemCount= dashboardService.countInventoryItems();
-        countDTOS.add(new CountDTO(customerCount,managerCount,inventoryItemCount));
+        long vehicleCount= dashboardService.countVehicles();
+        countDTOS.add(new CountDTO(customerCount,managerCount,inventoryItemCount,vehicleCount));
 
 
         return ResponseEntity.ok(countDTOS);

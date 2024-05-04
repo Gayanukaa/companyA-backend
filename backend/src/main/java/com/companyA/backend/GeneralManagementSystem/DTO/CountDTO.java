@@ -11,6 +11,7 @@ public class CountDTO {
     private long customerCount;
     private long managerCount;
     private long inventoryCount;
+    private long vehicleCount;
 
 
     public long getCustomerCount(){

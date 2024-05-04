@@ -4,6 +4,7 @@ import com.companyA.backend.GeneralManagementSystem.DTO.GraphsDataDTO;
 import com.companyA.backend.GeneralManagementSystem.DTO.InventoryDataDTO;
 import com.companyA.backend.InventoryManagementSystem.model.Inventory;
 import com.companyA.backend.InventoryManagementSystem.repository.InventoryRepository;
+import com.companyA.backend.LogisticsAndMaintenanceSystem.repository.VehicleRepository;
 import com.companyA.backend.SalesSystem.model.FinanceSalesTableBody;
 import com.companyA.backend.SalesSystem.repository.FinanceSalesTableRepository;
 import lombok.AllArgsConstructor;
@@ -48,6 +49,11 @@ public class DashboardService {
     }
     public long countInventoryItems(){
         return inventoryRepository.count();
+    }
+
+    private final VehicleRepository vehicleRepository;
+    public long countVehicles(){
+        return vehicleRepository.count();
     }
 
 }
