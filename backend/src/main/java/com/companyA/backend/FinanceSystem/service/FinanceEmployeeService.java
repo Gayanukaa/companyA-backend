@@ -55,7 +55,7 @@ public class FinanceEmployeeService {
         }
         return employeeSalary;
     }
-    public void updateEmployee(EmployeeSalary employeeSalary){
+    public void updateEmployeeSalary(EmployeeSalary employeeSalary){
         double calculatedGross = employeeSalary.calGrossSalary(employeeSalary.getBasicSalary(), employeeSalary.getOtHours(), employeeSalary.getPayForOtHour(),employeeSalary.getNumberOfAbsentDays());
         employeeSalary.setGrossSalary(calculatedGross);
         double calculatedTax = employeeSalary.calTax();
