@@ -1,10 +1,7 @@
 package com.companyA.backend.ManufacturingSystem.contoller;
 
 import com.companyA.backend.ManufacturingSystem.model.ProductionData;
-import com.companyA.backend.ManufacturingSystem.model.Employee;
 import com.companyA.backend.ManufacturingSystem.service.ProductionDataService;
-import lombok.AllArgsConstructor;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -8,5 +8,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 public class Manager extends User {
-
+    private Integer isDeleted;
 }

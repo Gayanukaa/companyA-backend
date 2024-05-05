@@ -2,6 +2,7 @@ package com.companyA.backend.FinanceSystem.contoller;
 
 
 import com.companyA.backend.FinanceSystem.model.Payment;
+import com.companyA.backend.FinanceSystem.repository.PaymentRepo;
 import com.companyA.backend.FinanceSystem.service.IDNotFoundException;
 import com.companyA.backend.FinanceSystem.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -19,6 +21,8 @@ public class PaymentController {
 
     @Autowired
     private PaymentService paymentService;
+    @Autowired
+    private PaymentRepo paymentRepo;
 
 
 
@@ -36,6 +40,18 @@ public class PaymentController {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Payment is received");
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/utilityPayment")
+    public ResponseEntity<Map<String, String>> utilityBillPayment(@RequestBody Payment payment) {
+        paymentService.payUtilityBill(payment);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Utility bill successfully paid");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @GetMapping("/financeOverview")
+    public List<Payment> getPaymentDetails(){
+        return paymentRepo.findAll();
     }
 
 

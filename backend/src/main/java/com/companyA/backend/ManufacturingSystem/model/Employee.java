@@ -14,5 +14,6 @@ public class Employee {
     private String firstName;       // First name of the employee
     private String lastName;        // Last name of the employee
     private String department;      // Department to which the employee belongs
-    // No additional fields needed for current functionalities
+
+
 }

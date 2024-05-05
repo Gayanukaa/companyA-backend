@@ -1,6 +1,7 @@
 package com.companyA.backend.GeneralManagementSystem.service;
 
 import com.companyA.backend.GeneralManagementSystem.DTO.LoginDTO;
+import com.companyA.backend.GeneralManagementSystem.model.Manager;
 import com.companyA.backend.GeneralManagementSystem.model.User;
 import com.companyA.backend.GeneralManagementSystem.repository.CustomerRepository;
 import com.companyA.backend.GeneralManagementSystem.repository.ManagerRepository;
@@ -46,7 +47,6 @@ public class UserService {
 
 
     // User Authentication using Generic Type
-    // User Authentication using Generic Type
     public <T extends User> ResponseEntity<Map<String, String>> authenticateUser(UserRepository<T> userRepository,
                                                                                  String userEmail,
                                                                                  String userPassword,
@@ -55,19 +55,27 @@ public class UserService {
             T relatedUser = userRepository.findByEmail(userEmail);
 
             if (relatedUser != null) {
-                String encodedPassword = relatedUser.getPassword();
-                boolean isPasswordCorrect = passwordEncoder.matches(userPassword, encodedPassword);
 
-                if (isPasswordCorrect) {
-                    String returnRole = relatedUser.getRole();
-                    String userId = relatedUser.getId();
-                    String successMessage = "Successfully Logged in";
-
-                    if (returnRole != null) {
-                        return sendResponseMessage(successMessage, userId, returnRole, HttpStatus.OK);
+                if (userRole.equals("manager")) {
+                    Manager userManager = (Manager) relatedUser;
+                    if (userManager.getIsDeleted() == 1) {
+                        return sendResponseMessage("Manager is deleted", null, null, HttpStatus.BAD_REQUEST);
                     }
                 }
-            }
+
+                    String encodedPassword = relatedUser.getPassword();
+                    boolean isPasswordCorrect = passwordEncoder.matches(userPassword, encodedPassword);
+
+                    if (isPasswordCorrect) {
+                        String returnRole = relatedUser.getRole();
+                        String userId = relatedUser.getId();
+                        String successMessage = "Successfully Logged in";
+
+                        if (returnRole != null) {
+                            return sendResponseMessage(successMessage, userId, returnRole, HttpStatus.OK);
+                        }
+                    }
+                }
 
             String errorMessage = "Authentication failed for " + userRole;
             return sendResponseMessage(errorMessage, null,null, HttpStatus.BAD_REQUEST);
