@@ -22,7 +22,7 @@ public class UserDetailsController {
     private UserDetailsService userDetailsService;
 
     @GetMapping("/userDetails")
-    public ResponseEntity<Optional<UserDetails>> getUserDetails(@RequestParam("id") String id) {
+    public ResponseEntity<Optional<UserDetails>> getUserDetails(@RequestParam("id") ObjectId id) {
         Optional<UserDetails> response = userDetailsService.getUserDetails(id);
         return new ResponseEntity<Optional<UserDetails>>(response, HttpStatus.OK);
     }
