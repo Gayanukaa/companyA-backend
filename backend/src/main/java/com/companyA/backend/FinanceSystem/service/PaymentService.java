@@ -3,9 +3,11 @@ package com.companyA.backend.FinanceSystem.service;
 import com.companyA.backend.FinanceSystem.model.EmployeeSalary;
 import com.companyA.backend.FinanceSystem.model.GenerateSalesBill;
 import com.companyA.backend.FinanceSystem.model.Payment;
+import com.companyA.backend.FinanceSystem.model.UtilityBill;
 import com.companyA.backend.FinanceSystem.repository.EmployeeSalaryRepo;
 import com.companyA.backend.FinanceSystem.repository.GenerateSalesBillRepo;
 import com.companyA.backend.FinanceSystem.repository.PaymentRepo;
+import com.companyA.backend.FinanceSystem.repository.UtilityBillRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,9 @@ public class PaymentService {
     private EmployeeSalaryRepo employeeSalaryRepo;
 
     @Autowired
+    private UtilityBillRepo utilityBillRepo;
+
+    @Autowired
     private GenerateSalesBillRepo generateSalesBillRepo;
 
 
@@ -38,6 +43,22 @@ public class PaymentService {
         payment.setStatus("Confirmed");
         payment.setPaymentDate(LocalDateTime.now());
         payment.setAmount(totalPayment);
+        paymentRepo.save(payment);
+
+    }
+
+    public void billPaymentConfirmation(Payment payment){
+        List<UtilityBill> bills = utilityBillRepo.findAll();
+        double totalBillPayment = 0;
+        for(UtilityBill bill : bills){
+            double billAmount = bill.getBillsSum();
+            totalBillPayment = totalBillPayment + billAmount;
+        }
+
+        payment.setType("Outgoing");
+        payment.setStatus("Confirmed");
+        payment.setPaymentDate(LocalDateTime.now());
+        payment.setAmount(totalBillPayment);
         paymentRepo.save(payment);
 
     }
