@@ -1,4 +1,5 @@
 package com.companyA.backend.CustomerOrderSystem.service;
+import com.companyA.backend.CustomerOrderSystem.model.OrderStatus;
 import com.companyA.backend.CustomerOrderSystem.model.UserDetails;
 import com.companyA.backend.CustomerOrderSystem.repository.UserDetailsRepository;
 import org.bson.types.ObjectId;
@@ -12,7 +13,8 @@ public class UserDetailsService {
     @Autowired
     private UserDetailsRepository userDetailsRepository;
 
-    public Optional<UserDetails> getUserDetails(ObjectId user_Id) {
-        return userDetailsRepository.findById(user_Id);
+    public Optional<UserDetails> getUserDetails(String id) {
+        return userDetailsRepository.findById(id);
     }
+
 }

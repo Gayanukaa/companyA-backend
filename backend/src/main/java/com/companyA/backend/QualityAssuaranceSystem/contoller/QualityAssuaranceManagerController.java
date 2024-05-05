@@ -9,9 +9,11 @@ import com.companyA.backend.QualityAssuaranceSystem.repository.SampleRepository;
 import com.companyA.backend.QualityAssuaranceSystem.service.PrototypeService;
 import com.companyA.backend.QualityAssuaranceSystem.service.QualityAssuaranceManagerService;
 import com.companyA.backend.QualityAssuaranceSystem.service.SampleService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,8 @@ public class QualityAssuaranceManagerController {
     private PrototypeRepository prototypeRepository;
     @Autowired
     private SampleRepository sampleRepository;
+    @Autowired
+    private View error;
 
     @PostMapping("/addQAManager")
     @ResponseStatus(HttpStatus.CREATED)
@@ -63,32 +67,42 @@ public class QualityAssuaranceManagerController {
         else return null ;
     }
 
+    @SneakyThrows
     @PutMapping("/concludeTest")
     public String concludeTest(@RequestParam String qaManagerId,String testSubjectId) {
 
         Optional<QualityAssuaranceManager> qaManager = qualityAssuaranceManagerService.getQAManagerById(qaManagerId);
-        Optional<Prototype> foundPrototype = prototypeService.getPrototypeById(testSubjectId);
-        Optional<Sample> foundSample = sampleService.getSampleById(testSubjectId);
 
-        if (qaManager.isPresent() && foundPrototype.isPresent()) {
-            TestSubjects checkedPrototypeAsTestSubject = qualityAssuaranceManagerService.concludeTest(qaManager.get(),testSubjectId);
+        Optional<Prototype> foundPrototype = prototypeService.getPrototypeById(testSubjectId);
+        boolean prototypeStatus = false;
+        if (foundPrototype.isPresent()) {
+            prototypeStatus = foundPrototype.get().getTestStatus().equals("Test initiated");
+        }
+
+        Optional<Sample> foundSample = sampleService.getSampleById(testSubjectId);
+        boolean sampleStatus = false;
+        if (foundSample.isPresent()) {
+            sampleStatus = foundSample.get().getTestStatus().equals("Test initiated");
+        }
+
+        if (qaManager.isPresent() && prototypeStatus) {
+            TestSubjects checkedPrototypeAsTestSubject = qualityAssuaranceManagerService.concludeTest(qaManager.get(), testSubjectId);
             Prototype checkedPrototype = prototypeRepository.findById(checkedPrototypeAsTestSubject.getId()).orElse(null);
             prototypeRepository.deleteById(Objects.requireNonNull(checkedPrototype).getId());
             checkedPrototype.setTestStatus("Done by " + qaManager.get().getName());
             prototypeRepository.save(checkedPrototype);
             return "Test was concluded successfully";
-        }
-        else if (qaManager.isPresent() && foundSample.isPresent()) {
-            TestSubjects checkedSampleAsTestSubject = qualityAssuaranceManagerService.concludeTest(qaManager.get(),testSubjectId);
+        } else if (qaManager.isPresent() && sampleStatus) {
+            TestSubjects checkedSampleAsTestSubject = qualityAssuaranceManagerService.concludeTest(qaManager.get(), testSubjectId);
             Sample checkedSample = sampleRepository.findById(checkedSampleAsTestSubject.getId()).orElse(null);
             sampleRepository.deleteById(Objects.requireNonNull(checkedSample).getId());
             checkedSample.setTestStatus("Done by " + qaManager.get().getName());
             sampleRepository.save(checkedSample);
             return "Test was concluded successfully";
-        }
-        else return "Invalid Parameters";
+        } else throw (Throwable) error;
     }
 
+    @SneakyThrows
     @PutMapping("/assignManager")
     public String assignManager(@RequestParam String qaManagerId,String testSubjectId) {
         Optional<Prototype> foundPrototype = prototypeService.getPrototypeById(testSubjectId);
@@ -113,7 +127,7 @@ public class QualityAssuaranceManagerController {
             }
             else return response;
         }
-        else return "Test Subject Not Found";
+        else throw (Throwable) error;
     }
 
     @DeleteMapping("/delete/{id}")
