@@ -38,6 +38,14 @@ public class ContactusController {
     public ResponseEntity<Map<String, Object>> MarkAsReadHandle(@RequestParam String id) {
         return contactusService.MarkAsRead(id);
     }
+
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Map<String, Object>> deleteFeedbackControl(@PathVariable String id) {
+        return contactusService.deleteFeedbackById(id);
+    }
+
+
 }
 
 
