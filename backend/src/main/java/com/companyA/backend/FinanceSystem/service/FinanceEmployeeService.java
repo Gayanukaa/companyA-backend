@@ -17,23 +17,31 @@ public class FinanceEmployeeService {
     @Autowired
     private EmployeeDetailRepository employeeDetailRepository;
 
-    public List<EmployeeSalary> getAllEmployee(){
+    public List<EmployeeSalary> getAllEmployeeSalary(){
         return employeeSalaryRepo.findAll();
     }
 
-    public void addEmployee(EmployeeSalary employeeSalary){
+    public void addEmployeeSalary(EmployeeSalary employeeSalary){
         double calculatedGross = employeeSalary.calGrossSalary(employeeSalary.getBasicSalary(), employeeSalary.getOtHours(), employeeSalary.getPayForOtHour(), employeeSalary.getNumberOfAbsentDays());
         employeeSalary.setGrossSalary(calculatedGross);
         double calculatedTax = employeeSalary.calTax();
         employeeSalary.setTax(calculatedTax);
-        employeeSalary.setEmployeeName(employeeDetailRepository.findByEmployeeId(employeeSalary.getEmployeeId()).getFirstName());
+        if(employeeDetailRepository.findByEmployeeId(employeeSalary.getEmployeeId()) != null){
+            employeeSalary.setEmployeeName(employeeDetailRepository.findByEmployeeId(employeeSalary.getEmployeeId()).getFirstName());
+        }
+        else {
+            // Employee not found, throw an exception
+            throw new IDNotFoundException("Employee not found with ID: " + employeeSalary.getEmployeeId());
+        }
+
+
         double calculatedNet = employeeSalary.calNetSalary();
         employeeSalary.setNetSalary(calculatedNet);
         employeeSalaryRepo.save(employeeSalary);
     }
 
 
-    public EmployeeSalary getEmployee(String employeeId) {
+    public EmployeeSalary getEmployeeSalary(String employeeId) {
         Optional<EmployeeSalary> salary = employeeSalaryRepo.findById(employeeId);
 
         EmployeeSalary employeeSalary = null;
@@ -47,7 +55,7 @@ public class FinanceEmployeeService {
         }
         return employeeSalary;
     }
-    public void updateEmployee(EmployeeSalary employeeSalary){
+    public void updateEmployeeSalary(EmployeeSalary employeeSalary){
         double calculatedGross = employeeSalary.calGrossSalary(employeeSalary.getBasicSalary(), employeeSalary.getOtHours(), employeeSalary.getPayForOtHour(),employeeSalary.getNumberOfAbsentDays());
         employeeSalary.setGrossSalary(calculatedGross);
         double calculatedTax = employeeSalary.calTax();

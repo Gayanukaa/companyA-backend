@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SampleRepository extends TestSubjectsRepository<Sample> {
-    //public String testSample(Sample sample, Test test);
+
 }
 

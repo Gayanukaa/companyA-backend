@@ -13,8 +13,8 @@ public class OrderStatusService {
     private OrderStatusRepository orderStatusRepository;
 
     public Optional<OrderStatus> getOrderStatus(String orderID) {
-        ObjectId objectId = new ObjectId(orderID);
-        return orderStatusRepository.findById(objectId);
+//        ObjectId objectId = new ObjectId(orderID);
+        return orderStatusRepository.findByOrderID(orderID);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.companyA.backend.FinanceSystem.contoller;
 
 import com.companyA.backend.FinanceSystem.model.EmployeeSalary;
+import com.companyA.backend.FinanceSystem.repository.EmployeeSalaryRepo;
 import com.companyA.backend.FinanceSystem.service.FinanceEmployeeService;
 import com.companyA.backend.FinanceSystem.service.IDNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +20,21 @@ public class FinanceEmployeeController {
     @Autowired
     private FinanceEmployeeService financeEmployeeService;
 
+    @Autowired
+    private EmployeeSalaryRepo employeeSalaryRepo;
+
     @GetMapping("/getEmployeeSalary")
     public List<EmployeeSalary> getAllEmployees() {
-        return financeEmployeeService.getAllEmployee();
+        return financeEmployeeService.getAllEmployeeSalary();
     }
     @GetMapping("/getEmployeeSalary/{employeeId}")
     public EmployeeSalary getEmployeeSalary(@PathVariable String employeeId) {
-        return financeEmployeeService.getEmployee(employeeId);
+        return financeEmployeeService.getEmployeeSalary(employeeId);
     }
 
     @PostMapping("/SaveEmployeeSalary")
     public ResponseEntity<Map<String, String>> setEmployeeSalary(@RequestBody EmployeeSalary employee) {
-        financeEmployeeService.addEmployee(employee);
+        financeEmployeeService.addEmployeeSalary(employee);
 
         Map<String, String> response = new HashMap<>();
         response.put("message", "Employee Salary is Successfully Added");
@@ -38,8 +42,13 @@ public class FinanceEmployeeController {
     }
 
     @PutMapping("/updateSalary")
-    public ResponseEntity<Map<String, String>> updateEmployeeSalary(@RequestBody EmployeeSalary employeeSalary){
-        financeEmployeeService.updateEmployee(employeeSalary);
+    public ResponseEntity<Map<String, String>> updateEmployeeSalary(@RequestParam String employeeId,@RequestParam double basicSalary,@RequestParam double otHours, @RequestParam double payForOtHour,@RequestParam int numberOfAbsentDays){
+        EmployeeSalary employeeSalary = employeeSalaryRepo.findById(employeeId).orElseThrow(null);
+        employeeSalary.setBasicSalary(basicSalary);
+        employeeSalary.setOtHours(otHours);
+        employeeSalary.setPayForOtHour(payForOtHour);
+        employeeSalary.setNumberOfAbsentDays(numberOfAbsentDays);
+        financeEmployeeService.updateEmployeeSalary(employeeSalary);
 
         Map<String, String> response = new HashMap<>();
         response.put("message", "Employee Salary is Successfully Updated");

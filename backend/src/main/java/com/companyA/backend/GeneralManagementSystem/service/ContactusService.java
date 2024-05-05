@@ -2,7 +2,6 @@ package com.companyA.backend.GeneralManagementSystem.service;
 
 import com.companyA.backend.GeneralManagementSystem.model.Contactus;
 import com.companyA.backend.GeneralManagementSystem.repository.ContactusRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.result.UpdateResult;
 import lombok.AllArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -12,7 +11,6 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +50,23 @@ public class ContactusService {
             response.put("message", "Message with ID " + id + " not found.");
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(response);
+        }
+    }
+
+    public ResponseEntity<Map<String, Object>> deleteFeedbackById(String id) {
+        Query query = new Query(Criteria.where("_id").is(id));
+        long deletedCount = mongoTemplate.remove(query, Contactus.class).getDeletedCount();
+
+        // Construct response map
+        Map<String, Object> response = new HashMap<>();
+        if (deletedCount > 0) {
+            response.put("status", true);
+            response.put("message", "Message with ID " + id + " deleted successfully.");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } else {
+            response.put("status", false);
+            response.put("message", "Message with ID " + id + " not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 }

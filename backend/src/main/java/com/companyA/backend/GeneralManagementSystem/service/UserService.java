@@ -1,6 +1,7 @@
 package com.companyA.backend.GeneralManagementSystem.service;
 
 import com.companyA.backend.GeneralManagementSystem.DTO.LoginDTO;
+import com.companyA.backend.GeneralManagementSystem.model.Manager;
 import com.companyA.backend.GeneralManagementSystem.model.User;
 import com.companyA.backend.GeneralManagementSystem.repository.CustomerRepository;
 import com.companyA.backend.GeneralManagementSystem.repository.ManagerRepository;
@@ -38,14 +39,13 @@ public class UserService {
                 return authenticateUser(managerRepository, userEmail, userPassword, userRole);
             }
 
-            return sendResponseMessage("Invalid User", null, HttpStatus.BAD_REQUEST);
+            return sendResponseMessage("Invalid User", null,null, HttpStatus.BAD_REQUEST);
         }
 
-        return sendResponseMessage("User Role is null", null, HttpStatus.BAD_REQUEST);
+        return sendResponseMessage("User Role is null", null, null, HttpStatus.BAD_REQUEST);
     }
 
 
-    // User Authentication using Generic Type
     // User Authentication using Generic Type
     public <T extends User> ResponseEntity<Map<String, String>> authenticateUser(UserRepository<T> userRepository,
                                                                                  String userEmail,
@@ -55,39 +55,51 @@ public class UserService {
             T relatedUser = userRepository.findByEmail(userEmail);
 
             if (relatedUser != null) {
-                String encodedPassword = relatedUser.getPassword();
-                boolean isPasswordCorrect = passwordEncoder.matches(userPassword, encodedPassword);
 
-                if (isPasswordCorrect) {
-                    String returnRole = relatedUser.getRole();
-                    String successMessage = "Successfully Logged in";
-
-                    if (returnRole != null) {
-                        return sendResponseMessage(successMessage, returnRole, HttpStatus.OK);
+                if (userRole.equals("manager")) {
+                    Manager userManager = (Manager) relatedUser;
+                    if (userManager.getIsDeleted() == 1) {
+                        return sendResponseMessage("Manager is deleted", null, null, HttpStatus.BAD_REQUEST);
                     }
                 }
-            }
+
+                    String encodedPassword = relatedUser.getPassword();
+                    boolean isPasswordCorrect = passwordEncoder.matches(userPassword, encodedPassword);
+
+                    if (isPasswordCorrect) {
+                        String returnRole = relatedUser.getRole();
+                        String userId = relatedUser.getId();
+                        String successMessage = "Successfully Logged in";
+
+                        if (returnRole != null) {
+                            return sendResponseMessage(successMessage, userId, returnRole, HttpStatus.OK);
+                        }
+                    }
+                }
 
             String errorMessage = "Authentication failed for " + userRole;
-            return sendResponseMessage(errorMessage, null, HttpStatus.BAD_REQUEST);
+            return sendResponseMessage(errorMessage, null,null, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             // Log the exception for debugging purposes
             e.printStackTrace();
 
             // Handle the exception and return an appropriate response
             String errorMessage = "An error occurred during authentication";
-            return sendResponseMessage(errorMessage, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return sendResponseMessage(errorMessage, null,null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
 
     // Separate Method for create the Response
-    public ResponseEntity <Map<String, String>> sendResponseMessage (String message, String returnRole, HttpStatus requestStatus) {
+    public ResponseEntity <Map<String, String>> sendResponseMessage (String message, String userId, String returnRole, HttpStatus requestStatus) {
         Map <String, String> response = new HashMap<>();
         response.put("message", message);
         if (returnRole != null) {
             response.put("role", returnRole);
+        }
+        if (userId != null) {
+            response.put("userId", userId);
         }
         response.put("status", String.valueOf(!requestStatus.isError()));
         return new ResponseEntity<>(response, requestStatus);

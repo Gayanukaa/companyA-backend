@@ -48,13 +48,13 @@ public class SampleController {
 
     }
 
-    @PutMapping("/inspect")    // Check Api
+    @PutMapping("/inspect")
     @ResponseStatus(HttpStatus.CREATED)
     public String testSample(@RequestParam String sampleId,  String testId) {
         if (sampleRepository.existsById(sampleId)&&testRepository.existsById(testId)) {
             Sample newSample = sampleRepository.findById(sampleId).get();
             Test newTest = testRepository.findById(testId).get();
-            return sampleService.testSample(newSample, newTest); // prototype ekt find by id eka dla aye check krnna
+            return sampleService.test(newSample, newTest);
         }
         else return "Invalid request";
     }

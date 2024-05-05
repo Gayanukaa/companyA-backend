@@ -42,7 +42,7 @@ public class SampleService {
             sample.setTestStatus("Received");
             sample.setAllocatedTest(null);
             sampleRepository.save(sample);
-            return "sample added Successfully";
+            return "Sample added Successfully";
         }
     }
 
@@ -52,7 +52,7 @@ public class SampleService {
         return sampleRepository.save(sample);
     }
 
-    public String testSample(Sample sample, Test test){
+    public String test(Sample sample, Test test){
         String tempid = sample.getId();
         String temptestid = test.getTestId();
         Optional<Sample> AvalilableSample = sampleRepository.findById(tempid);
