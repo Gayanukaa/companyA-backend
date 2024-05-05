@@ -8,8 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.bson.types.ObjectId;
 import java.util.List;
 
-import com.companyA.backend.ManufacturingSystem.model.Employee;
-
 // Entity class representing production data
 @Document(collection = "ProductionData")
 @Data

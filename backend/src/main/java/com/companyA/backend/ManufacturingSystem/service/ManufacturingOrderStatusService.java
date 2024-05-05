@@ -21,6 +21,10 @@ public class ManufacturingOrderStatusService {
         OrderStatus orderStatus;
         // Update the status
         orderStatus = manufacturingOrderStatusRepository.findByOrderID(orderID);
+        if (orderStatus == null) {
+            // return null value if the orderID is invalid
+            return null;
+        }
         orderStatus.setStatus(status);
         // Save and return the updated order status
         return manufacturingOrderStatusRepository.save(orderStatus);
