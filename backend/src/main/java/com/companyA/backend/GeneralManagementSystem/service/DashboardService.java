@@ -2,7 +2,7 @@ package com.companyA.backend.GeneralManagementSystem.service;
 
 import com.companyA.backend.GeneralManagementSystem.DTO.GraphsDataDTO;
 import com.companyA.backend.GeneralManagementSystem.DTO.InventoryDataDTO;
-import com.companyA.backend.InventoryManagementSystem.model.Inventory;
+import com.companyA.backend.InventoryManagementSystem.model.Stocks;
 import com.companyA.backend.InventoryManagementSystem.repository.InventoryRepository;
 import com.companyA.backend.LogisticsAndMaintenanceSystem.repository.VehicleRepository;
 import com.companyA.backend.SalesSystem.model.FinanceSalesTableBody;
@@ -18,13 +18,13 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class DashboardService {
 
-    private final InventoryRepository inventoryRepository;
+    private final InventoryRepository<Stocks> inventoryRepository;
     private final FinanceSalesTableRepository financeSalesTableRepository;
 
     public GraphsDataDTO getGraphsData() {
         GraphsDataDTO graphsDataDTO = new GraphsDataDTO();
 
-        List<Inventory> inventoryExistList = inventoryRepository.findAll();
+        List<Stocks> inventoryExistList = inventoryRepository.findAll();
         List<FinanceSalesTableBody> financeSalesTableBodyExistList = financeSalesTableRepository.findAll();
 
         Map<String, Integer> inventoryFilteredData = inventoryExistList.stream()
@@ -41,12 +41,13 @@ public class DashboardService {
     }
 
 
-    private InventoryDataDTO mapToDTO(Inventory inventoryData) {
+    private InventoryDataDTO mapToDTO(Stocks inventoryData) {
         InventoryDataDTO inventoryDTO = new InventoryDataDTO();
         inventoryDTO.setName(inventoryData.getName());
         inventoryDTO.setQuantity(Integer.valueOf(String.valueOf(inventoryData.getQuantity())));
         return inventoryDTO;
     }
+
     public long countInventoryItems(){
         return inventoryRepository.count();
     }

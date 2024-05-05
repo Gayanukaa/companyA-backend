@@ -21,13 +21,14 @@ public class ShipmentController {
 
     private final FinanceStockAlertService financeStockAlertService;
 
+    //Dependency Injection
     @Autowired
     public ShipmentController(ShipmentService shipmentService, FinanceStockAlertService financeStockAlertService) {
         this.shipmentService = shipmentService;
         this.financeStockAlertService = financeStockAlertService;
     }
 
-    //Retrieve all shipments
+    //Retrieves all shipments
     @GetMapping("/getShipments")
     public ResponseEntity<List<Shipment>> getAllShipments() {
         List<Shipment> shipments = shipmentService.getAllShipments();
@@ -49,14 +50,19 @@ public class ShipmentController {
         }
     }
 
-    //Create a shipment
+    //Create a shipment with the stock alerts
+    //Interacts with Finance System to confirm payment
     @PostMapping("/createShipment")
     public ResponseEntity<Shipment> createShipment(@RequestBody ShipmentAlertDTO shipmentAlertDTO) {
-        boolean paymentConfirmed = financeStockAlertService.sendRequestForPaymentConfirmation(shipmentAlertDTO.getStockAlerts());
-        if (paymentConfirmed) {
-            return new ResponseEntity<>(shipmentService.placeShipment(shipmentAlertDTO.getStockAlerts(), shipmentAlertDTO.getInventoryManagerId(), shipmentAlertDTO.getSupplierId()), HttpStatus.CREATED);
-        }
-        else {
+        try {
+            boolean paymentConfirmed = financeStockAlertService.sendRequestForPaymentConfirmation(shipmentAlertDTO.getStockAlerts());
+            if (paymentConfirmed) {
+                return new ResponseEntity<>(shipmentService.placeShipment(shipmentAlertDTO.getStockAlerts(), shipmentAlertDTO.getInventoryManagerId(), shipmentAlertDTO.getSupplierId()), HttpStatus.CREATED);
+            }
+            else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -64,25 +70,37 @@ public class ShipmentController {
     //Place a custom shipment
     @PostMapping("/placeCustomShipment")
     public ResponseEntity<Shipment> placeCustomShipment(@RequestBody CustomShipmentDTO customShipmentDTO) {
-        return new ResponseEntity<>(shipmentService.saveCustomShipment(customShipmentDTO), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(shipmentService.saveCustomShipment(customShipmentDTO), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     //Delete shipment by its ID
     @DeleteMapping("/deleteShipment/{id}")
     public ResponseEntity<String> deleteShipment(@PathVariable String id) {
-        shipmentService.deleteShipment(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    //Receive shipment
-    @GetMapping("/receiveShipment/{id}")
-    public ResponseEntity<List<Stocks>> receiveShipment(@PathVariable String id) {
-        Shipment shipment = shipmentService.getShipmentById(id);
-        if (shipment != null) {
-            return new ResponseEntity<List<Stocks>>(shipmentService.updateStocks(shipment), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            shipmentService.deleteShipment(id);
+            return new ResponseEntity<>("Shipment deleted successfully.", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
+
+    //Receive shipment that has been placed and update the stocks
+    @GetMapping("/receiveShipment/{id}")
+    public ResponseEntity<List<Stocks>> receiveShipment(@PathVariable String id) {
+        try {
+            Shipment shipment = shipmentService.getShipmentById(id);
+            if (shipment != null) {
+                return new ResponseEntity<List<Stocks>>(shipmentService.updateStocks(shipment), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }
