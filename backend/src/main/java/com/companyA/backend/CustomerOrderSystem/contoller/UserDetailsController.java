@@ -1,5 +1,7 @@
 package com.companyA.backend.CustomerOrderSystem.contoller;
 import java.util.Optional;
+
+import com.companyA.backend.CustomerOrderSystem.model.OrderStatus;
 import com.companyA.backend.CustomerOrderSystem.model.UserDetails;
 import com.companyA.backend.CustomerOrderSystem.service.UserDetailsService;
 import org.bson.types.ObjectId;
@@ -20,8 +22,8 @@ public class UserDetailsController {
     private UserDetailsService userDetailsService;
 
     @GetMapping("/userDetails")
-    public ResponseEntity<Optional<UserDetails>> getUserDetails(@RequestParam("email") String email) {
-        Optional<UserDetails> response = userDetailsService.getUserDetails(email);
+    public ResponseEntity<Optional<UserDetails>> getUserDetails(@RequestParam("id") String id) {
+        Optional<UserDetails> response = userDetailsService.getUserDetails(id);
         return new ResponseEntity<Optional<UserDetails>>(response, HttpStatus.OK);
     }
 }
