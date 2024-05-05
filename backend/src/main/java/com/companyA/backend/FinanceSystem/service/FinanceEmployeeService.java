@@ -26,7 +26,15 @@ public class FinanceEmployeeService {
         employeeSalary.setGrossSalary(calculatedGross);
         double calculatedTax = employeeSalary.calTax();
         employeeSalary.setTax(calculatedTax);
-        employeeSalary.setEmployeeName(employeeDetailRepository.findByEmployeeId(employeeSalary.getEmployeeId()).getFirstName());
+        if(employeeDetailRepository.findByEmployeeId(employeeSalary.getEmployeeId()) != null){
+            employeeSalary.setEmployeeName(employeeDetailRepository.findByEmployeeId(employeeSalary.getEmployeeId()).getFirstName());
+        }
+        else {
+            // Employee not found, throw an exception
+            throw new IDNotFoundException("Employee not found with ID: " + employeeSalary.getEmployeeId());
+        }
+
+
         double calculatedNet = employeeSalary.calNetSalary();
         employeeSalary.setNetSalary(calculatedNet);
         employeeSalaryRepo.save(employeeSalary);

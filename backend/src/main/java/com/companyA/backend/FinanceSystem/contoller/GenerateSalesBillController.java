@@ -20,7 +20,6 @@ public class GenerateSalesBillController {
     private GenerateSalesBillRepo generateSalesBillRepo;
 
 
-
     @GetMapping("/getOrderHistory")
     public List<GenerateSalesBill> orderHistory(){
 
