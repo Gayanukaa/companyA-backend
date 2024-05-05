@@ -11,4 +11,5 @@ import java.util.Map;
 public class GraphsDataDTO {
     private Map<String, Integer> inventoryData;
     private Map<String, Double> salesData;
+    private Map<String, Integer> warehouseData;
 }

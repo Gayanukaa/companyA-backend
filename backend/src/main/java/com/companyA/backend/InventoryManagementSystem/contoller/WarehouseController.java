@@ -29,19 +29,29 @@ public class WarehouseController {
     //Add a new warehouse
     @PostMapping("/addWarehouse")
     public ResponseEntity<Warehouse> addWarehouse(@RequestBody Warehouse warehouse) {
-        return new ResponseEntity<Warehouse>(warehouseService.addWarehouse(warehouse),HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<Warehouse>(warehouseService.addWarehouse(warehouse),HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     //Retrieve details of a specific warehouse by using its ID
     @GetMapping("/getWarehouse/{warehouseId}")
     public ResponseEntity<Warehouse> getWarehouse(@PathVariable String warehouseId) {
+        if (warehouseId == null || warehouseId.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<Warehouse>(warehouseService.getWarehouse(warehouseId),HttpStatus.OK);
     }
 
     //Remove a warehouse
     @DeleteMapping("/deleteWarehouse/{warehouseId}")
     public ResponseEntity<String> deleteWarehouse(@PathVariable String warehouseId) {
-        return new ResponseEntity<String>(warehouseService.deleteWarehouse(warehouseId),HttpStatus.OK);
+        try {
+            return new ResponseEntity<String>(warehouseService.deleteWarehouse(warehouseId),HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
-
 }

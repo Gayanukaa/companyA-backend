@@ -42,7 +42,7 @@ public class SampleService {
             sample.setTestStatus("Received");
             sample.setAllocatedTest(null);
             sampleRepository.save(sample);
-            return "sample added Successfully";
+            return "Sample added Successfully";
         }
     }
 

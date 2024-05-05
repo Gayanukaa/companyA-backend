@@ -13,8 +13,8 @@ public class UserDetailsService {
     @Autowired
     private UserDetailsRepository userDetailsRepository;
 
-    public Optional<UserDetails> getUserDetails(String email) {
-        return userDetailsRepository.findByEmail(email);
+    public Optional<UserDetails> getUserDetails(String id) {
+        return userDetailsRepository.findById(id);
     }
 
 }

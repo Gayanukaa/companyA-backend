@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin
 public class UserDetails {
     @Id
-    private ObjectId id;
+    private ObjectId _id;
     private String firstName;
     private String lastName;
     private String mobileNumber;
     private String email;
+    private String id;
 }
