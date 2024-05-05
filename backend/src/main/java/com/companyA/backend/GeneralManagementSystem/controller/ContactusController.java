@@ -40,8 +40,8 @@ public class ContactusController {
     }
 
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Map<String, Object>> deleteFeedbackControl(@PathVariable String id) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<Map<String, Object>> deleteFeedbackControl(@RequestParam String id) {
         return contactusService.deleteFeedbackById(id);
     }
 
