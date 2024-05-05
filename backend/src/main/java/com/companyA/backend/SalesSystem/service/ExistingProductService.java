@@ -58,7 +58,12 @@ public class ExistingProductService {
         String itemID = record.getItemId();
         int itemQuantity = record.getQuantity();
         Existing item = existingProductRepository.findById(itemID).orElse(null);
-        item.setQuantity(item.getQuantity() - itemQuantity);
+        int remaining = item.getQuantity() - itemQuantity;
+        System.out.println("r "+remaining);
+        if (remaining <0){
+            remaining = 0;
+        }
+        item.setQuantity(remaining);
         existingProductRepository.save(item);
 
     }
@@ -72,7 +77,8 @@ public class ExistingProductService {
         if (item == null){
             return false;
         }
-        item.setQuantity(item.getQuantity() + itemQuantity);
+        int remaining = item.getQuantity() + itemQuantity;
+        item.setQuantity(remaining);
         item.setWarehouseId(warehouse);
         item.setPrice(itemPrice);
         existingProductRepository.save(item);

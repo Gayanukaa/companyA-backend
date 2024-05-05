@@ -40,10 +40,16 @@ public class ProductService {
     }
 
     public void updateDatabase(UpdateData record) {
+        // this function checks for 
         String itemID = record.getItemId();
         int itemQuantity = record.getQuantity();
         Product item = productRepository.findById(itemID).orElse(null);
-        item.setQuantity(item.getQuantity() - itemQuantity);
+        int remaining = item.getQuantity() - itemQuantity;
+        System.out.println("r "+remaining);
+        if (remaining <0){
+            remaining = 0;
+        }
+        item.setQuantity(remaining);
         productRepository.save(item);
     }
 
