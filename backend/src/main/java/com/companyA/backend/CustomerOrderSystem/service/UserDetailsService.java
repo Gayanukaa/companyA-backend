@@ -13,7 +13,7 @@ public class UserDetailsService {
     @Autowired
     private UserDetailsRepository userDetailsRepository;
 
-    public Optional<UserDetails> getUserDetails(String id) {
+    public Optional<UserDetails> getUserDetails(ObjectId id) {
         return userDetailsRepository.findById(id);
     }
 
