@@ -14,4 +14,5 @@ public class ManagerDTO {
     private String mobileNumber;
     private String email;
     private String role;
+    private Integer isDeleted;
 }
