@@ -83,7 +83,12 @@ public class ManagerService {
 
     public long countManagers(){
         List<Manager>managers=managerRepository.findAll();
-        return managers.size();
+
+        List<Manager> activeManagers = managers.stream()
+                .filter(manager -> manager.getIsDeleted() == 0)
+                .toList();
+
+        return activeManagers.size()-3;
     }
 
 
