@@ -52,10 +52,4 @@ public class UtilityBillController {
         response.put("message", "payedFactoryRentBills is Successfully Added");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @ExceptionHandler
-    public ResponseEntity<String> handleEmployeeNotFoundException(IDNotFoundException ex) {
-        // Create a custom response for EmployeeNotFoundException
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
 }

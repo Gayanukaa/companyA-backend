@@ -13,8 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class UtilityBill {
     @Id
     private String billId;
-    private String waterBill_AccountNo;
-    private String electricityBill_AccountNo;
     private double billsSum;
     private double billAmount;
     private double waterBillAmount;
