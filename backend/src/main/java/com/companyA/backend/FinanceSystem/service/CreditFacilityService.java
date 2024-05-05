@@ -15,6 +15,7 @@ public class CreditFacilityService {
 
     public void createLoan(CreditFacility creditFacility){
         creditFacility.setMonthlyLoanAmount(creditFacility.monthlyLoanPayment());
+        creditFacility.setCurrentLoanAmount(creditFacility.getInitialLoanAmount());
         creditFacility.setLoanStatus("Active");
         creditFacility.setStartDate(LocalDate.now());
         creditFacilityRepo.save(creditFacility);

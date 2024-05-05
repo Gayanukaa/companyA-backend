@@ -41,6 +41,7 @@ public class PaymentService {
 
         payment.setType("Outgoing");
         payment.setStatus("Confirmed");
+
         payment.setPaymentDate(LocalDateTime.now());
         payment.setAmount(totalPayment);
         paymentRepo.save(payment);
@@ -76,7 +77,7 @@ public class PaymentService {
 
     }
 
-    
+
 
 
 
