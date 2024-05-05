@@ -48,7 +48,7 @@ public class PaymentService {
 
     }
 
-    public void billPaymentConfirmation(Payment payment){
+    public void payUtilityBill(Payment payment){
         List<UtilityBill> bills = utilityBillRepo.findAll();
         double totalBillPayment = 0;
         for(UtilityBill bill : bills){
@@ -76,6 +76,8 @@ public class PaymentService {
         paymentRepo.save(payment);
 
     }
+
+
 
 
 

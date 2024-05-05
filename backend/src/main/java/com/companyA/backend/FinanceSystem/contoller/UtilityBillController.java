@@ -27,29 +27,13 @@ public class UtilityBillController {
         return utilityBillService.getAllBills();
     }
 
-    @PostMapping("/payedWaterBills")
-    public ResponseEntity<Map<String, String>> setPaidWaterBill(@RequestBody UtilityBill paidBill) {
-        utilityBillService.payWaterBills(paidBill);
+    @PostMapping("/StoreUtilityBill")
+    public ResponseEntity<Map<String, String>> utilityBill(@RequestBody UtilityBill paidBill) {
+        utilityBillService.payUtilityBills(paidBill);
         Map<String, String> response = new HashMap<>();
-        response.put("message", "payedWaterBill is Successfully Added");
+        response.put("message", "UtilityBill is Successfully Added");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/payedElectricityBills")
-    public ResponseEntity<Map<String, String>> setPaidElectricityBill(@RequestBody UtilityBill paidBill) {
-        utilityBillService.payElectricityBills(paidBill);
 
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "payedElectricityBill is Successfully Added");
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @PostMapping("/payedFactoryRentBills")
-    public ResponseEntity<Map<String, String>> setPaidRentBill(@RequestBody UtilityBill paidBill) {
-        utilityBillService.payRentBills(paidBill);
-
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "payedFactoryRentBills is Successfully Added");
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
 }

@@ -16,51 +16,18 @@ public class UtilityBillService {
     @Autowired
     private UtilityBillRepo utilityBillRepo;
 
-    @Autowired
-    private PaymentRepo paymentRepo;
-
-    public Payment paymentWaterBill;
-
-    public Payment paymentElectricityBill;
-    public Payment paymentRentBill;
-
-    public UtilityBillService() {
-        this.paymentWaterBill = new Payment(); // Initialize payment object
-        this.paymentElectricityBill = new Payment();
-        this.paymentRentBill = new Payment();
+    public void payUtilityBills(UtilityBill bill){
+        bill.setBillsSum(bill.calculateTotalBillAmount(bill.getWaterBillAmount(),bill.getElectricityBillAmount(),bill.getRentBillAmount()));
+        utilityBillRepo.save(bill);
     }
-
-    public List<UtilityBill> getAllBills() {
+    public List<UtilityBill> getAllBills(){
         return utilityBillRepo.findAll();
     }
-    public void payWaterBills(UtilityBill paidBill) {
-        paidBill.setWaterBillAmount(paidBill.getBillAmount());
-        paymentWaterBill.setAmount(paidBill.getBillAmount());
-        paymentWaterBill.setType("Outgoing");
-        paymentWaterBill.setStatus("Confirmed");
-        paymentWaterBill.setPaymentDate(LocalDateTime.now());
-        paymentRepo.save(paymentWaterBill);
-        utilityBillRepo.save(paidBill);
-    }
 
-    public void payElectricityBills(UtilityBill paidBill) {
-        paidBill.setElectricityBillAmount(paidBill.getBillAmount());
-        paymentElectricityBill.setAmount(paidBill.getBillAmount());
-        paymentElectricityBill.setType("Outgoing");
-        paymentElectricityBill.setStatus("Confirmed");
-        paymentElectricityBill.setPaymentDate(LocalDateTime.now());
-        paymentRepo.save(paymentElectricityBill);
-        utilityBillRepo.save(paidBill);
-    }
 
-    public void payRentBills(UtilityBill paidBill) {
-        paidBill.setRentBillAmount(paidBill.getBillAmount());
-        paymentRentBill.setAmount(paidBill.getBillAmount());
-        paymentRentBill.setType("Outgoing");
-        paymentRentBill.setStatus("Confirmed");
-        paymentRentBill.setPaymentDate(LocalDateTime.now());
-        paymentRepo.save(paymentRentBill);
-        utilityBillRepo.save(paidBill);
-    }
+
+
+
+
 
 }

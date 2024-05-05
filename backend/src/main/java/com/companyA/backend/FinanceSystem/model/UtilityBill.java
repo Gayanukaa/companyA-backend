@@ -14,9 +14,16 @@ public class UtilityBill {
     @Id
     private String billId;
     private double billsSum;
-    private double billAmount;
     private double waterBillAmount;
-    private double ElectricityBillAmount;
-    private double RentBillAmount;
+    private double electricityBillAmount;
+    private double rentBillAmount;
+
+    public double calculateTotalBillAmount(double waterBillAmount,double electricityBillAmount,double rentBillAmount){
+        double totalBillAmount;
+        totalBillAmount = waterBillAmount+electricityBillAmount+rentBillAmount;
+        return totalBillAmount;
+    }
 
 }
+
+

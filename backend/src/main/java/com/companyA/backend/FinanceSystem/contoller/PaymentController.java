@@ -41,6 +41,14 @@ public class PaymentController {
         response.put("message", "Payment is received");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @PostMapping("/utilityPayment")
+    public ResponseEntity<Map<String, String>> utilityBillPayment(@RequestBody Payment payment) {
+        paymentService.payUtilityBill(payment);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Utility bill successfully paid");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     @GetMapping("/financeOverview")
     public List<Payment> getPaymentDetails(){
         return paymentRepo.findAll();
